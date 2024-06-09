@@ -1,0 +1,14 @@
+update -doc_name: description1; description2; description3
+update -all: All files associated with editing; description2; description3
+testing -doc_name: description1; description2; description3
+testing -all: description1; description2
+
+archive -all 
+initial commit before development and testing; 
+TODO: adding canvas for scrollbar to HrsMatrixFrame
+
+Update -App -AppButtonsFrame
+-App: Button Frame accomodations made
+-AppButtonsFrame: TitleFrame; ButtonsFrame; Separators; All packed layout;
+#TODO: pending button commands; pending CrewSort graph;
+#TODO: HrsFrameMatrix: asking_hours_tracking_labels are still reading from HoursCalculations.py. This file needs to pull starting asking hours or ScheduleHrsFrame should add from create_frames method (likely going with the latter approach)

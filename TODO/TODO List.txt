@@ -1,0 +1,24 @@
+To-Do List
+
+[x] Complete cosmetic layout to Work Schedule
+[x] Adaptive layout for smaller screens and reduced resolutions - potential avenues: adaptive layout, scrolling, zoom functionality, resizable widgets - chose horizontal scrolling
+[ ] Add option for WorkScheduleLegend detachment
+[x] Complete WorkScheduleLegend Frame
+[x] Print Schedule - Began cosmetic overhaul of Print feature for overtime schedule; overtime schedule layout is nearly there with a few TODOs left; 
+	Work Schedule no longer working with the new upgrades, will need to make some adjustments to accommodate the formatting adjustments with both schedules
+	Need color formatting adjustments for overtime schedule layout as follows [working hours: green; asking hours: red; Names; staggered formatting] 
+	Adjust header to accomodate HdrDateGrid info, thinking best approach would be to stack each character over the day using '\n'.
+[x] Send Email
+[ ] Archive Rankings
+[ ] Schedule Manager - Move up and Move down feature
+[ ] Schedule Manager - Revise Starting Hours for crew members
+[x] Schedule Manager - Remove member count Combobox. This will now be a label displayed above the Confirm All Changes button
+[x] The 'isdigit' verification is no longer necessary with the recent Schedule Manager changes. Remove this check to rectify the bugs below
+[x] Names Auto-match between work and overtime schedules - Currently, the list must be manually populated for both schedules individually; it's a bit cumbersome
+[x] Splash Screen Loading - Needs a few more optimizations where possible
+[ ] User Entry Tracking
+[ ] Titlebar Icon
+[ ] Final App Naming
+[ ] Desktop Icon
+[ ] Color Theme Selections
+[ ] Test PyInstaller, Nuitka, Inno Setup, and common pyinstaller troubles with py program .exe exports

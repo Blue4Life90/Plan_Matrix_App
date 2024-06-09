@@ -1,0 +1,2508 @@
+{
+    "month": {
+        "1": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 4,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [
+                        "12",
+                        "12",
+                        "12",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 3,
+                    "starting_working_hours": 5,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "12",
+                        "12",
+                        "12",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 1,
+                    "total_working_hours": 3,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            }
+        },
+        "2": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 1,
+                    "total_working_hours": 3,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "3": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 1,
+                    "total_working_hours": 3,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "4": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 1,
+                    "total_working_hours": 3,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "5": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 1,
+                    "total_working_hours": 3,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "6": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 1,
+                    "starting_working_hours": 3,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ],
+                    "working_hours_data": [
+                        "30",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            }
+        },
+        "7": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "8": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "9": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "10": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "11": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "12": {
+            "Jason Watts": {
+                "monthly_hours": {
+                    "starting_asking_hours": 40,
+                    "starting_working_hours": 6,
+                    "total_asking_hours": 40,
+                    "total_working_hours": 6,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Clint Spring": {
+                "monthly_hours": {
+                    "starting_asking_hours": 2,
+                    "starting_working_hours": 4,
+                    "total_asking_hours": 2,
+                    "total_working_hours": 4,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Patrick Blackwell": {
+                "monthly_hours": {
+                    "starting_asking_hours": 39,
+                    "starting_working_hours": 41,
+                    "total_asking_hours": 39,
+                    "total_working_hours": 41,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Jaimie Davis": {
+                "monthly_hours": {
+                    "starting_asking_hours": 6,
+                    "starting_working_hours": 7,
+                    "total_asking_hours": 6,
+                    "total_working_hours": 7,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Josh Ellington": {
+                "monthly_hours": {
+                    "starting_asking_hours": 8,
+                    "starting_working_hours": 8,
+                    "total_asking_hours": 8,
+                    "total_working_hours": 8,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Matthew Dunaway": {
+                "monthly_hours": {
+                    "starting_asking_hours": 9,
+                    "starting_working_hours": 9,
+                    "total_asking_hours": 9,
+                    "total_working_hours": 9,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Eric Watson": {
+                "monthly_hours": {
+                    "starting_asking_hours": 5,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 5,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chad Boike": {
+                "monthly_hours": {
+                    "starting_asking_hours": 7,
+                    "starting_working_hours": 1,
+                    "total_asking_hours": 7,
+                    "total_working_hours": 1,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Ryan Richard": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 2,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 2,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            },
+            "Chance Baskin": {
+                "monthly_hours": {
+                    "starting_asking_hours": 31,
+                    "starting_working_hours": 33,
+                    "total_asking_hours": 31,
+                    "total_working_hours": 33,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        }
+    }
+}

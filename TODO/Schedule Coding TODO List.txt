@@ -1,0 +1,86 @@
+Schedule Coding TODO List
+
+Initial commit prior to adding additional features; The following features with be the areas of focus: 
+[
+Print Schedule, 
+Send Email,
+Archive Rankings, 
+Splash Screen Loading, 
+User Entry Tracking, 
+Titlebar Icon, 
+Final App Naming, 
+Desktop Icon, 
+Work Schedule Framework, 
+Color Theme Selections, 
+BUG: Race condition/Syncronization Handling. Read below for proper handling processes
+]
+
+Ensuring proper synchronization and error handling. I'll provide suggestions and modifications where necessary.
+
+App class:
+
+The App class itself doesn't seem to have any direct race conditions since it mainly handles the initialization and setup of the application.
+However, it's important to ensure that the methods called within the App class, such as set_title_frame, set_hours_frame, load_ranking_system, etc., are properly synchronized and handle any potential race conditions within their respective classes.
+
+
+ScheduleHrsFrame class:
+
+The load_workbook_data method reads data from an Excel workbook. It's important to ensure that the workbook is not being modified by another process or thread while reading. You can consider using a lock mechanism to prevent concurrent access to the workbook file.
+The save_workbook_data method writes data to an Excel workbook. Similar to the previous point, it's crucial to ensure exclusive access to the workbook file during the write operation to avoid data corruption or inconsistencies.
+The create_frames method starts a separate thread (WorkbookDataLoader) to load the workbook data. Make sure that the main thread is not accessing or modifying the data simultaneously. Use proper synchronization mechanisms like locks or semaphores to coordinate access to shared resources between the main thread and the WorkbookDataLoader thread.
+The data_loaded method is called by the WorkbookDataLoader thread when the data is loaded. Ensure that any updates to the GUI widgets are performed on the main thread using after or after_idle methods to avoid potential race conditions.
+
+
+WorkbookDataLoader class:
+
+Review the run method to ensure that it handles any exceptions gracefully and communicates any errors back to the main thread using proper synchronization methods.
+
+
+HdrDateGrid and HeaderFrame classes:
+
+These classes mainly handle the display of date and header information and don't seem to have direct race condition risks.
+
+
+RankingFrame class:
+
+The RankingFrame class doesn't appear to have any direct race condition risks based on the provided code snippets.
+
+
+
+To incorporate error handling and synchronization mechanisms, consider the following:
+
+Use try-except blocks to handle exceptions gracefully and log any errors using the logging module.
+Implement lock mechanisms, such as threading.Lock or threading.RLock, to ensure exclusive access to shared resources like workbook files or data structures accessed by multiple threads.
+Use thread-safe methods like after or after_idle to update the GUI widgets from background threads to avoid race conditions.
+Consider using thread synchronization primitives like semaphores or condition variables to coordinate actions between threads and avoid race conditions.
+Thoroughly test the application under various scenarios, including concurrent access and potential race conditions, to identify and fix any issues.
+
+Here's an example of how you can incorporate error handling and synchronization in the save_workbook_data method of the ScheduleHrsFrame class:
+pythonCopy codeimport threading
+
+class ScheduleHrsFrame(tk.Frame):
+    def __init__(self, ...):
+        ...
+        self.workbook_lock = threading.Lock()
+        ...
+
+    def save_workbook_data(self, workbook_filename, worksheet_name):
+        try:
+            with self.workbook_lock:
+                # Acquire the lock to ensure exclusive access to the workbook file
+                workbook = openpyxl.load_workbook(workbook_filename)
+                sheet = workbook[worksheet_name]
+
+                # Perform the save operations here
+                ...
+
+                workbook.save(workbook_filename)
+                workbook.close()
+
+        except Exception as e:
+            logging.error(f"Error saving the schedule data: {str(e)}")
+            # Handle the exception appropriately, such as displaying an error message to the user
+            ...
+In this example, a threading.Lock is used to ensure exclusive access to the workbook file during the save operation. The lock is acquired before accessing the workbook and released after saving and closing the workbook. Any exceptions that occur during the save process are caught and logged using the logging module.
+Similar synchronization and error handling techniques can be applied to other methods and classes as needed to prevent race conditions and handle exceptions gracefully.
+Remember to thoroughly test the application and handle any potential edge cases or exceptions that may arise during concurrent access or unexpected scenarios.

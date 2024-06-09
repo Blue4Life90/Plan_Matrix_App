@@ -1,0 +1,5 @@
+Bug List
+[ ] Total Working and Asking Hours is saving to Starting Working and Asking hours. This will need to be adjusted in the code to save the starting hours
+[ ] The new Schedule Manager Feature to adjust starting hours is adjusting the starting hours for everyone in the crew instead of just the selected person. This will need to be fixed
+[ ] Starting Hours are being overwritten with 0 on load
+[ ] Starting Hour number in frames are not being loaded (They remain 0)
