@@ -5,7 +5,6 @@ import sys
 import time
 import logging
 import threading
-import subprocess
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
