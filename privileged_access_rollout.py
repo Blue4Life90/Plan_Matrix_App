@@ -15,7 +15,7 @@ PyInstaller Export
 pip install pyinstaller
 
 Syntax:
-pyinstaller --name="Plan_Matrix" --noconsole --onefile --icon=icon.ico your_script_name.py
+pyinstaller --name="Privileged_Key" --noconsole --onefile --icon=icon.ico privileged_access_rollout.py
 """
 
 """
@@ -24,7 +24,7 @@ Nuitka Export
 pip install nuitka
 
 Syntax:
-python -m nuitka --onefile --windows-disable-console --windows-icon-from-ico=icon.ico --output-filename="Plan_Matrix.exe" your_script_name.py
+python -m nuitka --onefile --windows-disable-console --windows-icon-from-ico=icon.ico --output-filename="Privileged_Key.exe" privileged_access_rollout.py
 """
 
 log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
