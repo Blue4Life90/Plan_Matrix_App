@@ -79,3 +79,5 @@
 2024-06-13 23:22:54,558 - INFO - Login - username:  / access level: read-only
 2024-06-13 23:23:27,379 - INFO - Login - username:  / access level: read-only
 2024-06-13 23:24:09,800 - INFO - Login - username: test_user1 / access level: read-only
+2024-06-14 00:05:15,079 - INFO - Login - username:  / access level: read-only
+2024-06-14 00:05:21,764 - INFO - Login - username: matth / access level: admin

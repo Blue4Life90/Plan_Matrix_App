@@ -1190,10 +1190,11 @@ class App(tk.Tk):
         if is_overtime:
             overtime_style = [
                 ('VALIGN', (0, 0), (1, 0), 'MIDDLE'),  # Vertical alignment for header cells
-                *[('BACKGROUND', (1, idx), (-1, idx), colors.HexColor("#FFC7CE")) for idx in range(1, len(span_commands)*2, 2)],  # Working hours row colors
-                *[('TEXTCOLOR', (1, idx), (-1, idx), colors.HexColor("#9C0006")) for idx in range(1, len(span_commands)*2, 2)],  # Working hours row text colors
-                *[('BACKGROUND', (1, idx), (-1, idx), colors.HexColor("#C6EFCE")) for idx in range(2, len(span_commands)*2+1, 2)],  # Asking hours row colors
-                *[('TEXTCOLOR', (1, idx), (-1, idx), colors.HexColor("#006100")) for idx in range(2, len(span_commands)*2+1, 2)],  # Asking hours row text colors
+                
+                *[('BACKGROUND', (1, idx), (-1, idx), colors.HexColor("#C6EFCE")) for idx in range(1, len(span_commands)*2, 2)],  # Working hours row colors
+                *[('TEXTCOLOR', (1, idx), (-1, idx), colors.HexColor("#006100")) for idx in range(1, len(span_commands)*2, 2)],  # Working hours row text colors
+                *[('BACKGROUND', (1, idx), (-1, idx), colors.HexColor("#FFC7CE")) for idx in range(2, len(span_commands)*2+1, 2)],  # Asking hours row colors
+                *[('TEXTCOLOR', (1, idx), (-1, idx), colors.HexColor("#9C0006")) for idx in range(2, len(span_commands)*2+1, 2)],  # Asking hours row text colors
                 ('TEXTCOLOR', (0, 1), (0, -1), colors.white),  # Name column text color
             ]
             base_style.extend(overtime_style)
