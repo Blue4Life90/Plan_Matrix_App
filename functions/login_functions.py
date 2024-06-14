@@ -4,7 +4,6 @@ import os
 import csv
 import pickle
 import logging
-from tkinter import messagebox
 
 # Third-Party Library Imports
 import bcrypt
@@ -148,8 +147,7 @@ def register_or_update_user(user_id, access_level):
             _, existing_ciphertext, _ = user_access_levels[user_id]
             existing_access_level = decrypt_data(*user_access_levels[user_id], key)
             if existing_access_level == access_level:
-                messagebox.showinfo("Info", f"User {user_id} already has {access_level} access.")
-                logging.error(f"{user_id} attempted to assign duplicate access level: {access_level}")
+                logging.info(f"User {user_id} already has {access_level} access.")
                 return
         nonce, ciphertext, tag = encrypt_data(access_level, key)
         user_access_levels[user_id] = (nonce, ciphertext, tag)
@@ -228,9 +226,6 @@ def add_new_user(user_id, password):
         if not file_exists:
             writer.writeheader()
         writer.writerow({'username': user_id, 'password_hash': hashed_password, 'remember_me': 'False'})
-        
-        #writer = csv.writer(file)
-        #writer.writerow([user_id, hashed_password])
         
 def hash_password(password):
     """

@@ -15,7 +15,7 @@ from constants import BUTTON_HOVER_BG_COLOR, BUTTON_FG_COLOR
 from constants import REGISTRATION_BANNER_IMAGE, LOGIN_BANNER_IMAGE
 from functions.header_functions import get_user_id
 from functions.login_functions import update_remember_me
-from functions.login_functions import is_verified_user, add_new_user
+from functions.login_functions import is_verified_user, add_new_user, register_or_update_user
 from functions.login_functions import get_user_access_level, load_user_access_levels
 from functions.login_functions import hash_password, get_stored_password, verify_password
 
@@ -300,6 +300,12 @@ class LoginWindow(tk.Toplevel):
         
         hashed_password = hash_password(self.new_password_entry.get())
         add_new_user(self.new_username_entry.get(), hashed_password)
+        
+        # Set default access level for the new user
+        user_access_levels = load_user_access_levels()
+        if username not in user_access_levels:
+            register_or_update_user(username, "read-only")
+        
         messagebox.showinfo("Successfully Registered", "Your User ID and password have been stored.")
         self.destroy()
         LoginWindow(self.parent)  # Create a new instance of LoginWindow
@@ -318,8 +324,6 @@ class LoginWindow(tk.Toplevel):
 
         stored_hash_tuple = get_stored_password(username)
 
-        # For Test Case 4 - User has been set to TRUE in csv and remains opted in
-        # In Test Case 4, all three bool values must be TRUE
         if self.remember_me and remember_me and stored_hash_tuple[1]:
             # If "Remember me" is selected and the stored remember_me value is True
             user_access_levels = load_user_access_levels()
@@ -331,9 +335,6 @@ class LoginWindow(tk.Toplevel):
             else:
                 messagebox.showerror("Login Failed", "Access level not set for this user.")
         else: 
-            # Test Case 1 - User has initially been set to FALSE in csv but has now opted in
-            # Test Case 2 - User has initially been set to TRUE in csv but has now opted out
-            # Test Case 3 - User has been set to FALSE in csv and remains opted out
             if not password:
                 messagebox.showerror("Login Failed", "Please enter your password.")
                 return

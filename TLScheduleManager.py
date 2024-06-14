@@ -550,6 +550,13 @@ class TLScheduleManager(tk.Toplevel):
             name_entry.grid(row=len(name_entries)+1, column=1, padx=10, pady=5)
             name_entries.append(name_entry)
 
+        def remove_entry():
+            if name_entries:
+                last_entry = name_entries.pop()
+                last_entry.destroy()
+                last_label = add_window.grid_slaves(row=len(name_entries)+1, column=0)[0]
+                last_label.destroy()
+
         name_entries = []
 
         add_window = tk.Toplevel(self)
@@ -604,7 +611,16 @@ class TLScheduleManager(tk.Toplevel):
             hover_color="#02a120", 
             text_color="white"
         )
-        add_another_button.grid(row=100, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+        add_another_button.grid(row=100, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
+        
+        remove_last_button = ctk.CTkButton(
+            add_window, text="-", command=remove_entry, 
+            font=("Calibri", 14, "bold"),
+            fg_color="#7a0404", 
+            hover_color="#a10202", 
+            text_color="white"
+        )
+        remove_last_button.grid(row=100, column=1, columnspan=1, padx=10, pady=10, sticky="ew")
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)

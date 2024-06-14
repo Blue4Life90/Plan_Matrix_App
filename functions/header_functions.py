@@ -7,7 +7,6 @@ import datetime as dt
 from datetime import datetime, timedelta
 
 # Third-Party Library Imports
-import itertools
 
 # Local Application/Library Specific Imports
 from constants import log_file
@@ -16,17 +15,7 @@ from constants import log_file
 logging.basicConfig(level=logging.ERROR, 
                     format='%(asctime)s - %(levelname)s - %(message)s',
                     filename=log_file, 
-                    filemode='a'
-)
-
-# Fake usernames for testing
-fake_usernames = itertools.cycle(
-    [
-    'fake_user1', 
-    'fake_user2', 
-    'fake_user3'
-    ]
-)
+                    filemode='a')
 
 def get_crew_shifts(crew, date_value):
     """
@@ -118,9 +107,6 @@ def get_selected_values(crew, month, year):
     }
     return values
 
-def test_get_user_id():
-    return next(fake_usernames)
-
 def get_user_id():
     """
     Retrieve the user ID of the current user.
@@ -130,7 +116,7 @@ def get_user_id():
     """
     try:
         user_id = os.getlogin()
-        return user_id
+        return "test_username4" # user_id
     except Exception as e:
         logging.error(f"Failed to retrieve user ID: {str(e)}")
         return "Unknown User"
