@@ -110,6 +110,21 @@ def save_user_access_levels():
     except Exception as e:
         logging.error(f"Error saving user access levels: {str(e)}")
 
+def update_user_password(username, hashed_password):
+    users_file_path = USER_ID_FILE
+    rows = []
+    with open(users_file_path, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row['username'] == username:
+                row['password_hash'] = hashed_password
+            rows.append(row)
+    with open(users_file_path, 'w', newline='') as file:
+        fieldnames = ['username', 'password_hash', 'remember_me']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
 def load_user_access_levels():
     """
     Load user access levels from the access_levels.enc file.

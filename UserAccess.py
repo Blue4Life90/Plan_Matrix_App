@@ -12,12 +12,13 @@ import customtkinter as ctk #type: ignore
 from constants import log_file
 from constants import APP_BG_COLOR, TEXT_COLOR
 from constants import BUTTON_HOVER_BG_COLOR, BUTTON_FG_COLOR
-from constants import REGISTRATION_BANNER_IMAGE, LOGIN_BANNER_IMAGE
+from constants import REGISTRATION_BANNER_IMAGE, LOGIN_BANNER_IMAGE, RESET_PASS_BANNER_IMAGE
 from functions.header_functions import get_user_id
 from functions.login_functions import update_remember_me
 from functions.login_functions import is_verified_user, add_new_user, register_or_update_user
 from functions.login_functions import get_user_access_level, load_user_access_levels
 from functions.login_functions import hash_password, get_stored_password, verify_password
+from functions.login_functions import update_user_password
 
 # Logging Format
 logging.basicConfig(level=logging.INFO, 
@@ -276,14 +277,30 @@ class LoginWindow(tk.Toplevel):
             hover_color="#940115",
             text_color=TEXT_COLOR
         )
-        self.close_login_button.grid(row=8, column=0, padx=10, pady=(0, 40), sticky="ew")
+        self.close_login_button.grid(row=8, column=0, padx=10, pady=(0, 10), sticky="ew")
+        
+        self.reset_password_button = ctk.CTkButton(
+            self.login_window_frame,
+            text="Forgot Password?",
+            command=self.reset_password,
+            fg_color=APP_BG_COLOR,
+            hover_color=APP_BG_COLOR,
+            text_color="#6f73f7",
+            border_width=0,
+            font=("Calibri", 12, "underline")
+        )
+        self.reset_password_button.grid(row=9, column=0, padx=0, pady=(0, 10), sticky="w")
         
         self.login_trademark_info_label = ctk.CTkLabel(
             self.login_window_frame, 
             text="Created April 2024 @ MDGL",
             font=("Calibri", 8), text_color=TEXT_COLOR
         )
-        self.login_trademark_info_label.grid(row=9, column=0, sticky="e")
+        self.login_trademark_info_label.grid(row=10, column=0, sticky="e")
+    
+    def reset_password(self):
+        self.destroy()
+        ResetPasswordWindow(self.parent)
     
     def toggle_password_entry(self):
         if not self.remember_me_var.get():
@@ -306,7 +323,7 @@ class LoginWindow(tk.Toplevel):
         if username not in user_access_levels:
             register_or_update_user(username, "read-only")
         
-        messagebox.showinfo("Successfully Registered", "Your User ID and password have been stored.")
+        messagebox.showinfo("Successfully Registered", "Your User ID and password have been registered.\nPlease login with your new password in the next window.")
         self.destroy()
         LoginWindow(self.parent)  # Create a new instance of LoginWindow
         
@@ -359,3 +376,131 @@ class LoginWindow(tk.Toplevel):
         
     def close_app(self):
         self.parent.destroy()
+        
+class ResetPasswordWindow(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        self.title("Reset Password")
+        self.overrideredirect(True)
+        self.configure(background=APP_BG_COLOR)
+
+        self.username = tk.StringVar(value=str(get_user_id()))
+
+        self.open_reset_password_window()
+
+        # Center the window on the parent application
+        self.center_window()
+
+    def center_window(self):
+        self.update_idletasks()  # Update window dimensions
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        window_width = self.winfo_width()
+        window_height = self.winfo_height()
+        position_x = int((screen_width / 2) - (window_width / 2))
+        position_y = int((screen_height / 2) - (window_height / 2))
+        self.geometry(f"+{position_x}+{position_y}")
+
+    def open_reset_password_window(self):
+        """Picture Frame"""
+        self.reset_password_picture_frame = ctk.CTkFrame(self)
+        self.reset_password_picture_frame.grid(row=0, column=0, sticky="nsew")
+
+        self.reset_password_image = ctk.CTkImage(light_image=Image.open(RESET_PASS_BANNER_IMAGE),
+                                                 dark_image=Image.open(RESET_PASS_BANNER_IMAGE),
+                                                 size=(250, 500))
+        self.reset_password_image_label = ctk.CTkLabel(
+            self.reset_password_picture_frame,
+            text="",
+            image=self.reset_password_image
+        )
+        self.reset_password_image_label.grid(row=0, column=0, sticky="nsew")
+
+        """Reset Password Frame"""
+        self.reset_password_frame = ctk.CTkFrame(self, fg_color=APP_BG_COLOR)
+        self.reset_password_frame.grid(row=0, column=1, padx=(20, 20), pady=(40, 0), sticky="nsew")
+
+        self.reset_password_info_label = ctk.CTkLabel(
+            self.reset_password_frame,
+            text="Reset Password\nPlease enter your new password below.",
+            font=("Calibri", 14), text_color="white"
+        )
+        self.reset_password_info_label.grid(row=0, column=0, padx=10, pady=(50, 5), sticky="w")
+
+        self.reset_password_username_label = ctk.CTkLabel(
+            self.reset_password_frame,
+            text="Your Username:",
+            font=("Calibri", 14), text_color="white"
+        )
+        self.reset_password_username_label.grid(row=1, column=0, padx=10, pady=(50, 5), sticky="w")
+
+        self.reset_password_username_entry = ctk.CTkEntry(
+            self.reset_password_frame,
+            state="disabled",
+            textvariable=self.username,
+            text_color="black",
+            fg_color="#6f73f7"
+        )
+        self.reset_password_username_entry.grid(row=2, column=0, padx=10, pady=(0, 20), sticky="ew")
+
+        self.reset_password_new_password_label = ctk.CTkLabel(
+            self.reset_password_frame, text="New Password:",
+            font=("Calibri", 14), text_color="white"
+        )
+        self.reset_password_new_password_label.grid(row=3, column=0, padx=10, pady=(0, 5), sticky="w")
+
+        self.reset_password_new_password_entry = ctk.CTkEntry(self.reset_password_frame, show="*")
+        self.reset_password_new_password_entry.grid(row=4, column=0, padx=10, pady=(0, 20), sticky="ew")
+
+        self.reset_password_confirm_button = ctk.CTkButton(
+            self.reset_password_frame,
+            text="Confirm Password Reset",
+            command=self.update_password,
+            fg_color=BUTTON_FG_COLOR,
+            hover_color=BUTTON_HOVER_BG_COLOR,
+            text_color=TEXT_COLOR
+        )
+        self.reset_password_confirm_button.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="ew")
+
+        # Bind the "Enter" key event to the confirm button
+        self.reset_password_confirm_button.bind("<Return>", lambda event: self.update_password())
+
+        # Bind the "Enter" key event to the reset password window
+        self.bind("<Return>", lambda event: self.update_password())
+
+        self.reset_password_close_button = ctk.CTkButton(
+            self.reset_password_frame,
+            text="Close",
+            command=self.close_reset_password_window,
+            fg_color="#730110",
+            hover_color="#940115",
+            text_color=TEXT_COLOR
+        )
+        self.reset_password_close_button.grid(row=6, column=0, padx=10, pady=(0, 25), sticky="ew")
+
+        self.reset_password_trademark_info_label = ctk.CTkLabel(
+            self.reset_password_frame,
+            text="Created April 2024 @ MDGL",
+            font=("Calibri", 8), text_color=TEXT_COLOR
+        )
+        self.reset_password_trademark_info_label.grid(row=7, column=0, sticky="e")
+
+    def update_password(self):
+        username = self.username.get()
+        new_password = self.reset_password_new_password_entry.get()
+
+        if not username or not new_password:
+            messagebox.showerror("Reset Password Failed", "Please enter your new password.")
+            return
+
+        hashed_password = hash_password(new_password)
+        update_user_password(username, hashed_password)
+
+        messagebox.showinfo("Password Updated", "Your password has been successfully updated.")
+        self.destroy()
+        LoginWindow(self.parent)  # Create a new instance of LoginWindow
+
+    def close_reset_password_window(self):
+        self.destroy()
+        LoginWindow(self.parent)  # Create a new instance of LoginWindow

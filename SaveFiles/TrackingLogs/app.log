@@ -64,3 +64,18 @@
 2024-06-13 22:20:38,924 - INFO - Login - username: test_username3 / access level: read-only
 2024-06-13 22:21:59,762 - INFO - Login - username:  / access level: read-only
 2024-06-13 22:22:40,438 - INFO - Login - username: test_username4 / access level: read-only
+2024-06-13 22:46:23,621 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:08:44,184 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:12:18,243 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:16:10,265 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:16:56,472 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:17:29,880 - INFO - Login - username: matth / access level: admin
+2024-06-13 23:18:49,695 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:19:18,128 - INFO - Login - username: test_user / access level: read-only
+2024-06-13 23:19:44,108 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:20:05,439 - INFO - Login - username: test_user / access level: read-only
+2024-06-13 23:20:26,139 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:20:52,591 - INFO - Login - username: test_user / access level: read-only
+2024-06-13 23:22:54,558 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:23:27,379 - INFO - Login - username:  / access level: read-only
+2024-06-13 23:24:09,800 - INFO - Login - username: test_user1 / access level: read-only
