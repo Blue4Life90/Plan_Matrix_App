@@ -1,7 +1,6 @@
 {
     "month": {
-        "1": {},
-        "2": {
+        "1": {
             "[placeholder]": {
                 "monthly_hours": {
                     "starting_asking_hours": 0,
@@ -13,6 +12,7 @@
                 }
             }
         },
+        "2": {},
         "3": {
             "[placeholder]": {
                 "monthly_hours": {
@@ -97,8 +97,41 @@
                 }
             }
         },
-        "10": {},
-        "11": {},
-        "12": {}
+        "10": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "11": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "12": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        }
     }
 }

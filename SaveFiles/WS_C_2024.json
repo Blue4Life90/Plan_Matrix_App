@@ -63,8 +63,26 @@
                 }
             }
         },
-        "10": {},
-        "11": {},
-        "12": {}
+        "10": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "entry_data": []
+                }
+            }
+        },
+        "11": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "entry_data": []
+                }
+            }
+        },
+        "12": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "entry_data": []
+                }
+            }
+        }
     }
 }

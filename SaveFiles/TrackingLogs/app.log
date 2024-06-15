@@ -116,3 +116,19 @@
 2024-06-14 20:07:30,713 - INFO - Login - username: aimiecham_testing / access level: privileged
 2024-06-14 20:12:34,304 - INFO - Login - username:  / access level: read-only
 2024-06-14 20:12:35,531 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 21:46:31,330 - INFO - Login - username:  / access level: read-only
+2024-06-14 21:46:34,242 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 21:47:30,839 - ERROR - No data found for month 1
+2024-06-14 21:47:31,179 - ERROR - No data found for month 1
+2024-06-14 21:49:32,547 - ERROR - No data found for month 10
+2024-06-14 21:49:32,554 - ERROR - No data found for month 10
+2024-06-14 21:49:32,564 - ERROR - No data found for month 11
+2024-06-14 21:49:32,571 - ERROR - No data found for month 11
+2024-06-14 21:49:32,579 - ERROR - No data found for month 12
+2024-06-14 21:49:32,584 - ERROR - No data found for month 12
+2024-06-14 21:49:32,587 - ERROR - No data found for month 10
+2024-06-14 21:49:39,582 - ERROR - No data found for month 10
+2024-06-14 21:49:54,365 - ERROR - No data found for month 10
+2024-06-14 21:50:11,770 - ERROR - schedule_data or filename is empty or None
+2024-06-14 21:50:11,770 - ERROR - Filename: D Crew WS - October 2024.pdf
+Schedule Data: []
