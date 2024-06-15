@@ -236,9 +236,15 @@ class AccessGUI(tk.Tk):
         self.user_id = get_user_id()
 
         self.label_user = tk.Label(self, text=f"User: {self.user_id}", bg="blue", fg="white", font=("Calibri", 12, "bold"))
-        self.label_user.pack(pady=10)
+        self.label_user.pack(padx=10, pady=10)
 
-        self.label_instruction = tk.Label(self, text="Click the button below to gain Admin access to the schedule", bg="blue", fg="white", font=("Calibri", 12))
+        self.label_instruction = tk.Label(self, text="Click the button below to gain Admin access to the schedule.", bg="blue", fg="white", font=("Calibri", 12))
+        self.label_instruction.pack(padx=10, pady=10)
+        
+        self.label_instruction = tk.Label(
+            self, 
+            text="Note: This program must be located in the same directory as\nit's affiliated program for it to work as expected.", 
+            bg="blue", fg="white", font=("Calibri", 12, "italic"), justify="left")
         self.label_instruction.pack(pady=10)
 
         self.button_grant_access = tk.Button(self, text="Grant Admin Access", command=self.grant_access, bg="yellow", fg="black", font=("Calibri", 12, "bold"))
