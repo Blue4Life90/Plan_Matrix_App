@@ -73,7 +73,11 @@ class RankingFrame(ctk.CTkFrame):
     def calculate_total_working_hours(self, member_frame):
         total_working_hours = int(member_frame.starting_working_hours)
         for entry in member_frame.working_hours_entries:
-            total_working_hours += int(entry.get() or 0)
+            try:
+                total_working_hours += int(entry.get() or 0)
+            except ValueError:
+                # Skip the entry if it is not a valid integer
+                pass
         return total_working_hours
 
     def calculate_total_asking_hours(self, member_frame):
@@ -107,12 +111,11 @@ class RankingFrame(ctk.CTkFrame):
             ta_frame.grid(row=i, column=2, padx=5, pady=5)
             
     def update_ranking(self, member_frame, modified_entry):
-        # Find the index of the modified entry
-        entry_index = (
-            member_frame.working_hours_entries.index(modified_entry)
-            if modified_entry in member_frame.working_hours_entries
-            else member_frame.asking_hours_entries.index(modified_entry)
-        )
+        # Check if the modified entry value is valid
+        entry_value = modified_entry.get()
+        if not entry_value.isdigit() or len(entry_value) > 4:
+            # Skip the update if the entry value is invalid
+            return
 
         # Update the totals and labels
         member_name = member_frame.labels[0].cget("text")

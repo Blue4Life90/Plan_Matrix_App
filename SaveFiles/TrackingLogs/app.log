@@ -81,3 +81,26 @@
 2024-06-13 23:24:09,800 - INFO - Login - username: test_user1 / access level: read-only
 2024-06-14 00:05:15,079 - INFO - Login - username:  / access level: read-only
 2024-06-14 00:05:21,764 - INFO - Login - username: matth / access level: admin
+2024-06-14 14:11:56,869 - INFO - Login - username:  / access level: read-only
+2024-06-14 14:12:18,463 - INFO - Login - username: aimiecham_testing / access level: read-only
+2024-06-14 14:21:42,478 - INFO - Login - username:  / access level: read-only
+2024-06-14 14:21:47,929 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 14:26:21,163 - INFO - Login - username:  / access level: read-only
+2024-06-14 14:26:26,576 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 14:27:40,385 - ERROR - No data found for month 1
+2024-06-14 14:27:40,703 - ERROR - No data found for month 1
+2024-06-14 14:53:29,883 - INFO - Login - username:  / access level: read-only
+2024-06-14 14:53:44,037 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 15:02:33,677 - INFO - Login - username:  / access level: read-only
+2024-06-14 15:02:38,167 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 15:08:32,442 - ERROR - Error configuring save_entries_button: invalid command name ".!ctkframe2.!leftpanebuttonframe.!frame.!ctkbutton4"
+2024-06-14 15:08:37,826 - ERROR - Error updating switch button: invalid command name ".!ctkframe2.!leftpanebuttonframe.!frame.!ctkbutton3.!label"
+2024-06-14 15:19:33,278 - INFO - Login - username:  / access level: read-only
+2024-06-14 15:19:34,879 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 15:20:49,531 - ERROR - HrsMatrixFrame.entry_modified: self.ranking_frame is not visible
+2024-06-14 15:20:49,966 - ERROR - HrsMatrixFrame.entry_modified: self.ranking_frame is not visible
+2024-06-14 15:20:52,070 - ERROR - HrsMatrixFrame.entry_modified: self.ranking_frame is not visible
+2024-06-14 16:08:56,345 - INFO - Login - username:  / access level: read-only
+2024-06-14 16:08:58,112 - INFO - Login - username: aimiecham_testing / access level: privileged
+2024-06-14 19:16:51,636 - INFO - Login - username:  / access level: read-only
+2024-06-14 19:16:53,306 - INFO - Login - username: aimiecham_testing / access level: privileged

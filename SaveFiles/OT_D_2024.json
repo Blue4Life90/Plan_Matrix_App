@@ -1,0 +1,137 @@
+{
+    "month": {
+        "1": {},
+        "2": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "3": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "4": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "5": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "6": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "7": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "8": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "9": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "10": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "11": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        },
+        "12": {
+            "[placeholder]": {
+                "monthly_hours": {
+                    "starting_asking_hours": 0,
+                    "starting_working_hours": 0,
+                    "total_asking_hours": 0,
+                    "total_working_hours": 0,
+                    "asking_hours_data": [],
+                    "working_hours_data": []
+                }
+            }
+        }
+    }
+}

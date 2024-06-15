@@ -19,3 +19,85 @@
 2024-06-13 19:19:07,487 - INFO - Overtime - test_username1 - a_Jason Watts 20240103 - Entered: 
 2024-06-13 19:19:08,146 - INFO - Overtime - test_username1 - a_Jason Watts 20240101 - Entered: 
 2024-06-13 19:19:08,632 - INFO - Overtime - test_username1 - a_Jason Watts 20240103 - Entered: 
+2024-06-14 14:23:00,648 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240104 - Entered: 1
+2024-06-14 14:23:02,614 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240104 - Entered: 1
+2024-06-14 14:23:07,789 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240104 - Entered: 
+2024-06-14 14:23:46,098 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240104 - Entered: 4
+2024-06-14 14:23:50,870 - INFO - Work Schedule - aimiecham_testing - Chance Baskin 20240104 - Entered: 8
+2024-06-14 14:23:59,323 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: B
+2024-06-14 14:23:59,559 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: BB
+2024-06-14 14:23:59,599 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: BB
+2024-06-14 14:24:02,270 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: B
+2024-06-14 14:24:03,014 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:04,221 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: G
+2024-06-14 14:24:04,350 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: G
+2024-06-14 14:24:08,446 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:09,798 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: B
+2024-06-14 14:24:10,102 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: BH
+2024-06-14 14:24:10,160 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: BH
+2024-06-14 14:24:12,726 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: B
+2024-06-14 14:24:12,925 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:14,003 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: V
+2024-06-14 14:24:14,040 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: V
+2024-06-14 14:24:15,940 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:16,414 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: M
+2024-06-14 14:24:16,511 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: M
+2024-06-14 14:24:17,402 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:19,252 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: O
+2024-06-14 14:24:19,594 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: OV
+2024-06-14 14:24:19,839 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: OV
+2024-06-14 14:24:20,079 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: OV
+2024-06-14 14:24:20,805 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: O
+2024-06-14 14:24:21,514 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: OC
+2024-06-14 14:24:21,559 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: OC
+2024-06-14 14:24:25,127 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: O
+2024-06-14 14:24:25,313 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:35,687 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:36,565 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: S
+2024-06-14 14:24:36,951 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: S
+2024-06-14 14:24:37,558 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: SA
+2024-06-14 14:24:37,591 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: SA
+2024-06-14 14:24:39,150 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: S
+2024-06-14 14:24:39,327 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: 
+2024-06-14 14:24:40,157 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: P
+2024-06-14 14:24:40,547 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: PC
+2024-06-14 14:24:40,648 - INFO - Work Schedule - aimiecham_testing - Ryan Richard 20240105 - Entered: PC
+2024-06-14 15:20:02,123 - INFO - Overtime - aimiecham_testing - a_Kevin Conway 20240104 - Entered: 
+2024-06-14 15:20:02,797 - INFO - Overtime - aimiecham_testing - w_Kevin Conway 20240104 - Entered: 
+2024-06-14 15:20:03,437 - INFO - Overtime - aimiecham_testing - a_Kevin Conway 20240101 - Entered: 
+2024-06-14 15:20:05,986 - INFO - Overtime - aimiecham_testing - a_Kevin Conway 20240103 - Entered: 
+2024-06-14 15:20:49,530 - INFO - Overtime - aimiecham_testing - w_Pete Jurich 20240107 - Entered: 
+2024-06-14 15:20:49,966 - INFO - Overtime - aimiecham_testing - a_Pete Jurich 20240103 - Entered: 
+2024-06-14 15:20:52,070 - INFO - Overtime - aimiecham_testing - w_Pete Jurich 20240104 - Entered: 
+2024-06-14 15:21:15,357 - INFO - Overtime - aimiecham_testing - a_Jaimie Davis 20240106 - Entered: 
+2024-06-14 15:21:15,850 - INFO - Overtime - aimiecham_testing - a_Josh Ellington 20240107 - Entered: 
+2024-06-14 15:21:19,806 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 16:09:09,642 - INFO - Overtime - aimiecham_testing - w_Clint Spring 20240106 - Entered: 
+2024-06-14 16:09:13,084 - INFO - Overtime - aimiecham_testing - w_Clint Spring 20240106 - Entered: 
+2024-06-14 16:09:16,983 - INFO - Overtime - aimiecham_testing - a_Jason Watts 20240108 - Entered: 
+2024-06-14 19:17:06,568 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 123423
+2024-06-14 19:17:09,628 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:17,679 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 
+2024-06-14 19:17:18,825 - INFO - Overtime - aimiecham_testing - a_Josh Ellington 20240106 - Entered: 
+2024-06-14 19:17:22,459 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 1234
+2024-06-14 19:17:24,736 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:26,849 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:28,970 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:31,252 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 23445345
+2024-06-14 19:17:32,720 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:35,862 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 
+2024-06-14 19:17:36,721 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:38,580 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:41,091 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:42,654 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:44,416 - INFO - Overtime - aimiecham_testing - w_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:47,218 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:49,390 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:17:51,533 - INFO - Overtime - aimiecham_testing - w_Clint Spring 20240108 - Entered: 12
+2024-06-14 19:17:52,402 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240109 - Entered: 
+2024-06-14 19:17:55,145 - INFO - Overtime - aimiecham_testing - w_Clint Spring 20240108 - Entered: 1234
+2024-06-14 19:17:56,197 - INFO - Overtime - aimiecham_testing - a_Clint Spring 20240108 - Entered: 
+2024-06-14 19:17:59,281 - INFO - Overtime - aimiecham_testing - w_Clint Spring 20240108 - Entered: 12345
+2024-06-14 19:18:00,567 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:18:03,424 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 
+2024-06-14 19:18:36,255 - INFO - Overtime - aimiecham_testing - a_Patrick Blackwell 20240108 - Entered: 

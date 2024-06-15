@@ -234,7 +234,8 @@ class App(tk.Tk):
     def toggle_nav_pane(self):
         if self.left_pane_frame.winfo_viewable():
             self.left_pane_frame.grid_forget()
-            self.left_pane_button_frame.destroy()
+            if hasattr(self, 'left_pane_button_frame') and self.left_pane_button_frame.winfo_exists():
+                self.left_pane_button_frame.destroy()
         else:
             self.left_pane_frame.grid(row=0, column=0, rowspan=3, sticky="nsew")
             self.left_pane_button_frame = LeftPaneButtonFrame(
@@ -443,12 +444,14 @@ class App(tk.Tk):
 
     def configure_save_button(self):
         try:
-            self.left_pane_button_frame.save_entries_button.configure(
-                command=self.schedule_hrs_frame.save_member_data
-            )
+            if hasattr(self, 'left_pane_button_frame') and self.left_pane_button_frame.winfo_exists():
+                self.left_pane_button_frame.save_entries_button.configure(
+                    command=self.schedule_hrs_frame.save_member_data
+                )
+            else:
+                logging.warning("left_pane_button_frame or save_entries_button is not accessible.")
         except tk.TclError as e:
             logging.error(f"Error configuring save_entries_button: {str(e)}")
-            # Add any additional error handling or logging here
     
     def update_schedule_hrs_frame(self, schedule_type):
         if self.schedule_hrs_frame:
@@ -671,9 +674,20 @@ class App(tk.Tk):
         Opens the input window for selecting the schedule date and crew.
         """
         self.input_window = TLSelectScheduleDate(self)
-        self.left_pane_button_frame.select_new_schedule_button.configure(
-            command=self.load_schedule_from_file
-        )
+        
+        if hasattr(self, 'left_pane_button_frame') and self.left_pane_button_frame.winfo_exists():
+            if hasattr(self.left_pane_button_frame, 'select_new_schedule_button'):
+                try:
+                    self.left_pane_button_frame.select_new_schedule_button.configure(
+                        command=self.load_schedule_from_file
+                    )
+                except tk.TclError as e:
+                    logging.error(f"Error configuring select_new_schedule_button: {str(e)}")
+            else:
+                logging.warning("select_new_schedule_button does not exist.")
+        else:
+            logging.warning("left_pane_button_frame does not exist or has been destroyed.")
+        
         self.wait_visibility(self.input_window) # Wait for the input window to be visible
         center_toplevel_window(self.input_window)
     
@@ -700,6 +714,10 @@ class App(tk.Tk):
         self.title_frame = None
         self.schedule_hrs_frame = None
         self.ranking_frame = None
+        
+        # Temporarily unhide the navigation pane if it was hidden
+        if not self.left_pane_frame.winfo_viewable():
+            self.toggle_nav_pane()
         
         self.open_input_window()
         
@@ -745,7 +763,13 @@ class App(tk.Tk):
     
     def update_switch_button(self, schedule_type, switch_command):
         if hasattr(self, 'left_pane_button_frame'):
-            self.left_pane_button_frame.update_switch_button(schedule_type, switch_command)
+            try:
+                self.left_pane_button_frame.update_switch_button(schedule_type, switch_command)
+            except Exception as e:
+                logging.error(f"Error updating switch button: {str(e)}")
+                # Add any additional error handling or logging here
+        else:
+            logging.warning("left_pane_button_frame does not exist.")
     
     def save_schedule_data(self):
         """

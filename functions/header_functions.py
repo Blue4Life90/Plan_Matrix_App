@@ -116,7 +116,7 @@ def get_user_id():
     """
     try:
         user_id = os.getlogin()
-        return user_id
+        return "aimiecham_testing" #user_id
     except Exception as e:
         logging.error(f"Failed to retrieve user ID: {str(e)}")
         return "Unknown User"

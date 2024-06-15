@@ -1,6 +1,7 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
 import os
+import logging
 import tkinter as tk
 from PIL import Image, ImageTk  # Import for handling images
 
@@ -8,8 +9,15 @@ from PIL import Image, ImageTk  # Import for handling images
 import customtkinter as ctk #type: ignore
 
 # Local Application/Library Specific Imports
-from constants import PANE_BG_COLOR
+from constants import PANE_BG_COLOR, log_file
 from constants import BUTTON_FG_COLOR, BUTTON_HOVER_BG_COLOR
+
+# Logging Format
+logging.basicConfig(level=logging.ERROR, 
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    filename=log_file, 
+                    filemode='a'
+)
 
 class LeftPaneButtonFrame(ctk.CTkFrame):
     def __init__(
@@ -107,4 +115,12 @@ class LeftPaneButtonFrame(ctk.CTkFrame):
             switch_text = "Overtime Schedule"
         else:
             switch_text = "Work Schedule"
-        self.switch_schedules_button.configure(text=switch_text, command=switch_command)
+
+        if hasattr(self, 'switch_schedules_button'):
+            try:
+                self.switch_schedules_button.configure(text=switch_text, command=switch_command)
+            except Exception as e:
+                logging.error(f"Error updating switch button: {str(e)}")
+                # Add any additional error handling or logging here
+        else:
+            logging.warning("switch_schedules_button does not exist.")
