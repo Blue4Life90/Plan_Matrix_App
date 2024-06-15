@@ -14,6 +14,8 @@ TRACKING_LOGS_DIR = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
 REGISTRATION_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Registration_Form_Banner.jpg")
 RESET_PASS_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Reset_Password_Banner.jpg")
 LOGIN_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Login_Form_Banner.jpg")
+SELECT_SCHEDULE_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Select_Schedule_Banner.jpg")
+
 def load_icons():
     ICON_PATH_0 = ImageTk.PhotoImage(file=os.path.join("images/background_images/svg/ICO/","16px.ico"))
     ICON_PATH_1 = ImageTk.PhotoImage(file=os.path.join("images/background_images/svg/ICO/","32px.ico"))

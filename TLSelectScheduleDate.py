@@ -8,13 +8,14 @@ from tkinter import ttk
 from tkinter import messagebox
 
 # Third-Party Library Imports
+from PIL import Image
 import customtkinter as ctk # type: ignore
 
 # Local Application/Library Specific Imports
 import functions.header_functions as header_functions
 from constants import log_file
 from constants import load_icons
-from constants import APP_BG_COLOR
+from constants import APP_BG_COLOR, SELECT_SCHEDULE_BANNER_IMAGE
 from constants import BUTTON_FG_COLOR, BUTTON_HOVER_BG_COLOR, TEXT_COLOR
 
 
@@ -46,11 +47,13 @@ class TLSelectScheduleDate(tk.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.title("Schedule Selection")
+        self.overrideredirect(True)
         self.iconpath_0, self.iconpath_1, self.iconpath_2 = load_icons()
         self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
         self.configure(background=APP_BG_COLOR)
         
         self.attributes("-topmost", True)  # Keep the window on top of others
+        self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
         
         self.user_selections = {}
         
@@ -60,73 +63,118 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.schedule_type = tk.StringVar()
         self.selected_schedule_type = "Overtime"
         
-        # Crew Selection
-        self.select_schedule_crew_label = ttk.Label(
-            self, text="Select Crew:", 
-            font=("Calibri", 12), foreground=TEXT_COLOR,
-            background=APP_BG_COLOR
-        )
-        self.select_schedule_crew_label.grid(row=1, column=0, padx=10, pady=10, sticky="ew")        
+        """Picture Frame"""
+        self.picture_frame = ctk.CTkFrame(self)
+        self.picture_frame.grid(row=0, column=0, rowspan=6, sticky="nsew")
         
-        self.select_schedule_crew = ttk.Combobox(self, values=header_functions.crews_list())
-        self.select_schedule_crew.set("A")
+        self.image = ctk.CTkImage(light_image=Image.open(SELECT_SCHEDULE_BANNER_IMAGE),
+                                  dark_image=Image.open(SELECT_SCHEDULE_BANNER_IMAGE),
+                                  size=(250, 500))
+        self.image_label = ctk.CTkLabel(
+            self.picture_frame,
+            text="",
+            image=self.image
+        )
+        self.image_label.grid(row=0, column=0, sticky="nsew")
+        
+        """Selection Frame"""
+        self.selection_frame = ctk.CTkFrame(self, fg_color=APP_BG_COLOR)
+        self.selection_frame.grid(row=0, column=1, padx=(20, 20), pady=(40, 0), sticky="nsew")
+        
+        
+        # Crew Selection
+        self.step_label = ctk.CTkLabel(
+            self.selection_frame, 
+            text="Please select the schedule via the\ncomboboxes below:",
+            font=("Calibri", 14), text_color="white", 
+            justify="left"
+        )
+        self.step_label.grid(row=0, column=0, columnspan=2, padx=10, pady=(20, 30), sticky="ew")
+        
+        # Crew Selection
+        self.select_schedule_crew_label = ctk.CTkLabel(
+            self.selection_frame, text="Select Crew:", 
+            font=("Calibri", 14, "bold"), text_color="white",
+            fg_color=APP_BG_COLOR
+        )
+        self.select_schedule_crew_label.grid(row=1, column=0, padx=10, pady=10, sticky="w")        
+        
+        self.select_schedule_crew = ctk.CTkComboBox(self.selection_frame, values=header_functions.crews_list())
+        #self.select_schedule_crew.set("A")
         self.select_schedule_crew.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
         # Month Selection
-        self.select_schedule_month_label = ttk.Label(
-            self, text="Select Month:", 
-            font=("Calibri", 12), foreground=TEXT_COLOR,
-            background=APP_BG_COLOR
+        self.select_schedule_month_label = ctk.CTkLabel(
+            self.selection_frame, text="Select Month:", 
+            font=("Calibri", 14, "bold"), text_color="white",
+            fg_color=APP_BG_COLOR
         )
-        self.select_schedule_month_label.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+        self.select_schedule_month_label.grid(row=2, column=0, padx=10, pady=10, sticky="w")
         
-        self.select_schedule_month = ttk.Combobox(self, values=list(calendar.month_name)[1:])
+        self.select_schedule_month = ctk.CTkComboBox(self.selection_frame, values=list(calendar.month_name)[1:])
         #self.select_schedule_month.set(calendar.month_name[self.currentmonth])
         self.select_schedule_month.grid(row=2, column=1, padx=10, pady=10, sticky="ew")
         
         # Year Selection
-        self.select_schedule_year_label = ttk.Label(
-            self, text="Select Year:", 
-            font=("Calibri", 12), 
-            foreground=TEXT_COLOR,
-            background=APP_BG_COLOR
+        self.select_schedule_year_label = ctk.CTkLabel(
+            self.selection_frame, text="Select Year:", 
+            font=("Calibri", 14, "bold"), 
+            fg_color=APP_BG_COLOR,
+            text_color="white"
         )
-        self.select_schedule_year_label.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+        self.select_schedule_year_label.grid(row=3, column=0, padx=10, pady=10, sticky="w")
         
-        self.select_schedule_year = ttk.Combobox(
-            self, values=list(
-                range(self.currentyear - 30, self.currentyear + 31))
-            )
-        self.select_schedule_year.set(self.currentyear)
+        self.select_schedule_year = ctk.CTkComboBox(self.selection_frame, values=[str(year) for year in range(self.currentyear - 30, self.currentyear + 31)])
+        self.select_schedule_year.set(str(self.currentyear))
         self.select_schedule_year.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
         
         # Button to confirm selections and open the main application window
         self.confirm_button = ctk.CTkButton(
-            self, text="Confirm", 
+            self.selection_frame, text="Confirm", 
             font=("Calibri", 16, "bold"), 
             fg_color=BUTTON_FG_COLOR, hover_color=BUTTON_HOVER_BG_COLOR, 
             command=self.confirm_selections)
-        self.confirm_button.grid(row=5, column=1, padx=10, pady=10, sticky="s")
+        self.confirm_button.grid(row=5, column=0, columnspan=2, padx=10, pady=(30,5), sticky="ew")
+        
+        # Button to close the application
+        self.close_button = ctk.CTkButton(
+            self.selection_frame,
+            text="Close App",
+            font=("Calibri", 16, "bold"), 
+            command=self.close_app,
+            fg_color="#730110",
+            hover_color="#940115",
+            text_color="white"
+        )
+        self.close_button.grid(row=6, column=0, columnspan=2, padx=10, pady=(5, 60), sticky="ew")
+        
+        self.trademark_info_label = ctk.CTkLabel(
+            self.selection_frame,
+            text="Created April 2024 @ MDGL",
+            font=("Calibri", 8), text_color=TEXT_COLOR, 
+            justify="right",
+            anchor="e"
+        )
+        self.trademark_info_label.grid(row=10, column=0, columnspan=2, sticky="ew")
         
         self.create_schedule_type_combo()
 
     def create_schedule_type_combo(self):
-        self.schedule_type_label = ttk.Label(
-            self, text="Schedule Type:", 
-            font=("Calibri", 12), 
-            foreground=TEXT_COLOR,
-            background=APP_BG_COLOR
+        self.schedule_type_label = ctk.CTkLabel(
+            self.selection_frame, text="Schedule Type:", 
+            font=("Calibri", 14, "bold"), 
+            text_color="white",
+            fg_color=APP_BG_COLOR
         )
         self.schedule_type_label.grid(row=4, column=0, padx=10, pady=10, sticky="w")
 
-        schedule_type_combo = ttk.Combobox(
-            self, 
+        schedule_type_combo = ctk.CTkComboBox(
+            self.selection_frame, 
             values=["Overtime", "Work Schedule"], 
-            textvariable=self.schedule_type  # Use 'textvariable' instead of 'variable'
+            variable=self.schedule_type 
         )
-        schedule_type_combo.grid(row=4, column=1, padx=10, pady=10, sticky="w")
+        schedule_type_combo.grid(row=4, column=1, padx=10, pady=10, sticky="ew")
         schedule_type_combo.set("Overtime")  # Set the default value
-
         self.schedule_type.trace_add("write", self.update_schedule_type)
 
     def update_schedule_type(self, *args):
@@ -170,3 +218,6 @@ class TLSelectScheduleDate(tk.Toplevel):
             messagebox.showerror("Invalid Selection", "Please select a valid year.")
             logging.error("Invalid Selection", "Somehow user made an invalid selection when selecting schedule data to view.")
             return False
+    
+    def close_app(self):
+        self.parent.destroy()

@@ -653,6 +653,8 @@ class App(tk.Tk):
                     self.save_schedule_data()
                     self.display_save_status()
                 super().destroy()
+            else:
+                super().destroy()
     
     """
     Menu Bar Options

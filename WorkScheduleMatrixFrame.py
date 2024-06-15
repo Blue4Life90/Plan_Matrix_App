@@ -59,6 +59,10 @@ class WorkScheduleMatrixFrame(tk.Frame):
         self.labels.append(name_label)
 
         for j in range(self.cols):
+            if j < len(self.hdr_date_grid.dates):
+                date_str = self.hdr_date_grid.dates[j].strftime('%Y%m%d')
+            else:
+                date_str = ''
             column_frame = tk.Frame(
                 self, bg=APP_BG_COLOR, relief="flat", borderwidth=1
             )
@@ -70,7 +74,7 @@ class WorkScheduleMatrixFrame(tk.Frame):
                 relief="raised", bd=1,
                 bg="white", fg="black", 
                 justify="center",
-                name=f"r_{self.name} {self.hdr_date_grid.dates[j].strftime('%Y%m%d')}"  # Add this line
+                name=f"r_{self.name} {date_str}"  # Add this line
             )
             crew_member_role_entry.pack(fill="both", expand=True)
             crew_member_role_entry.bind(
