@@ -4,7 +4,6 @@ import logging
 import calendar
 import datetime
 import tkinter as tk
-from tkinter import ttk
 from tkinter import messagebox
 
 # Third-Party Library Imports

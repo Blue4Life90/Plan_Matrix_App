@@ -227,8 +227,8 @@
                 "monthly_hours": {
                     "starting_asking_hours": 0,
                     "starting_working_hours": 0,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 24,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 60,
                     "asking_hours_data": [
                         "",
                         "12",
@@ -267,9 +267,9 @@
                         "12",
                         "",
                         "12",
-                        "",
-                        "",
-                        "",
+                        "12",
+                        "12",
+                        "12",
                         "",
                         "",
                         "",
@@ -967,10 +967,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 24,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 24,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 60,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 60,
                     "asking_hours_data": [
                         "",
                         "",
@@ -1709,10 +1709,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 24,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 24,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 60,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 60,
                     "asking_hours_data": [
                         "",
                         "",
@@ -2259,10 +2259,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 24,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 24,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 60,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 60,
                     "asking_hours_data": [],
                     "working_hours_data": []
                 }
@@ -2553,10 +2553,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 24,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 24,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 60,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 60,
                     "asking_hours_data": [
                         "",
                         "",
@@ -3295,10 +3295,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 24,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 60,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [
                         "",
                         "",
@@ -3845,10 +3845,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [],
                     "working_hours_data": []
                 }
@@ -3947,10 +3947,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [],
                     "working_hours_data": []
                 }
@@ -4049,10 +4049,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [],
                     "working_hours_data": []
                 }
@@ -4343,10 +4343,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [
                         "",
                         "",
@@ -4893,10 +4893,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [],
                     "working_hours_data": []
                 }
@@ -5187,10 +5187,10 @@
             },
             "Josh Ellington": {
                 "monthly_hours": {
-                    "starting_asking_hours": 36,
-                    "starting_working_hours": 224,
-                    "total_asking_hours": 36,
-                    "total_working_hours": 224,
+                    "starting_asking_hours": 72,
+                    "starting_working_hours": 260,
+                    "total_asking_hours": 72,
+                    "total_working_hours": 260,
                     "asking_hours_data": [
                         "",
                         "",
