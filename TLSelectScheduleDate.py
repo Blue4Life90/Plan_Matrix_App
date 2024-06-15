@@ -49,6 +49,9 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.iconpath_0, self.iconpath_1, self.iconpath_2 = load_icons()
         self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
         self.configure(background=APP_BG_COLOR)
+        
+        self.attributes("-topmost", True)  # Keep the window on top of others
+        
         self.user_selections = {}
         
         self.currentdate = datetime.datetime.now()

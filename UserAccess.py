@@ -50,6 +50,9 @@ class LoginWindow(tk.Toplevel):
         self.overrideredirect(True)
         self.configure(background=APP_BG_COLOR)
         
+        self.attributes("-topmost", True)  # Keep the window on top of others
+        self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
+        
         self.username = tk.StringVar(value=str(get_user_id()))
 
         if is_verified_user(get_user_id()):
@@ -384,6 +387,9 @@ class ResetPasswordWindow(tk.Toplevel):
         self.title("Reset Password")
         self.overrideredirect(True)
         self.configure(background=APP_BG_COLOR)
+        
+        self.attributes("-topmost", True)  # Keep the window on top of others
+        self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
 
         self.username = tk.StringVar(value=str(get_user_id()))
 
