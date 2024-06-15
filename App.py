@@ -721,6 +721,12 @@ class App(tk.Tk):
         
         self.open_input_window()
         
+        # Update the HdrDateGrid instance with the new user selections
+        if hasattr(self, 'hdr_date_grid') and self.hdr_date_grid.winfo_exists():
+            self.hdr_date_grid.destroy()
+        self.hdr_date_grid = HdrDateGrid(self.scrolled_frame.scrollable_frame, self.user_selections)
+        self.hdr_date_grid.grid(column=0, row=1, padx=10, pady=0, sticky="ew")
+        
         if self.schedule_hrs_frame:
             if self.schedule_hrs_frame.schedule_type == "Overtime":
                 self.update_switch_button("work_schedule", self.select_work_schedule)

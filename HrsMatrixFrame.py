@@ -129,6 +129,11 @@ class HrsMatrixFrame(tk.Frame):
         self.labels.append(name_label)
 
         for j in range(self.cols):
+            if j < len(self.hdr_date_grid.dates):
+                date_str = self.hdr_date_grid.dates[j].strftime('%Y%m%d')
+            else:
+                date_str = ''
+
             column_frame = tk.Frame(
                 self, bg=BG_COLOR, relief="flat", borderwidth=1
             )
@@ -140,14 +145,13 @@ class HrsMatrixFrame(tk.Frame):
                 relief="raised", bd=1,
                 bg=WORKING_HRS_BG_COLOR, fg=WORKING_HRS_FG_COLOR, 
                 justify="center",
-                name=f"w_{self.name} {self.hdr_date_grid.dates[j].strftime('%Y%m%d')}"  # Add this line
+                name=f"w_{self.name} {date_str}"
             )
             working_hours_entry.pack(fill="both", expand=True)
             working_hours_entry.bind(
                 "<FocusOut>", 
                 lambda event, 
-                entry=working_hours_entry: [self.entry_modified(entry), 
-                                            self.update_column_sums(event)]
+                entry=working_hours_entry: [self.entry_modified(entry), self.update_column_sums(event)]
             )
             self.working_hours_entries.append(working_hours_entry)
 
@@ -157,14 +161,13 @@ class HrsMatrixFrame(tk.Frame):
                 relief="raised", bd=1,
                 bg=ASKING_HRS_BG_COLOR, fg=ASKING_HRS_FG_COLOR, 
                 justify="center",
-                name=f"a_{self.name} {self.hdr_date_grid.dates[j].strftime('%Y%m%d')}"  # Add this line
+                name=f"a_{self.name} {date_str}"
             )
             asking_hours_entry.pack(fill="both", expand=True)
             asking_hours_entry.bind(
                 "<FocusOut>", 
                 lambda event, 
-                entry=asking_hours_entry: [self.entry_modified(entry), 
-                                           self.update_column_sums(event)]
+                entry=asking_hours_entry: [self.entry_modified(entry), self.update_column_sums(event)]
             )
             self.asking_hours_entries.append(asking_hours_entry)
 
@@ -180,6 +183,7 @@ class HrsMatrixFrame(tk.Frame):
             )
             asking_hours_tracking_label.pack(fill="both", expand=True)
             self.asking_hours_tracking.append(asking_hours_tracking_label)
+
             
     def on_entry_focus(self, event):
         entry = event.widget
