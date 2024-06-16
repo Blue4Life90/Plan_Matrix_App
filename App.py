@@ -40,6 +40,24 @@ from AppButtonsFrame import LeftPaneButtonFrame
 from AccessLevelManager import AccessLevelManager
 from TLSelectScheduleDate import TLSelectScheduleDate
 
+"""
+PyInstaller Export
+
+pip install pyinstaller
+
+Syntax:
+pyinstaller --name="Plan_Matrix" --noconsole --onefile --icon=icon.ico App.py
+"""
+
+"""
+Nuitka Export
+
+pip install nuitka
+
+Syntax:
+python -m nuitka --onefile --windows-console-mode=disable --windows-icon-from-ico=desktop_icon.ico --output-filename="Plan_Matrix.exe" --enable-plugin=tk-inter App.py
+"""
+
 # Logging Format
 logging.basicConfig(level=logging.ERROR, 
                     format='%(asctime)s - %(levelname)s - %(message)s',

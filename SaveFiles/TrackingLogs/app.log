@@ -219,3 +219,5 @@ Schedule Data: []
 2024-06-15 07:17:44,107 - INFO - Login - username:  / access level: read-only
 2024-06-15 07:18:43,540 - INFO - Login - username: matth / access level: privileged
 2024-06-15 07:19:37,489 - INFO - Login - username:  / access level: read-only
+2024-06-16 17:01:28,278 - INFO - Login - username:  / access level: read-only
+2024-06-16 17:01:35,512 - INFO - Login - username: matth / access level: privileged
