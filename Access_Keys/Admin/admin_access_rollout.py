@@ -7,7 +7,9 @@ import tkinter as tk
 from tkinter import messagebox
 
 # Third-Party Library Imports
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES # type: ignore
+from PIL import Image, ImageTk
+
 
 """
 PyInstaller Export
@@ -15,7 +17,7 @@ PyInstaller Export
 pip install pyinstaller
 
 Syntax:
-pyinstaller --name="Admin_Key" --noconsole --onefile --icon=icon.ico admin_access_rollout.py
+pyinstaller --name="Admin_Key" --noconsole --onefile --icon=admin_icon.ico admin_access_rollout.py
 """
 
 """
@@ -24,7 +26,7 @@ Nuitka Export
 pip install nuitka
 
 Syntax:
-python -m nuitka --onefile --windows-disable-console --windows-icon-from-ico=icon.ico --output-filename="Admin_Key.exe" admin_access_rollout.py
+python -m nuitka --onefile --windows-console-mode=disable --windows-icon-from-ico=admin_icon.ico --output-filename="Admin_Key.exe" --enable-plugin=tk-inter admin_access_rollout.py
 """
 
 log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
@@ -233,21 +235,41 @@ class AccessGUI(tk.Tk):
         self.title("Grant Admin Access")
         self.configure(background="blue")
 
+        # Create a main frame to hold the image frame and other widgets
+        self.main_frame = tk.Frame(self, bg="blue")
+        self.main_frame.pack(padx=10, pady=10)
+
+        # Create an image frame on the left
+        self.image_frame = tk.Frame(self.main_frame, bg="blue")
+        self.image_frame.pack(side=tk.LEFT, padx=(10, 0))
+
+        # Load and display the image from the relative path
+        image_path = os.path.join("images", "AdminKey_image.png")
+        image = Image.open(image_path)
+        photo = ImageTk.PhotoImage(image)
+        self.image_label = tk.Label(self.image_frame, image=photo, bg="blue")
+        self.image_label.image = photo  # Keep a reference to avoid garbage collection
+        self.image_label.pack()
+
+        # Create a frame for other widgets on the right
+        self.content_frame = tk.Frame(self.main_frame, bg="blue")
+        self.content_frame.pack(side=tk.RIGHT, padx=20)
+
         self.user_id = get_user_id()
 
-        self.label_user = tk.Label(self, text=f"User: {self.user_id}", bg="blue", fg="white", font=("Calibri", 12, "bold"))
+        self.label_user = tk.Label(self.content_frame, text=f"User: {self.user_id}", bg="blue", fg="white", font=("Calibri", 12, "bold"))
         self.label_user.pack(padx=10, pady=10)
 
-        self.label_instruction = tk.Label(self, text="Click the button below to gain Admin access to the schedule.", bg="blue", fg="white", font=("Calibri", 12))
+        self.label_instruction = tk.Label(self.content_frame, text="Click the button below to gain Admin access to the schedule.", bg="blue", fg="white", font=("Calibri", 12))
         self.label_instruction.pack(padx=10, pady=10)
         
         self.label_instruction = tk.Label(
-            self, 
+            self.content_frame, 
             text="Note: This program must be located in the same directory as\nit's affiliated program for it to work as expected.", 
             bg="blue", fg="white", font=("Calibri", 12, "italic"), justify="left")
         self.label_instruction.pack(pady=10)
 
-        self.button_grant_access = tk.Button(self, text="Grant Admin Access", command=self.grant_access, bg="yellow", fg="black", font=("Calibri", 12, "bold"))
+        self.button_grant_access = tk.Button(self.content_frame, text="Grant Admin Access", command=self.grant_access, bg="yellow", fg="black", font=("Calibri", 12, "bold"))
         self.button_grant_access.pack(pady=20)
 
     def grant_access(self):

@@ -8,6 +8,7 @@ from tkinter import messagebox
 
 # Third-Party Library Imports
 from Crypto.Cipher import AES
+from PIL import Image, ImageTk
 
 """
 PyInstaller Export
@@ -15,7 +16,7 @@ PyInstaller Export
 pip install pyinstaller
 
 Syntax:
-pyinstaller --name="Privileged_Key" --noconsole --onefile --icon=icon.ico privileged_access_rollout.py
+pyinstaller --name="Privileged_Key" --noconsole --onefile --icon=privileged_icon.ico privileged_access_rollout.py
 """
 
 """
@@ -24,7 +25,7 @@ Nuitka Export
 pip install nuitka
 
 Syntax:
-python -m nuitka --onefile --windows-disable-console --windows-icon-from-ico=icon.ico --output-filename="Privileged_Key.exe" privileged_access_rollout.py
+python -m nuitka --onefile --windows-console-mode=disable --windows-icon-from-ico=privileged_icon.ico --output-filename="Privileged_Key.exe" --enable-plugin=tk-inter privileged_access_rollout.py
 """
 
 log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
@@ -226,28 +227,47 @@ def get_user_id():
         logging.error(f"Failed to retrieve user ID: {str(e)}")
         return "Unknown User"
 
-# GUI class to provide the access grant interface
 class AccessGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Grant Privileged Access")
         self.configure(background="white")
 
+        # Create a main frame to hold the image frame and other widgets
+        self.main_frame = tk.Frame(self, bg="white")
+        self.main_frame.pack(padx=10, pady=10)
+
+        # Create an image frame on the left
+        self.image_frame = tk.Frame(self.main_frame, bg="white")
+        self.image_frame.pack(side=tk.LEFT, padx=(10, 0))
+
+        # Load and display the image from the relative path
+        image_path = os.path.join("images", "PrivilegedKey_image.png")
+        image = Image.open(image_path)
+        photo = ImageTk.PhotoImage(image)
+        self.image_label = tk.Label(self.image_frame, image=photo, bg="white")
+        self.image_label.image = photo  # Keep a reference to avoid garbage collection
+        self.image_label.pack()
+
+        # Create a frame for other widgets on the right
+        self.content_frame = tk.Frame(self.main_frame, bg="white")
+        self.content_frame.pack(side=tk.RIGHT, padx=20)
+
         self.user_id = get_user_id()
 
-        self.label_user = tk.Label(self, text=f"User: {self.user_id}", bg="white", fg="black", font=("Calibri", 12, "bold"))
+        self.label_user = tk.Label(self.content_frame, text=f"User: {self.user_id}", bg="white", fg="black", font=("Calibri", 12, "bold"))
         self.label_user.pack(padx=10, pady=10)
 
-        self.label_instruction = tk.Label(self, text="Click the button below to gain Privileged access to the schedule.", bg="white", fg="black", font=("Calibri", 12))
+        self.label_instruction = tk.Label(self.content_frame, text="Click the button below to gain Privileged access to the schedule.", bg="white", fg="black", font=("Calibri", 12))
         self.label_instruction.pack(padx=10, pady=10)
         
         self.label_instruction = tk.Label(
-            self, 
+            self.content_frame, 
             text="Note: This program must be located in the same directory as\nit's affiliated program for it to work as expected.", 
             bg="white", fg="black", font=("Calibri", 12, "italic"), justify="left")
         self.label_instruction.pack(pady=10)
 
-        self.button_grant_access = tk.Button(self, text="Grant Privileged Access", command=self.grant_access, bg="blue", fg="white", font=("Calibri", 12))
+        self.button_grant_access = tk.Button(self.content_frame, text="Grant Privileged Access", command=self.grant_access, bg="blue", fg="white", font=("Calibri", 12))
         self.button_grant_access.pack(pady=20)
 
     def grant_access(self):
