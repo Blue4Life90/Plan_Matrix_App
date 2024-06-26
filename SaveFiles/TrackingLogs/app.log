@@ -221,3 +221,22 @@ Schedule Data: []
 2024-06-15 07:19:37,489 - INFO - Login - username:  / access level: read-only
 2024-06-16 17:01:28,278 - INFO - Login - username:  / access level: read-only
 2024-06-16 17:01:35,512 - INFO - Login - username: matth / access level: privileged
+2024-06-16 18:22:04,054 - INFO - Login - username:  / access level: read-only
+2024-06-16 18:27:16,896 - INFO - Login - username:  / access level: read-only
+2024-06-16 18:27:21,690 - INFO - Login - username: matth / access level: privileged
+2024-06-17 15:40:43,386 - INFO - Login - username:  / access level: read-only
+2024-06-17 15:40:55,352 - INFO - Login - username: mdgl / access level: admin
+2024-06-18 06:00:00,258 - INFO - Login - username:  / access level: read-only
+2024-06-18 08:19:58,459 - INFO - Login - username:  / access level: read-only
+2024-06-18 08:20:00,752 - INFO - Login - username: mdgl / access level: admin
+2024-06-18 11:26:10,748 - INFO - Login - username:  / access level: read-only
+2024-06-18 11:26:44,684 - INFO - Login - username:  / access level: read-only
+2024-06-18 11:26:47,591 - INFO - Login - username: mdgl / access level: admin
+2024-06-18 11:29:48,909 - INFO - Login - username:  / access level: read-only
+2024-06-18 11:29:53,104 - INFO - Login - username: mdgl / access level: admin
+2024-06-19 06:29:03,653 - INFO - Login - username:  / access level: read-only
+2024-06-19 06:30:38,722 - INFO - Login - username:  / access level: read-only
+2024-06-19 06:36:25,461 - INFO - Login - username:  / access level: read-only
+2024-06-19 06:36:54,822 - INFO - Login - username:  / access level: read-only
+2024-06-19 06:36:56,821 - INFO - Login - username: mdgl / access level: admin
+2024-06-19 11:06:05,355 - INFO - Login - username:  / access level: read-only

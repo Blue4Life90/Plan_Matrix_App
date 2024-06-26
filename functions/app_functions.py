@@ -7,7 +7,6 @@ import datetime as dt
 from tkinter import messagebox
 
 # Third-Party Library Imports
-import openpyxl
 import customtkinter as ctk # type: ignore
 import win32com.client as win32 # type: ignore
 
@@ -100,34 +99,7 @@ def generate_row_data(schedule, month):
     else:
         row_data = []  # Handle invalid schedule type
 
-    return row_data
-
-def create_workbook(workbook_filename, schedule):
-    """
-    Create a new workbook with the specified filename and populate it with worksheets based on the schedule type.
-
-    Args:
-        workbook_filename (str): The filename for the new workbook.
-        schedule (str): The schedule type ("Overtime" or "work_schedule").
-    """
-    try:
-        workbook = openpyxl.Workbook()
-
-        # Remove the default sheet created by openpyxl
-        default_sheet = workbook.active
-        workbook.remove(default_sheet)
-
-        for month in range(1, 13):
-            sheet_name = f"Month {month}"
-            sheet = workbook.create_sheet(title=sheet_name)
-            
-            # generate_row_data to generate sheet content
-            row_data = generate_row_data(schedule, month)
-            sheet.append(row_data)
-
-        workbook.save(workbook_filename)
-    except Exception as e:
-        logging.error(f"Failed to create workbook '{workbook_filename}': {str(e)}")        
+    return row_data      
 
 def forward_outlook_email(subject, body, recipient):
     """
@@ -209,67 +181,6 @@ def set_theme(root, color, widget_type=None):
             apply_theme(child)
 
     apply_theme(root)
- 
-def read_save_data(data_file, ws_name):
-    """
-    Read the number of names from an Excel file.
-
-    Args:
-        data_file (str): The file path of the Excel file.
-        ws_name (str): The name of the worksheet.
-
-    Returns:
-        int | None: The number of names in the Excel file, or None if an error occurred.
-    """
-    try:
-        if not os.path.exists(data_file):
-            print("New workbook message at read_save_data functions.py")
-            
-        return None
-    
-    except PermissionError:
-        messagebox.showerror("File in Use", f"The file '{data_file}' is currently in use. Please close the file and try again.")
-        logging.error(f"File Appears to be open. Close to read '{data_file}'")
-
-    except FileNotFoundError:
-        logging.error(f"File '{data_file}' not found.")
-        messagebox.showerror("File Not Found", f"{data_file} not found.\nPlease view the log or reload the schedule.")
-    except KeyError:
-        logging.error(f"Worksheet '{ws_name}' not found in the workbook.")
-        messagebox.showerror("Worksheet Not Found", f"Worksheet '{ws_name}' not found in the workbook.\nPlease check the worksheet name.")
-
-    except Exception as e:
-        logging.error(f"Failed to read data from file '{data_file}': {str(e)}")
-        messagebox.showerror("Unknown Error", "An error occurred.\nPlease see log for details.")
-    return None
-        
-def get_hours_for_selected_person(workbook_filename, worksheet_name, selected_name):
-    try:
-        workbook = openpyxl.load_workbook(workbook_filename)
-        worksheet = workbook[worksheet_name]
-
-        for row in worksheet.iter_rows(min_row=2, values_only=True):
-            if row[0] == selected_name:
-                starting_asking_hours = row[1]
-                starting_working_hours = row[2]
-                return starting_working_hours, starting_asking_hours
-
-        return None, None  # Return None if the selected name is not found
-    
-    except PermissionError:
-        messagebox.showerror("File in Use", f"The file '{workbook_filename}' is currently in use. Please close the file and try again.")
-        logging.error(f"PermissionError opening or loading Overtime Schedule '{workbook_filename}'.")
-    except FileNotFoundError:
-        messagebox.showerror("Error", f"Workbook '{workbook_filename}' not found.")
-        logging.error(f"File '{workbook_filename} not found'.")
-        return None, None
-    except Exception as e:
-        messagebox.showerror("Error", f"An error occurred: {str(e)}")
-        logging.error(f"Error opening or loading Overtime Schedule '{workbook_filename}'.\nException: {str(e)}")
-        return None, None
-    finally:
-        if 'workbook' in locals():
-            workbook.close()
 
 def center_toplevel_window(toplevel):
     """

@@ -1,6 +1,7 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
 import os
+import csv
 from PIL import ImageTk
 
 # Third-Party Library Imports
@@ -9,6 +10,13 @@ from PIL import ImageTk
 
 log_file = os.path.join(os.getcwd(), "SaveFiles/TrackingLogs", "app.log")
 TRACKING_LOGS_DIR = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
+
+# Create the directory if it doesn't exist
+os.makedirs(TRACKING_LOGS_DIR, exist_ok=True)
+
+# Create the file if it doesn't exist
+if not os.path.exists(log_file):
+    open(log_file, 'w').close()
 
 """images"""
 REGISTRATION_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Registration_Form_Banner.jpg")
@@ -23,8 +31,36 @@ def load_icons():
     return ICON_PATH_0, ICON_PATH_1, ICON_PATH_2
 
 """login_functions.py"""
-USER_ID_FILE = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry", "user_id.csv")
+USER_REGISTRY_DIR = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
+USER_ID_FILE = os.path.join(USER_REGISTRY_DIR, "user_id.csv")
+os.makedirs(USER_REGISTRY_DIR, exist_ok=True)
+
+if os.path.exists(USER_ID_FILE):
+    with open(USER_ID_FILE, 'r', newline='') as file:
+        reader = csv.reader(file)
+        try:
+            first_row = next(reader)
+            if not first_row:
+                # If the first row is blank, write the headers
+                with open(USER_ID_FILE, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['username', 'password_hash', 'remember_me'])
+        except StopIteration:
+            # If the file is empty, write the headers
+            with open(USER_ID_FILE, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['username', 'password_hash', 'remember_me'])
+else:
+    # If the file doesn't exist, create it with the headers
+    with open(USER_ID_FILE, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['username', 'password_hash', 'remember_me'])
+
 ACCESS_LEVEL_ENCRYPTION = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry", "access_levels.enc")
+
+# Create the file if it doesn't exist
+if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+    open(ACCESS_LEVEL_ENCRYPTION, 'w').close()
 
 """HrsMatrixFrame.py"""
 MEMBER_SAVE_DATA = os.path.join(os.getcwd(), "SaveFiles", "Crew_Member_Save_Data.csv")

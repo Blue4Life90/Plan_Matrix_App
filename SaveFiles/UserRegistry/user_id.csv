@@ -1,6 +1,6 @@
 username,password_hash,remember_me
 matth,$2b$12$mjLlx8vuFemtzTpTanRLvO6Se9h9jKee9ZIsYyRa9u1wNzttkPV2K,True
-mdgl,$2b$12$JETfUgtU5ErGBeisM.A.vusV4qSFkbd49/NEWwup52I1YOZVJQHpm,FALSE
+mdgl,$2b$12$JETfUgtU5ErGBeisM.A.vusV4qSFkbd49/NEWwup52I1YOZVJQHpm,True
 test_username3,$2b$12$ayCiZVBryhJVWUdQFENy7eNW8kNVGwYDwGXZj9cOX29P.rTbiMXiW,False
 test_username4,$2b$12$cMRUDv0eq7oY5O7fHoiTFu2qjY5PX6u0fwhgQIfvFzjDG5dyRb9AW,True
 test_user,$2b$12$WECXxQ0qQgQGBWoqki1.EeBX6RMNna54rMyG4TP96zorNWRgETORu,False

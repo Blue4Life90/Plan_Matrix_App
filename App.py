@@ -2,6 +2,7 @@
 # Standard Library Imports
 import os
 import sys
+import csv
 import time
 import logging
 import threading
@@ -40,30 +41,32 @@ from AppButtonsFrame import LeftPaneButtonFrame
 from AccessLevelManager import AccessLevelManager
 from TLSelectScheduleDate import TLSelectScheduleDate
 
-"""
-PyInstaller Export
+#log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
+#log_file = os.path.join(log_directory, "app.log")
+registry_directory = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
+ACCESS_LEVEL_ENCRYPTION = os.path.join(registry_directory, "access_levels.enc")
+USER_REGISTRY_DIR = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
+USER_ID_FILE = os.path.join(USER_REGISTRY_DIR, "user_id.csv")
 
-pip install pyinstaller
+# Create directories if they don't exist
+try:
+    if not os.path.exists(os.path.join(os.getcwd(), "SaveFiles/TrackingLogs", "app.log")):
+        open(log_file, 'w').close()
+    if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+        open(ACCESS_LEVEL_ENCRYPTION, 'w').close()
+    if not os.path.exists(USER_ID_FILE):
+        with open(USER_ID_FILE, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['username', 'password_hash', 'remember_me'])  # Write header row
+except OSError as e:
+    messagebox.showerror("Error", f"Failed to create files: {str(e)}")
+    logging.error(f"Failed to create files: {str(e)}")
+    exit(1)
 
-Syntax:
-pyinstaller --name="Plan_Matrix" --noconsole --onefile --icon=icon.ico App.py
-"""
-
-"""
-Nuitka Export
-
-pip install nuitka
-
-Syntax:
-python -m nuitka --onefile --windows-console-mode=disable --windows-icon-from-ico=desktop_icon.ico --output-filename="Plan_Matrix.exe" --enable-plugin=tk-inter App.py
-"""
-
-# Logging Format
-logging.basicConfig(level=logging.ERROR, 
+logging.basicConfig(level=logging.ERROR,
                     format='%(asctime)s - %(levelname)s - %(message)s',
-                    filename=log_file, 
-                    filemode='a'
-)
+                    filename=log_file,
+                    filemode='a')
 
 class App(tk.Tk):
     """

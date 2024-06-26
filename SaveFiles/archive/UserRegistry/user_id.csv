@@ -1,0 +1,8 @@
+username,password_hash,remember_me
+matth,$2b$12$mjLlx8vuFemtzTpTanRLvO6Se9h9jKee9ZIsYyRa9u1wNzttkPV2K,True
+mdgl,$2b$12$JETfUgtU5ErGBeisM.A.vusV4qSFkbd49/NEWwup52I1YOZVJQHpm,True
+test_username3,$2b$12$ayCiZVBryhJVWUdQFENy7eNW8kNVGwYDwGXZj9cOX29P.rTbiMXiW,False
+test_username4,$2b$12$cMRUDv0eq7oY5O7fHoiTFu2qjY5PX6u0fwhgQIfvFzjDG5dyRb9AW,True
+test_user,$2b$12$WECXxQ0qQgQGBWoqki1.EeBX6RMNna54rMyG4TP96zorNWRgETORu,False
+test_user1,$2b$12$O6/mpZJpbUjv7EK6hqRS6.XH1tGd.BNkzuP5HkFLmaxR.Shzi0Ie2,False
+aimiecham_testing,$2b$12$bRCC56tq8MiC.k31gDcTMevO75.nKHMRChn/4R3FXnAeYBHmL.mRS,True
