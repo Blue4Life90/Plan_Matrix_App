@@ -4,11 +4,15 @@ import os
 import logging
 import pickle
 import tkinter as tk
+from tkinter import filedialog
 from tkinter import messagebox
 
 # Third-Party Library Imports
 from Crypto.Cipher import AES
 from PIL import Image, ImageTk
+
+# Local Library Imports
+from path_config import get_shared_path, save_shared_path
 
 """
 PyInstaller Export
@@ -28,11 +32,24 @@ Syntax:
 python -m nuitka --onefile --windows-console-mode=disable --windows-icon-from-ico=privileged_icon.ico --output-filename="Privileged_Key.exe" --enable-plugin=tk-inter privileged_access_rollout.py
 """
 
-log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
-log_file = os.path.join(log_directory, "app.log")
+def prompt_shared_directory():
+    shared_directory = get_shared_path()
+    if not shared_directory:
+        messagebox.showinfo("Select Shared Directory", "Please select the shared directory for the Schedule App.")
+        shared_directory = filedialog.askdirectory(title="Select Shared Directory")
+        if shared_directory:
+            save_shared_path(shared_directory)
+        else:
+            messagebox.showerror("Error", "No shared directory selected. The application will use the default directory.")
+    return shared_directory
 
-registry_directory = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
-ACCESS_LEVEL_ENCRYPTION = os.path.join(registry_directory, "access_levels.enc")
+shared_directory = prompt_shared_directory()
+
+log_directory = os.path.normpath(os.path.join(shared_directory, "SaveFiles", "TrackingLogs"))
+log_file = os.path.normpath(os.path.join(log_directory, "app.log"))
+
+registry_directory = os.path.normpath(os.path.join(shared_directory, "SaveFiles", "UserRegistry"))
+ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(registry_directory, "access_levels.enc"))
 
 # Fixed Level List
 ACCESS_LEVELS = ["admin", "privileged", "read-only"]
@@ -263,7 +280,7 @@ class AccessGUI(tk.Tk):
         
         self.label_instruction = tk.Label(
             self.content_frame, 
-            text="Note: This program must be located in the same directory as\nit's affiliated program for it to work as expected.", 
+            text="Note: This program is easier to work with when located in the same directory as\nit's affiliated program (the Plan Matrix Schedule App)", 
             bg="white", fg="black", font=("Calibri", 12, "italic"), justify="left")
         self.label_instruction.pack(pady=10)
 
@@ -278,6 +295,7 @@ def main():
     """
     Run the Access GUI application.
     """
+    prompt_shared_directory()
     app = AccessGUI()
     app.mainloop()
 
