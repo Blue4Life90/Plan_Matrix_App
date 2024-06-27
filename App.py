@@ -26,6 +26,7 @@ import customtkinter as ctk # type: ignore
 # Local Application/Library Specific Imports
 import constants
 from constants import log_file
+from PathConfig import get_shared_path
 import functions.header_functions as header_functions
 from functions.app_functions import lock_widgets
 from functions.header_functions import get_user_id
@@ -41,16 +42,22 @@ from AppButtonsFrame import LeftPaneButtonFrame
 from AccessLevelManager import AccessLevelManager
 from TLSelectScheduleDate import TLSelectScheduleDate
 
-#log_directory = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
-#log_file = os.path.join(log_directory, "app.log")
-registry_directory = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
-ACCESS_LEVEL_ENCRYPTION = os.path.join(registry_directory, "access_levels.enc")
-USER_REGISTRY_DIR = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
-USER_ID_FILE = os.path.join(USER_REGISTRY_DIR, "user_id.csv")
+shared_path = get_shared_path() or os.getcwd()
+
+registry_directory = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
+ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(registry_directory, "access_levels.enc"))
+USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
+USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
+
+log_directory = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs"))
+log_file = os.path.normpath(os.path.join(log_directory, "app.log"))
 
 # Create directories if they don't exist
 try:
-    if not os.path.exists(os.path.join(os.getcwd(), "SaveFiles/TrackingLogs", "app.log")):
+    os.makedirs(log_directory, exist_ok=True)
+    os.makedirs(registry_directory, exist_ok=True)
+    
+    if not os.path.exists(log_file):
         open(log_file, 'w').close()
     if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
         open(ACCESS_LEVEL_ENCRYPTION, 'w').close()

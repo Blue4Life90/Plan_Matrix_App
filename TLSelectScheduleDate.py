@@ -51,7 +51,7 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
         self.configure(background=APP_BG_COLOR)
         
-        self.attributes("-topmost", True)  # Keep the window on top of others
+        #self.attributes("-topmost", True)  # Keep the window on top of others
         self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
         
         self.user_selections = {}

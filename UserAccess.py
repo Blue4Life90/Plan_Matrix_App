@@ -2,6 +2,7 @@
 # Standard Library Imports
 import logging
 import tkinter as tk
+from tkinter import filedialog
 from tkinter import messagebox
 
 # Third-Party Library Imports
@@ -13,6 +14,7 @@ from constants import log_file
 from constants import APP_BG_COLOR, TEXT_COLOR
 from constants import BUTTON_HOVER_BG_COLOR, BUTTON_FG_COLOR
 from constants import REGISTRATION_BANNER_IMAGE, LOGIN_BANNER_IMAGE, RESET_PASS_BANNER_IMAGE
+from PathConfig import get_shared_path, save_shared_path
 from functions.header_functions import get_user_id
 from functions.login_functions import update_remember_me
 from functions.login_functions import is_verified_user, add_new_user, register_or_update_user
@@ -50,7 +52,7 @@ class LoginWindow(tk.Toplevel):
         self.overrideredirect(True)
         self.configure(background=APP_BG_COLOR)
         
-        self.attributes("-topmost", True)  # Keep the window on top of others
+        #self.attributes("-topmost", True)  # Keep the window on top of others
         self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
         
         self.username = tk.StringVar(value=str(get_user_id()))
@@ -76,6 +78,7 @@ class LoginWindow(tk.Toplevel):
         self.geometry(f"+{position_x}+{position_y}")
 
     def open_registration_window(self):
+        self.prompt_shared_path()
         """Picture Frame"""
         self.registration_window_picture_frame = ctk.CTkFrame(self)
         self.registration_window_picture_frame.grid(row=0, column=0, sticky="nsew")
@@ -169,7 +172,20 @@ class LoginWindow(tk.Toplevel):
         )
         self.trademark_info_label.grid(row=8, column=0, sticky="e")
 
+    def prompt_shared_path(self):
+        shared_path = get_shared_path()
+        if not shared_path:
+            messagebox.showinfo("Select Shared Path", "Please select a shared path for saving application data.\n\nBe sure to select a path so that other personnel on crew can view the schedule data you save!\n\ni.e. 'O: Drive' or 'shared Drive'")
+            shared_path = filedialog.askdirectory(title="Select Shared Path")
+            if shared_path:
+                save_shared_path(shared_path)
+                self.destroy()
+                self.__init__(self.parent)  # Reinitialize the login window after selecting the shared path
+            else:
+                messagebox.showerror("Error", "No shared path selected. Application will use default path.")
+    
     def open_login_window(self):
+        self.prompt_shared_path()
         """Picture Frame"""
         self.login_window_picture_frame = ctk.CTkFrame(self)
         self.login_window_picture_frame.grid(row=0, column=0, sticky="nsew")

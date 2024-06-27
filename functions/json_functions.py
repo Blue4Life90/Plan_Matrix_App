@@ -8,6 +8,7 @@ import logging
 
 # Local Application/Library Specific Imports
 from constants import log_file
+from PathConfig import get_shared_path
 from CrewMemberHours import CrewMemberHours
 
 # Logging Format
@@ -29,7 +30,8 @@ class DataCache:
             schedule_prefix = "WS"
         
         cache_key = f"{schedule_prefix}_{crew}_{year}"
-        json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+        shared_path = get_shared_path() or os.getcwd()
+        json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
         
         if not os.path.exists(json_filepath):
             create_hours_data_json(crew, year, "Overtime")
@@ -57,7 +59,8 @@ class DataCache:
 data_cache = DataCache()
 
 def create_hours_data_json(crew, year, schedule_type):
-    save_folder = os.path.join(os.getcwd(), "SaveFiles")
+    shared_path = get_shared_path() or os.getcwd()
+    save_folder = os.path.join(shared_path, "SaveFiles")
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
         
@@ -149,8 +152,9 @@ def save_new_crew_member(crew_member_name, crew, month, year, schedule_type):
     else:
         schedule_prefix = "WS"
 
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
-
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+   
     # Load the entire JSON data from the file
     with open(json_filepath, 'r') as file:
         data = json.load(file)
@@ -197,8 +201,9 @@ def remove_crew_member(crew_member_name, crew, month, year, schedule_type):
     else:
         schedule_prefix = "WS"
 
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
-
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+   
     # Load the entire JSON data from the file
     with open(json_filepath, 'r') as file:
         data = json.load(file)
@@ -221,8 +226,9 @@ def remove_crew_member(crew_member_name, crew, month, year, schedule_type):
 
 def adjust_crew_member_starting_hours(crew_member_name, crew, year, new_starting_working_hours, new_starting_asking_hours):
     schedule_prefix = "OT"
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
-
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+   
     # Load the entire JSON data from the file
     with open(json_filepath, 'r') as file:
         data = json.load(file)
@@ -275,8 +281,9 @@ def change_crew_member_name(old_name, new_name, crew, month, year, schedule_type
     else:
         schedule_prefix = "WS"
 
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
-
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+   
     # Load the entire JSON data from the file
     with open(json_filepath, 'r') as file:
         data = json.load(file)
@@ -303,8 +310,9 @@ def save_hours_data_to_json(crew_member_hours, crew, year, schedule_type, month)
     else:
         schedule_prefix = "WS"
 
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
-
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json")
+   
     # Load existing data from the JSON file
     with open(json_filepath, 'r') as file:
         existing_data = json.load(file)
@@ -366,7 +374,8 @@ def move_person_data(user_selections, moved_personnel, schedule_type):
     else:
         schedule_prefix = "WS"
 
-    json_filepath = os.path.join(os.getcwd(), "SaveFiles", f"{schedule_prefix}_{user_selections['selected_crew']}_{user_selections['selected_year'].year}.json")
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{user_selections['selected_crew']}_{user_selections['selected_year'].year}.json")
 
     # Load the entire JSON data from the file
     with open(json_filepath, 'r') as file:

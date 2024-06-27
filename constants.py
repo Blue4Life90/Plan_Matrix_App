@@ -3,13 +3,20 @@
 import os
 import csv
 from PIL import ImageTk
+from PathConfig import get_shared_path
 
 # Third-Party Library Imports
 
 # Local Application/Library Specific Imports
 
-log_file = os.path.join(os.getcwd(), "SaveFiles/TrackingLogs", "app.log")
-TRACKING_LOGS_DIR = os.path.join(os.getcwd(), "SaveFiles", "TrackingLogs")
+shared_path = get_shared_path() or os.getcwd()
+print(shared_path)
+
+log_file = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs", "app.log"))
+TRACKING_LOGS_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs"))
+USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
+USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
+ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry", "access_levels.enc"))
 
 # Create the directory if it doesn't exist
 os.makedirs(TRACKING_LOGS_DIR, exist_ok=True)
@@ -17,6 +24,7 @@ os.makedirs(TRACKING_LOGS_DIR, exist_ok=True)
 # Create the file if it doesn't exist
 if not os.path.exists(log_file):
     open(log_file, 'w').close()
+
 
 """images"""
 REGISTRATION_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Registration_Form_Banner.jpg")
@@ -31,8 +39,8 @@ def load_icons():
     return ICON_PATH_0, ICON_PATH_1, ICON_PATH_2
 
 """login_functions.py"""
-USER_REGISTRY_DIR = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
-USER_ID_FILE = os.path.join(USER_REGISTRY_DIR, "user_id.csv")
+USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
+USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
 os.makedirs(USER_REGISTRY_DIR, exist_ok=True)
 
 if os.path.exists(USER_ID_FILE):
@@ -56,7 +64,7 @@ else:
         writer = csv.writer(file)
         writer.writerow(['username', 'password_hash', 'remember_me'])
 
-ACCESS_LEVEL_ENCRYPTION = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry", "access_levels.enc")
+ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry", "access_levels.enc"))
 
 # Create the file if it doesn't exist
 if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
