@@ -147,7 +147,6 @@ def load_user_access_levels():
     except Exception as e:
         logging.error(f"Error loading user access levels: {e}")
         user_access_levels = {}
-    print(user_access_levels)
     return user_access_levels
 
 def register_or_update_user(user_id, access_level):
@@ -190,7 +189,6 @@ def get_user_access_level(username, user_access_levels):
         nonce, ciphertext, tag = user_access_levels[username]
         try:
             access_level = decrypt_data(nonce, ciphertext, tag, key)
-            print(access_level)
             return access_level
         except ValueError as e:
             logging.error(f"Error decrypting access level for user {username}: {str(e)}")

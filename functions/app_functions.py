@@ -125,7 +125,6 @@ def forward_outlook_email(subject, body, recipient):
         # Display the email window for review
         mail.Display()
 
-        print("Email forwarded successfully.")
     except Exception as e:
         logging.error(f"An error occurred while forwarding the email: {str(e)}")
 
