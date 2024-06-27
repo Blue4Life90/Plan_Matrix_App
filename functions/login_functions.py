@@ -136,7 +136,11 @@ def load_user_access_levels():
     try:
         if os.path.exists(ACCESS_LEVEL_ENCRYPTION):
             with open(ACCESS_LEVEL_ENCRYPTION, "rb") as f:
-                user_access_levels = pickle.load(f)
+                try:
+                    user_access_levels = pickle.load(f)
+                except EOFError:
+                    # File is empty, initialize an empty dictionary
+                    user_access_levels = {}
         else:
             # File doesn't exist, initialize an empty dictionary
             user_access_levels = {}

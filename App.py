@@ -8,6 +8,7 @@ import logging
 import threading
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 from PIL import Image, ImageTk
 from datetime import datetime
 from tkinter import messagebox
@@ -26,7 +27,7 @@ import customtkinter as ctk # type: ignore
 # Local Application/Library Specific Imports
 import constants
 from constants import log_file
-from PathConfig import get_shared_path
+from PathConfig import get_shared_path, save_shared_path
 import functions.header_functions as header_functions
 from functions.app_functions import lock_widgets
 from functions.header_functions import get_user_id
@@ -42,7 +43,18 @@ from AppButtonsFrame import LeftPaneButtonFrame
 from AccessLevelManager import AccessLevelManager
 from TLSelectScheduleDate import TLSelectScheduleDate
 
-shared_path = get_shared_path() or os.getcwd()
+def prompt_shared_path():
+    shared_path = get_shared_path()
+    if not shared_path:
+        messagebox.showinfo("Select Shared Path", "Please select the shared path for saving application data.")
+        shared_path = filedialog.askdirectory(title="Select Shared Path")
+        if shared_path:
+            save_shared_path(shared_path)
+        else:
+            messagebox.showerror("Error", "No shared path selected. The application will use the default directory.")
+    return shared_path
+
+shared_path = prompt_shared_path()
 
 registry_directory = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
 ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(registry_directory, "access_levels.enc"))
@@ -300,6 +312,7 @@ class App(tk.Tk):
         self.file_menu.add_command(label="Save", command=self.save_schedule_data)
         self.file_menu.add_checkbutton(label="Auto Save", variable=self.autosave_var, command=self.update_autosave_label)
         self.file_menu.add_command(label="Print", command=self.print_current_schedule)
+        self.file_menu.add_command(label="Select New Shared Save Path", command=self.select_new_shared_path)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Exit", command=self.destroy)
         self.menu_bar.add_cascade(label="File", menu=self.file_menu)
@@ -328,6 +341,12 @@ class App(tk.Tk):
             
         self.config(menu=self.menu_bar)
 
+    def select_new_shared_path(self):
+        new_shared_path = filedialog.askdirectory(title="Select New Shared Path")
+        if new_shared_path:
+            save_shared_path(new_shared_path)
+            messagebox.showinfo("Success", "New shared path selected. Please restart the application for the changes to take effect.")    
+    
     def view_tracking_log(self):
         if self.schedule_hrs_frame:
             crew_folder = os.path.join("SaveFiles", "TrackingLogs", self.user_selections["selected_crew"])

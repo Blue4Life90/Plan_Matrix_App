@@ -2,12 +2,26 @@
 # Standard Library Imports
 import os
 import csv
+from tkinter import messagebox, filedialog
 from PIL import ImageTk
-from PathConfig import get_shared_path
+from PathConfig import get_shared_path, save_shared_path
 
 # Third-Party Library Imports
 
 # Local Application/Library Specific Imports
+
+def prompt_shared_path():
+    shared_path = get_shared_path()
+    if not shared_path:
+        messagebox.showinfo("Select Shared Path", "Please select the shared path for saving application data.")
+        shared_path = filedialog.askdirectory(title="Select Shared Path")
+        if shared_path:
+            save_shared_path(shared_path)
+        else:
+            messagebox.showerror("Error", "No shared path selected. The application will use the default directory.")
+    return shared_path
+
+shared_path = prompt_shared_path()
 
 shared_path = get_shared_path() or os.getcwd()
 print(shared_path)

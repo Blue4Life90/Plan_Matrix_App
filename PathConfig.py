@@ -8,6 +8,11 @@ def get_shared_path():
     return None
 
 def save_shared_path(path):
-    config_file = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry", "shared_path.txt")
+    config_dir = os.path.join(os.getcwd(), "SaveFiles", "UserRegistry")
+    config_file = os.path.join(config_dir, "shared_path.txt")
+    
+    # Create the directory if it doesn't exist
+    os.makedirs(config_dir, exist_ok=True)
+    
     with open(config_file, 'w') as file:
         file.write(path)
