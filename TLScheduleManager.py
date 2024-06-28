@@ -549,6 +549,7 @@ class TLScheduleManager(tk.Toplevel):
             name_entry = tk.Entry(add_window)
             name_entry.grid(row=len(name_entries)+1, column=1, padx=10, pady=5)
             name_entries.append(name_entry)
+            name_entry.focus_set()  # Set focus to the new entry
 
         def remove_entry():
             if name_entries:
@@ -556,13 +557,33 @@ class TLScheduleManager(tk.Toplevel):
                 last_entry.destroy()
                 last_label = add_window.grid_slaves(row=len(name_entries)+1, column=0)[0]
                 last_label.destroy()
+                if name_entries:
+                    name_entries[-1].focus_set()
 
+        def on_tab(event):
+            add_entry()
+            return "break"  # Prevent default Tab behavior
+
+        def on_ctrl_z(event):
+            if len(name_entries) > 1:
+                remove_entry()
+            return "break"  # Prevent default Ctrl+Z behavior
+        
+        def on_enter(event):
+            confirm_add()
+            return "break"  # Prevent default Enter behavior
+        
         name_entries = []
 
         add_window = tk.Toplevel(self)
         add_window.overrideredirect(True)
         add_window.title("Add New Crew Members")
         add_window.configure(bg=APP_BG_COLOR)
+        
+        # Bind the hotkeys
+        add_window.bind("<Tab>", on_tab)
+        add_window.bind("<Control-z>", on_ctrl_z)
+        add_window.bind("<Return>", on_enter)
 
         # Calculate the center position
         app_window_width = self.winfo_width()
@@ -604,8 +625,9 @@ class TLScheduleManager(tk.Toplevel):
         )
         cancel_button.grid(row=101, column=1, padx=10, pady=10, sticky="ew")
 
+        # Modify the add_entry and remove_last buttons to use the new functions
         add_another_button = ctk.CTkButton(
-            add_window, text="+", command=add_entry, 
+            add_window, text="+ (Tab)", command=add_entry, 
             font=("Calibri", 14, "bold"),
             fg_color="#047a1b", 
             hover_color="#02a120", 
@@ -614,7 +636,8 @@ class TLScheduleManager(tk.Toplevel):
         add_another_button.grid(row=100, column=0, columnspan=1, padx=10, pady=10, sticky="ew")
         
         remove_last_button = ctk.CTkButton(
-            add_window, text="-", command=remove_entry, 
+            add_window, text="- (Ctrl+z)", 
+            command=lambda: remove_entry() if len(name_entries) > 1 else None,
             font=("Calibri", 14, "bold"),
             fg_color="#7a0404", 
             hover_color="#a10202", 
