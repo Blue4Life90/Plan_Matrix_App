@@ -449,6 +449,7 @@ class TLScheduleManager(tk.Toplevel):
         try:
             self.apply_member_count()
             self.app.create_frames()
+            # update rankingframe here
             
             # Update the scrollbar after updating the member count
             self.app.update_scrollbar()
@@ -498,8 +499,9 @@ class TLScheduleManager(tk.Toplevel):
             
             # Remove the crew members from the JSON files if they were removed from the Treeview
             if self.removed_crew_members:
+                removed_crew_members_copy = self.removed_crew_members.copy()
                 for month in range(self.user_selections['selected_month'].month, 13):
-                    for name in self.removed_crew_members:
+                    for name in removed_crew_members_copy:
                         remove_crew_member(name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "Overtime")
                         remove_crew_member(name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "work_schedule")
                 
@@ -705,7 +707,7 @@ class TLScheduleManager(tk.Toplevel):
             self.tree.delete(item)
             
         self.selected_num_rows_var.set(len(self.tree.get_children()))
-        self.num_rows_label.configure(text=f"{self.selected_num_rows_var} Crew Members")
+        self.num_rows_label.configure(text=f"{self.selected_num_rows_var.get()} Crew Members")
 
 
 

@@ -419,7 +419,7 @@ class ScheduleHrsFrame(tk.Frame):
         self.update_scrollbar()
         self.get_labels()
         self.adjust_canvas_size()
-
+        
         def check_frames_created():
             if self.schedule_type == "Overtime":
                 if len(self.frames) == self.crew_member_count:

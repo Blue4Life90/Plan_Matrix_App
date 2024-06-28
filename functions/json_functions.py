@@ -221,8 +221,9 @@ def remove_crew_member(crew_member_name, crew, month, year, schedule_type):
     # Save the updated JSON data back to the file
     with open(json_filepath, 'w') as file:
         json.dump(data, file, indent=4)
-        
-    load_hours_data_from_json(crew, month, year, schedule_type)
+    
+    #TODO    
+    #load_hours_data_from_json(crew, month, year, schedule_type)
 
 def adjust_crew_member_starting_hours(crew_member_name, crew, year, new_starting_working_hours, new_starting_asking_hours):
     schedule_prefix = "OT"

@@ -27,6 +27,7 @@ import customtkinter as ctk # type: ignore
 # Local Application/Library Specific Imports
 import constants
 from constants import log_file
+from constants import prompt_shared_path
 from PathConfig import get_shared_path, save_shared_path
 import functions.header_functions as header_functions
 from functions.app_functions import lock_widgets
@@ -42,17 +43,6 @@ from ScheduleHrsFrame import ScheduleHrsFrame
 from AppButtonsFrame import LeftPaneButtonFrame
 from AccessLevelManager import AccessLevelManager
 from TLSelectScheduleDate import TLSelectScheduleDate
-
-def prompt_shared_path():
-    shared_path = get_shared_path()
-    if not shared_path:
-        messagebox.showinfo("Select Shared Path", "Please select the shared path for saving application data.")
-        shared_path = filedialog.askdirectory(title="Select Shared Path")
-        if shared_path:
-            save_shared_path(shared_path)
-        else:
-            messagebox.showerror("Error", "No shared path selected. The application will use the default directory.")
-    return shared_path
 
 shared_path = prompt_shared_path()
 

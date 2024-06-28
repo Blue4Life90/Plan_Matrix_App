@@ -23,9 +23,6 @@ def prompt_shared_path():
 
 shared_path = prompt_shared_path()
 
-shared_path = get_shared_path() or os.getcwd()
-print(shared_path)
-
 log_file = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs", "app.log"))
 TRACKING_LOGS_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs"))
 USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
