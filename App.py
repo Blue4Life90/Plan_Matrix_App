@@ -28,7 +28,7 @@ import customtkinter as ctk # type: ignore
 import constants
 from constants import log_file
 from constants import prompt_shared_path
-from PathConfig import get_shared_path, save_shared_path
+from PathConfig import save_shared_path
 import functions.header_functions as header_functions
 from functions.app_functions import lock_widgets
 from functions.header_functions import get_user_id
@@ -52,7 +52,6 @@ USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "Use
 USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
 
 log_directory = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs"))
-log_file = os.path.normpath(os.path.join(log_directory, "app.log"))
 
 # Create directories if they don't exist
 try:

@@ -84,7 +84,7 @@ class TLScheduleManager(tk.Toplevel):
         self.num_rows_label.grid(row=1, column=1, sticky="ew", padx=10, pady=0)
         
         apply_member_count_btn = ctk.CTkButton(
-            self, text="Confirm All Changes", 
+            self, text="Refresh", 
             fg_color="#047a1b", hover_color="#02a120", text_color="white", 
             command=self.confirm_changes
         )
@@ -111,6 +111,36 @@ class TLScheduleManager(tk.Toplevel):
             
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+    
+    def show_loading_window(self):
+        self.loading_window = tk.Toplevel(self)
+        self.loading_window.title("Loading")
+        self.loading_window.overrideredirect(True)  # Remove window decorations
+        self.loading_window.configure(bg=APP_BG_COLOR)
+
+        # Calculate the center position of the loading window
+        manager_window_width = self.winfo_width()
+        manager_window_height = self.winfo_height()
+        manager_window_x = self.winfo_x()
+        manager_window_y = self.winfo_y()
+
+        loading_window_width = 300
+        loading_window_height = 100
+
+        center_x = manager_window_x + (manager_window_width - loading_window_width) // 2
+        center_y = manager_window_y + (manager_window_height - loading_window_height) // 2
+
+        # Set the position and size of the loading window
+        self.loading_window.geometry(f"{loading_window_width}x{loading_window_height}+{center_x}+{center_y}")
+
+        loading_label = tk.Label(
+            self.loading_window, text="Loading changes. Please wait...",
+            font=("Calibri", 16, "bold"),
+            bg=APP_BG_COLOR, fg=TEXT_COLOR
+        )
+        loading_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+
+        self.loading_window.update()
     
     def configure_hours_frame(self):
         """
@@ -296,6 +326,8 @@ class TLScheduleManager(tk.Toplevel):
             
             moved_name = self.tree.item(selected_item)['values'][0]
             self.moved_personnel.append((moved_name, index - 1))
+            
+        self.confirm_changes()
 
     def move_down(self):
         selected_items = self.tree.selection()
@@ -312,6 +344,8 @@ class TLScheduleManager(tk.Toplevel):
             # Store the moved personnel name and new position
             moved_name = self.tree.item(selected_item)['values'][0]
             self.moved_personnel.append((moved_name, index + 1))
+        
+        self.confirm_changes()
         
     def configure_treeview(self):
         """
@@ -447,13 +481,15 @@ class TLScheduleManager(tk.Toplevel):
         Handle and log any exceptions that occur during the process.
         """
         try:
+            self.show_loading_window()  # Show the loading window
+
             self.apply_member_count()
             self.app.create_frames()
-            # update rankingframe here
-            
+
             # Update the scrollbar after updating the member count
             self.app.update_scrollbar()
-            messagebox.showinfo("Success", "Member count and names updated successfully.")
+
+            self.loading_window.destroy()  # Hide the loading window
         except Exception as e:
             logging.error(f"Error applying changes.\nException: {str(e)}")
             messagebox.showinfo("Error", "There was an error please view the log file.")
@@ -539,6 +575,8 @@ class TLScheduleManager(tk.Toplevel):
             self.selected_num_rows_var.set(len(self.tree.get_children()))
             self.num_rows_label.configure(text=f"{self.selected_num_rows_var.get()} Crew Members")
             add_window.destroy()
+            
+            self.confirm_changes()
         
         def add_entry():
             name_label = tk.Label(
@@ -685,6 +723,8 @@ class TLScheduleManager(tk.Toplevel):
 
         # Disable the entry box
         self.new_name_entry.config(state="disabled")
+        
+        self.confirm_changes()
 
     def remove_name(self):
         """
@@ -708,6 +748,9 @@ class TLScheduleManager(tk.Toplevel):
             
         self.selected_num_rows_var.set(len(self.tree.get_children()))
         self.num_rows_label.configure(text=f"{self.selected_num_rows_var.get()} Crew Members")
+        
+        self.confirm_changes()
+        
 
 
 
