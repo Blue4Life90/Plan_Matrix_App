@@ -1,6 +1,9 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
+import time
+import queue
 import logging
+import threading
 import tkinter as tk
 import datetime as datetime
 from tkinter import ttk
@@ -13,10 +16,11 @@ import customtkinter as ctk # type: ignore
 from functions.json_functions import adjust_crew_member_starting_hours
 from functions.json_functions import load_hours_data_from_json, save_new_crew_member
 from functions.json_functions import remove_crew_member, change_crew_member_name, move_person_data
+from functions.app_functions import center_toplevel_window
 from constants import log_file
 from constants import load_icons
 from constants import BUTTON_FG_COLOR, BUTTON_HOVER_BG_COLOR
-from constants import APP_BG_COLOR, FILE_MENU_BG_COLOR, TEXT_COLOR
+from constants import APP_BG_COLOR, FILE_MENU_BG_COLOR, TEXT_COLOR, PANE_BG_COLOR
 from constants import ASKING_HRS_FG_COLOR, WORKING_HRS_FG_COLOR
 from constants import ASKING_HRS_BG_COLOR, WORKING_HRS_BG_COLOR
 from constants import TREEVIEW_EVEN, TREEVIEW_ODD, TREEVIEW_TEXT, TREEVIEW_SELECTED
@@ -49,6 +53,14 @@ class TLScheduleManager(tk.Toplevel):
         self.user_selections = user_selections
         self.schedule_type = schedule_type
         self.crew_member_count = crew_member_count
+
+        self.task_queue = queue.Queue(maxsize=1000)  # Limit queue size to 1000 tasks
+        self.processing_thread = None
+        self.is_processing = threading.Event()
+        self.cancel_requested = threading.Event()
+        self.shutdown_requested = threading.Event()
+
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         
         # Center the toplevel window over the parent window
         parent_x = parent.winfo_rootx()
@@ -111,37 +123,104 @@ class TLScheduleManager(tk.Toplevel):
             
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
+
+        center_toplevel_window(self)
     
-    def show_loading_window(self):
-        self.loading_window = tk.Toplevel(self)
-        self.loading_window.title("Loading")
-        self.loading_window.overrideredirect(True)  # Remove window decorations
-        self.loading_window.configure(bg=APP_BG_COLOR)
+    def show_progress_window(self):
+        self.progress_window = tk.Toplevel(self)
+        self.progress_window.title("Processing")
+        self.progress_window.geometry("300x150")
+        self.progress_window.configure(background=APP_BG_COLOR)
+        self.progress_window.iconphoto(False, self.iconpath_0)  # Set the icon for the progress window
 
-        # Calculate the center position of the loading window
-        manager_window_width = self.winfo_width()
-        manager_window_height = self.winfo_height()
-        manager_window_x = self.winfo_x()
-        manager_window_y = self.winfo_y()
-
-        loading_window_width = 300
-        loading_window_height = 100
-
-        center_x = manager_window_x + (manager_window_width - loading_window_width) // 2
-        center_y = manager_window_y + (manager_window_height - loading_window_height) // 2
-
-        # Set the position and size of the loading window
-        self.loading_window.geometry(f"{loading_window_width}x{loading_window_height}+{center_x}+{center_y}")
-
-        loading_label = tk.Label(
-            self.loading_window, text="Loading changes. Please wait...",
-            font=("Calibri", 16, "bold"),
-            bg=APP_BG_COLOR, fg=TEXT_COLOR
+        progress_label = ctk.CTkLabel(
+            self.progress_window,
+            text="Processing changes...",
+            font=("Calibri", 16),
+            text_color=TEXT_COLOR,
+            bg_color=APP_BG_COLOR
         )
-        loading_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        progress_label.pack(pady=20)
 
-        self.loading_window.update()
+        progressbar_style = ttk.Style()
+        progressbar_style.theme_use('clam')
+        progressbar_style.configure(
+            "red.Horizontal.TProgressbar",
+            bordercolor='#0d00ff',
+            troughcolor=PANE_BG_COLOR,
+            foreground='#06039c',
+            background='#0400d6',
+            darkcolor="#05015c",
+            lightcolor="#3d34ed"
+        )
+
+        self.progress_bar = ttk.Progressbar(self.progress_window, style="red.Horizontal.TProgressbar", length=200, mode='determinate')
+        self.progress_bar.pack(pady=10)
+        self.progress_bar.start(10)
+
+        self.progress_window.update()
+        self.progress_window.transient(self)
+        self.progress_window.grab_set()
+
+        center_toplevel_window(self.progress_window)
     
+    def hide_progress_window(self):
+        if self.progress_window:
+            self.progress_bar.stop()
+            self.progress_window.destroy()
+            self.progress_window = None
+
+    def worker_thread(self):
+        max_wait_time = 2  # Maximum waiting time for each get() call in seconds
+
+        while True:
+            try:
+                print(f"Task queue size: {self.task_queue.qsize()}")  # Print the task queue size
+                task = self.task_queue.get(block=True, timeout=max_wait_time)
+                print(f"Got task from queue: {task}")  # Print the task retrieved from the queue
+                if self.cancel_requested.is_set():
+                    self.task_queue.task_done()
+                    self.after(0, lambda: messagebox.showinfo("Cancelled", "Operation was cancelled"))
+                    continue
+
+                try:
+                    task()
+                except Exception as e:
+                    print(f"Error in worker thread: {str(e)}")
+                finally:
+                    self.task_queue.task_done()
+                    self.is_processing.clear()  # Clear the is_processing flag after processing the task
+
+            except queue.Empty:
+                if not self.is_processing.is_set() and self.task_queue.empty():
+                    print("Task queue empty and processing not active. Exiting worker thread.")  # Print when exiting the worker thread
+                    break
+                else:
+                    print("Task queue empty. Waiting for more tasks.")  # Print when waiting for more tasks
+
+            except Exception as e:
+                print(f"Error in worker thread: {str(e)}")
+                self.after(0, lambda: messagebox.showerror("Error", f"An error occurred: {str(e)}"))
+
+        print("Worker thread finished.")  # Print when the worker thread finishes
+        self.after(0, self.hide_progress_window)
+    
+    def on_closing(self):
+        self.shutdown_requested.set()
+        self.cancel_requested.set()
+        if self.processing_thread:
+            self.processing_thread.join(timeout=5)
+        self.after(0, self._finish_closing)
+
+    def _finish_closing(self):
+        while not self.task_queue.empty():
+            try:
+                self.task_queue.get(block=False)
+                self.task_queue.task_done()
+            except queue.Empty:
+                break
+        self.destroy()
+
     def configure_hours_frame(self):
         """
         Configure the frame widget containing all starting hour adjustment options.
@@ -475,24 +554,33 @@ class TLScheduleManager(tk.Toplevel):
 
     
     def confirm_changes(self):
-        """
-        Confirm the changes made to crew member names and apply the changes.
-        Update the member count and names in the application.
-        Handle and log any exceptions that occur during the process.
-        """
-        try:
-            self.show_loading_window()  # Show the loading window
+        if self.task_queue.full():
+            messagebox.showwarning("Warning", "Too many pending changes. Please wait.")
+            return
 
+        with threading.Lock():
+            if not self.processing_thread or not self.processing_thread.is_alive():
+                self.cancel_requested.clear()
+                self.shutdown_requested.clear()
+                self.is_processing.set()
+                self.processing_thread = threading.Thread(target=self.worker_thread, daemon=True)
+                self.processing_thread.start()
+                self.show_progress_window()
+
+        try:
+            print("Putting task in queue: process_changes")  # Print when putting a task in the queue
+            self.task_queue.put(self.process_changes, block=False)
+        except queue.Full:
+            messagebox.showwarning("Warning", "Cannot add more changes. Queue is full.")
+    
+    def process_changes(self):
+        try:
             self.apply_member_count()
             self.app.create_frames()
-
-            # Update the scrollbar after updating the member count
             self.app.update_scrollbar()
-
-            self.loading_window.destroy()  # Hide the loading window
         except Exception as e:
             logging.error(f"Error applying changes.\nException: {str(e)}")
-            messagebox.showinfo("Error", "There was an error please view the log file.")
+            self.after(0, lambda: messagebox.showinfo("Error", "There was an error. Please view the log file."))
     
     def apply_member_count(self):
         """
@@ -551,13 +639,13 @@ class TLScheduleManager(tk.Toplevel):
             # Clear the edited and removed crew member lists
             self.edited_crew_members = {}
             self.removed_crew_members = []
-            
-            self.app.crew_member_count = num_rows
-            self.app.get_labels()
 
         except Exception as e:
             logging.error(f"Error applying changes.\nException: {str(e)}")
             messagebox.showerror("Error", str(e))
+
+        self.app.crew_member_count = num_rows
+        self.app.get_labels()
 
     def add_name(self):
         """

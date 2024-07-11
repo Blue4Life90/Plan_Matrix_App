@@ -51,8 +51,7 @@ class LoginWindow(tk.Toplevel):
         self.title("Login")
         self.overrideredirect(True)
         self.configure(background=APP_BG_COLOR)
-        
-        #self.attributes("-topmost", True)  # Keep the window on top of others
+    
         self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
         
         self.username = tk.StringVar(value=str(get_user_id()))
@@ -76,6 +75,8 @@ class LoginWindow(tk.Toplevel):
         position_x = int((screen_width / 2) - (window_width / 2))
         position_y = int((screen_height / 2) - (window_height / 2))
         self.geometry(f"+{position_x}+{position_y}")
+        self.update()  # Force an update of the window
+        self.lift()  # Lift the window after it's positioned
 
     def open_registration_window(self):
         self.prompt_shared_path()
@@ -394,7 +395,9 @@ class LoginWindow(tk.Toplevel):
         self.destroy()
         
     def close_app(self):
-        self.parent.destroy()
+        confirm = messagebox.askyesno("Confirm Exit", "Are you sure you want to close the application?")
+        if confirm:
+            self.parent.destroy()
         
 class ResetPasswordWindow(tk.Toplevel):
     def __init__(self, parent):
@@ -404,7 +407,6 @@ class ResetPasswordWindow(tk.Toplevel):
         self.overrideredirect(True)
         self.configure(background=APP_BG_COLOR)
         
-        self.attributes("-topmost", True)  # Keep the window on top of others
         self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
 
         self.username = tk.StringVar(value=str(get_user_id()))
@@ -423,6 +425,8 @@ class ResetPasswordWindow(tk.Toplevel):
         position_x = int((screen_width / 2) - (window_width / 2))
         position_y = int((screen_height / 2) - (window_height / 2))
         self.geometry(f"+{position_x}+{position_y}")
+        self.update()
+        self.lift()
 
     def open_reset_password_window(self):
         """Picture Frame"""

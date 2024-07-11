@@ -51,7 +51,6 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
         self.configure(background=APP_BG_COLOR)
         
-        #self.attributes("-topmost", True)  # Keep the window on top of others
         self.attributes("-toolwindow", True)  # Remove the minimize/maximize buttons
         
         self.user_selections = {}
@@ -157,6 +156,19 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.trademark_info_label.grid(row=10, column=0, columnspan=2, sticky="ew")
         
         self.create_schedule_type_combo()
+        self.center_window()
+
+    def center_window(self):
+        self.update_idletasks()  # Update window dimensions
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        window_width = self.winfo_width()
+        window_height = self.winfo_height()
+        position_x = int((screen_width / 2) - (window_width / 2))
+        position_y = int((screen_height / 2) - (window_height / 2))
+        self.geometry(f"+{position_x}+{position_y}")
+        self.update()
+        self.lift()
 
     def create_schedule_type_combo(self):
         self.schedule_type_label = ctk.CTkLabel(
@@ -219,4 +231,6 @@ class TLSelectScheduleDate(tk.Toplevel):
             return False
     
     def close_app(self):
-        self.parent.destroy()
+        confirm = messagebox.askyesno("Confirm Exit", "Are you sure you want to close the application?")
+        if confirm:
+            self.parent.destroy()

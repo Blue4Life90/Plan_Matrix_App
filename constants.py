@@ -2,6 +2,9 @@
 # Standard Library Imports
 import os
 import csv
+import time
+import subprocess
+import threading
 from tkinter import messagebox, filedialog
 from PIL import ImageTk
 from PathConfig import get_shared_path, save_shared_path
@@ -9,6 +12,25 @@ from PathConfig import get_shared_path, save_shared_path
 # Third-Party Library Imports
 
 # Local Application/Library Specific Imports
+
+def map_network_drives():
+    drive_mapping_path = r"C:\Program Files\Chevron\MDLogin\MDLogin.exe"
+    def mapping_thread():
+        try:
+            subprocess.run([drive_mapping_path], check=True)
+            # Wait for a short time to allow the drives to be mapped
+            time.sleep(5)
+            return True
+        except subprocess.CalledProcessError:
+            print("Failed to run Drive Mapping application.")
+            return False
+        except FileNotFoundError:
+            print("Drive Mapping application not found.")
+            return False
+    # Start the mapping process in a separate thread
+    threading.Thread(target=mapping_thread, daemon=True).start()
+
+map_network_drives()
 
 def prompt_shared_path():
     shared_path = get_shared_path()

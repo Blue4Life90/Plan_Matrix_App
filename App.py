@@ -213,8 +213,8 @@ class App(tk.Tk):
                 child.grid_configure(sticky="nsew")
         
         self.add_left_pane_frame()
-        self.open_input_window()
         self.configure_app_menu_bar()
+        self.open_input_window()
         
         # Ensure all widgets are fully loaded
         self.update_idletasks()
@@ -246,6 +246,7 @@ class App(tk.Tk):
         self.file_menu.entryconfig("Auto Save", state="disabled")
         self.edit_menu.entryconfig("Open Schedule Manager", state="disabled")
         self.edit_menu.entryconfig("Manage Access Levels", state="disabled")
+        self.view_menu.entryconfig("Navigation Pane", state="disabled")
 
     def enable_menu_options(self):
         # Enable menu options based on access level
@@ -711,23 +712,26 @@ class App(tk.Tk):
         
         Opens the input window for selecting the schedule date and crew.
         """
-        self.input_window = TLSelectScheduleDate(self)
-        
-        if hasattr(self, 'left_pane_button_frame') and self.left_pane_button_frame.winfo_exists():
-            if hasattr(self.left_pane_button_frame, 'select_new_schedule_button'):
-                try:
-                    self.left_pane_button_frame.select_new_schedule_button.configure(
-                        command=self.load_schedule_from_file
-                    )
-                except tk.TclError as e:
-                    logging.error(f"Error configuring select_new_schedule_button: {str(e)}")
+        try:
+            self.input_window = TLSelectScheduleDate(self)
+            
+            if hasattr(self, 'left_pane_button_frame') and self.left_pane_button_frame.winfo_exists():
+                if hasattr(self.left_pane_button_frame, 'select_new_schedule_button'):
+                    try:
+                        self.left_pane_button_frame.select_new_schedule_button.configure(
+                            command=self.load_schedule_from_file
+                        )
+                    except tk.TclError as e:
+                        logging.error(f"Error configuring select_new_schedule_button: {str(e)}")
+                else:
+                    logging.warning("select_new_schedule_button does not exist.")
             else:
-                logging.warning("select_new_schedule_button does not exist.")
-        else:
-            logging.warning("left_pane_button_frame does not exist or has been destroyed.")
-        
-        self.wait_visibility(self.input_window) # Wait for the input window to be visible
-        center_toplevel_window(self.input_window)
+                logging.warning("left_pane_button_frame does not exist or has been destroyed.")
+            
+            self.wait_window(self.input_window) # Wait for the input window to be visible
+            center_toplevel_window(self.input_window)
+        except Exception as e:
+            logging.error("Error occurring at open_input_window")
     
     def load_schedule_from_file(self):
         """
