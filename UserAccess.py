@@ -367,8 +367,8 @@ class LoginWindow(tk.Toplevel):
             access_level = get_user_access_level(username, user_access_levels)
             if access_level:
                 self.parent.current_user = User(username, "", access_level)
-                self.parent.initialize_application()
                 self.destroy()
+                self.parent.initialize_application()
             else:
                 messagebox.showerror("Login Failed", "Access level not set for this user.")
         else: 

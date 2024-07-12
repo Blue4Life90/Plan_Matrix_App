@@ -339,15 +339,18 @@ class App(tk.Tk):
     
     def view_tracking_log(self):
         if self.schedule_hrs_frame:
-            crew_folder = os.path.join("SaveFiles", "TrackingLogs", self.user_selections["selected_crew"])
+            crew_folder = os.path.join(constants.TRACKING_LOGS_DIR, self.user_selections["selected_crew"])
             selected_year = self.user_selections["selected_year"].strftime("%Y")
             selected_month = self.user_selections["selected_month"].strftime("%m")
             log_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
+            
+            print(f"Attempting to open log file: {log_file}")  # Debug print
 
             if os.path.exists(log_file):
                 if sys.platform == "win32":
                     os.system(f'start cmd /c "type {log_file} & pause"')
             else:
+                print(f"Log file does not exist: {log_file}")  # Debug print
                 messagebox.showinfo("Tracking Log", "No tracking log found for the selected schedule.")
         else:
             messagebox.showinfo("Tracking Log", "No schedule is currently loaded.")
@@ -516,6 +519,11 @@ class App(tk.Tk):
             self.update_idletasks()
         
         self.set_hours_frame(self.user_selections, selected_schedule_type)
+        
+        # Update the tracking file for all frames
+        if self.schedule_hrs_frame:
+            self.schedule_hrs_frame.update_frames(self.user_selections)
+        
         self.show_loading_overlay() 
 
         def update_ui():
@@ -770,6 +778,7 @@ class App(tk.Tk):
         self.hdr_date_grid.grid(column=0, row=1, padx=10, pady=0, sticky="ew")
         
         if self.schedule_hrs_frame:
+            self.schedule_hrs_frame.update_frames(self.user_selections)
             if self.schedule_hrs_frame.schedule_type == "Overtime":
                 self.update_switch_button("work_schedule", self.select_work_schedule)
             else:

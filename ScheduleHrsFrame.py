@@ -85,8 +85,6 @@ class ScheduleHrsFrame(tk.Frame):
         self.user_selections = user_selections
         self.schedule_type = schedule_type
         self.crew_member_hours = {}
-        #TODO:
-        # Read backend file solely to get the member count
         crew_data = load_hours_data_from_json(self.user_selections['selected_crew'], self.user_selections['selected_month'].month, self.user_selections['selected_year'].year, schedule_type)
         self.crew_member_count = len(crew_data)
         self.initial_names = []
@@ -134,7 +132,6 @@ class ScheduleHrsFrame(tk.Frame):
             self.legend_frame.pack(fill="x", expand=True, side=tk.BOTTOM)
             self.adjust_canvas_size()
     
-    #TODO: Will need error handling
     def load_workbook_data(self, json_filename, worksheet_name, schedule_type):
         """
         Load data from the JSON file.
@@ -259,23 +256,6 @@ class ScheduleHrsFrame(tk.Frame):
 
                 save_hours_data_to_json(self.crew_member_hours, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, self.schedule_type, month_number)
 
-            #elif self.schedule_type == "work_schedule":
-            #    for i, frame in enumerate(self.work_schedule_frames, start=2):
-            #        name = frame.labels[0].cget("text")
-            #        if name in self.crew_member_hours:
-            #            member = self.crew_member_hours[name]
-
-                        # Ensure monthly hours are initialized
-            #            if month_str not in member.monthly_hours:
-            #                member.monthly_hours[month_str] = {
-            #                    'entry_data': []
-            #                }
-
-            #            role_data = [entry.get() for entry in frame.crew_member_role_entries]
-            #            member.monthly_hours[month_str]['entry_data'] = role_data
-
-            #    save_hours_data_to_json(self.crew_member_hours, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, self.schedule_type, month_number)
-
         except Exception as e:
             logging.error(f"An error occurred while saving data to JSON file: {str(e)}")
             messagebox.showerror("Error", "An error occurred while saving the data.")
@@ -341,6 +321,14 @@ class ScheduleHrsFrame(tk.Frame):
         self.frames_created.set(False)
         data_loader = WorkbookDataLoader(self)
         data_loader.start()
+    
+    def update_frames(self, user_selections):
+        if self.schedule_type == "Overtime":
+            for frame in self.frames:
+                frame.update_tracking_file(user_selections)
+        elif self.schedule_type == "work_schedule":
+            for frame in self.work_schedule_frames:
+                frame.update_tracking_file(user_selections)
     
     def data_loaded(self, data, exception):
         """

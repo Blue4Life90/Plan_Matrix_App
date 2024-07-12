@@ -45,6 +45,13 @@ class WorkScheduleMatrixFrame(tk.Frame):
         tracking_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
         return tracking_file
     
+    def update_tracking_file(self, user_selections):
+        self.user_selections = user_selections
+        self.tracking_file = self.get_tracking_file_path()
+        logging_config.setup_logging(entry_log_file=self.tracking_file)
+        self.entry_logger = logging.getLogger('entry_logger')
+        self.error_logger = logging.getLogger('error_logger')
+    
     def create_labels_and_entries(self):
         # Create a label in column 0 with the specified dimensions and position
         name_label = tk.Label(self, 

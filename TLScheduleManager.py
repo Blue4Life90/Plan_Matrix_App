@@ -200,7 +200,6 @@ class TLScheduleManager(tk.Toplevel):
 
             except Exception as e:
                 print(f"Error in worker thread: {str(e)}")
-                self.after(0, lambda: messagebox.showerror("Error", f"An error occurred: {str(e)}"))
 
         print("Worker thread finished.")  # Print when the worker thread finishes
         self.after(0, self.hide_progress_window)
@@ -306,15 +305,21 @@ class TLScheduleManager(tk.Toplevel):
             return
 
         selected_name = self.tree.item(selected_items[0])['values'][0]
-        new_starting_working_hours = self.crew_member_starting_working_hours.get()
-        new_starting_asking_hours = self.crew_member_starting_asking_hours.get()
+        new_starting_working_hours = self.crew_member_starting_working_hours.get().strip()
+        new_starting_asking_hours = self.crew_member_starting_asking_hours.get().strip()
 
         try:
+            if not new_starting_working_hours or not new_starting_asking_hours:
+                raise ValueError("Starting hours cannot be empty.")
+            
             if not new_starting_working_hours.isdigit() or not new_starting_asking_hours.isdigit():
-                messagebox.showerror("Entry Error", "Starting hours must be a number.")
+                raise ValueError("Starting hours must be a number.")
 
             new_starting_working_hours = int(new_starting_working_hours)
             new_starting_asking_hours = int(new_starting_asking_hours)
+
+            if new_starting_working_hours < 0 or new_starting_asking_hours < 0:
+                raise ValueError("Starting hours cannot be negative.")
 
             crew = self.user_selections['selected_crew']
             year = self.user_selections['selected_year'].year
@@ -328,8 +333,8 @@ class TLScheduleManager(tk.Toplevel):
             messagebox.showerror("Error", str(e))
             logging.error(f"ValueError applying changes.\nException: {str(e)}")
         except Exception as e:
-            messagebox.showerror("Error", f"An error occurred: {str(e)}")
-            logging.error(f"ValueError applying changes.\nException: {str(e)}")
+            messagebox.showerror("Error", f"An unidentified error occurred. Check the log: {str(e)}")
+            logging.error(f"Exception applying changes.\nException: {str(e)}")
 
     def configure_button_frame(self):
         """
@@ -499,12 +504,15 @@ class TLScheduleManager(tk.Toplevel):
         # Get the selected item
         selected_items = self.tree.selection()
         if not selected_items:
-            # No item selected, disable the entry box
             self.new_name_entry.config(state="disabled")
             if hasattr(self, 'starting_hours_frame') and self.starting_hours_frame.winfo_viewable():
                 self.confirm_new_starting_hours_button.configure(state="disabled")
-                self.crew_member_starting_working_hours.configure(placeholder_text="", state="disabled")
-                self.crew_member_starting_asking_hours.configure(placeholder_text="", state="disabled")
+                self.crew_member_starting_working_hours.configure(state="normal")
+                self.crew_member_starting_working_hours.delete(0, 'end')
+                self.crew_member_starting_working_hours.configure(state="disabled")
+                self.crew_member_starting_asking_hours.configure(state="normal")
+                self.crew_member_starting_asking_hours.delete(0, 'end')
+                self.crew_member_starting_asking_hours.configure(state="disabled")
             return
         elif len(selected_items) > 1:
             # Multiple items selected, disable the entry box and clear the name label
@@ -536,12 +544,24 @@ class TLScheduleManager(tk.Toplevel):
                         self.selected_name_working_hours = member_data.monthly_hours.get('starting_working_hours', 0)
                         self.selected_name_asking_hours = member_data.monthly_hours.get('starting_asking_hours', 0)
 
-                        self.crew_member_starting_working_hours.configure(placeholder_text=self.selected_name_working_hours, state="normal")
-                        self.crew_member_starting_asking_hours.configure(placeholder_text=self.selected_name_asking_hours, state="normal")
+                        self.crew_member_starting_working_hours.configure(state="normal")
+                        self.crew_member_starting_working_hours.delete(0, 'end')
+                        self.crew_member_starting_working_hours.insert(0, str(self.selected_name_working_hours))
+                        
+                        self.crew_member_starting_asking_hours.configure(state="normal")
+                        self.crew_member_starting_asking_hours.delete(0, 'end')
+                        self.crew_member_starting_asking_hours.insert(0, str(self.selected_name_asking_hours))
+                        
                         self.confirm_new_starting_hours_button.configure(state="normal")
                     else:
-                        self.crew_member_starting_working_hours.configure(placeholder_text="", state="disabled")
-                        self.crew_member_starting_asking_hours.configure(placeholder_text="", state="disabled")
+                        self.crew_member_starting_working_hours.configure(state="normal")
+                        self.crew_member_starting_working_hours.delete(0, 'end')
+                        self.crew_member_starting_working_hours.configure(state="disabled")
+                        
+                        self.crew_member_starting_asking_hours.configure(state="normal")
+                        self.crew_member_starting_asking_hours.delete(0, 'end')
+                        self.crew_member_starting_asking_hours.configure(state="disabled")
+                        
                         self.confirm_new_starting_hours_button.configure(state="disabled")
 
             # Get the name of the selected item
