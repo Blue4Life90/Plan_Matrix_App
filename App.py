@@ -427,7 +427,7 @@ class App(tk.Tk):
         """
         return lambda: None
     
-    def set_title_frame(self, user_selections):
+    def set_title_frame(self, user_selections, schedule_type):
         """
         Set up the title frame.
 
@@ -447,6 +447,7 @@ class App(tk.Tk):
         self.title_frame.update_calendar(user_selections["selected_crew"],
                                         user_selections["selected_month"],
                                         user_selections["selected_year"])
+        self.title_frame.update_labels(schedule_type)  # Add this line
     
     def set_hours_frame(self, user_selections, schedule_type):
         """
@@ -512,7 +513,7 @@ class App(tk.Tk):
         """
 
         self.user_selections = user_selections
-        self.set_title_frame(self.user_selections)
+        self.set_title_frame(self.user_selections, selected_schedule_type)
         
         if not hasattr(self, 'loading_overlay') or not self.loading_overlay.winfo_exists():
             self.init_loading_overlay()
@@ -1104,7 +1105,7 @@ class App(tk.Tk):
                 span_commands = self.generate_overtime_span_commands(schedule_data)
             elif "WS" in filename:
                 header_text = self.generate_header_text("Work Schedule")
-                table_data = self.generate_work_schedule_table_data(schedule_data, HEADER_STYLE, DATA_STYLE)
+                table_data, cell_styles = self.generate_work_schedule_table_data(schedule_data, HEADER_STYLE, DATA_STYLE)
                 span_commands = []
             else:
                 logging.error("Invalid schedule type. Check filename in generate_schedule_pdf method")
@@ -1122,6 +1123,10 @@ class App(tk.Tk):
             # Create the table and apply the styles
             table = Table(table_data)
             table.setStyle(table_style)
+            
+            # Apply cell styles only for work schedule
+            if "WS" in filename:
+                table.setStyle(TableStyle(cell_styles))
 
             # Build the PDF document with the header and table
             elements = [header_table, table]
@@ -1219,9 +1224,28 @@ class App(tk.Tk):
                 for i in range(num_days_in_month)
             ]
         ]
+        
+        cell_styles = []
+        
         for name, row_data in schedule_data:
-            table_data.append([Paragraph(name, data_style)] + [Paragraph(data, data_style) for data in row_data])
-        return table_data
+            row = [Paragraph(name, data_style)]
+            for data in row_data:
+                if data in constants.COLOR_SPECS:
+                    bg_color = constants.COLOR_SPECS[data]["label_bg"]
+                    text_color = constants.COLOR_SPECS[data]["label_text"]
+                    cell_style = ParagraphStyle(
+                        f'colored_cell_{data}',
+                        parent=data_style,
+                        textColor=colors.HexColor(text_color),
+                        backColor=colors.HexColor(bg_color)
+                    )
+                    row.append(Paragraph(data, cell_style))
+                    cell_styles.append(('BACKGROUND', (len(row)-1, len(table_data)), (len(row)-1, len(table_data)), colors.HexColor(bg_color)))
+                else:
+                    row.append(Paragraph(data, data_style))
+            table_data.append(row)
+
+        return table_data, cell_styles
 
     def generate_overtime_span_commands(self, schedule_data):
         """
