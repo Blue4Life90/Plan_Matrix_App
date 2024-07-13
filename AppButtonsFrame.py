@@ -101,7 +101,6 @@ class LeftPaneButtonFrame(ctk.CTkFrame):
                                                 command=switch_command)
         self.switch_schedules_button.pack(padx=10, pady=5)
         
-        # Create a button widget
         self.save_entries_button = ctk.CTkButton(self.frame_for_nav_pane_buttons, text="Save", 
                                                  width=200, height=40, 
                                                  font=("Calibri", 16, "bold"), 
@@ -110,6 +109,20 @@ class LeftPaneButtonFrame(ctk.CTkFrame):
                                                  command=self.save_member_data_method)
         self.save_entries_button.pack(padx=10, pady=5)
         
+        self.print_schedule_button = ctk.CTkButton(
+            self.frame_for_nav_pane_buttons, 
+            text="Print", 
+            width=200, height=40,
+            font=("Calibri", 16, "bold"),
+            fg_color=BUTTON_FG_COLOR, 
+            hover_color=BUTTON_HOVER_BG_COLOR, 
+            command=self.print_current_schedule
+        )
+        self.print_schedule_button.pack(padx=10, pady=5)
+        
+    def print_current_schedule(self):
+        self.parent.master.print_current_schedule()
+    
     def update_switch_button(self, schedule_type, switch_command):
         if schedule_type == "Overtime":
             switch_text = "Overtime Schedule"

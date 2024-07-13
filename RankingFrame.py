@@ -1,5 +1,6 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
+import tkinter as tk
 
 # Third-Party Library Imports
 import customtkinter as ctk # type: ignore
@@ -8,13 +9,38 @@ import customtkinter as ctk # type: ignore
 from constants import APP_BG_COLOR, PANE_BG_COLOR, TEXT_COLOR
 from constants import ASKING_HRS_FG_COLOR, ASKING_HRS_BG_COLOR
 from constants import WORKING_HRS_FG_COLOR, WORKING_HRS_BG_COLOR
+from constants import SCROLLBAR_FG_COLOR, SCROLLBAR_HOVER_COLOR
 
 class RankingFrame(ctk.CTkFrame):
     def __init__(self, parent, schedule_hrs_frame):
         super().__init__(parent, bg_color=PANE_BG_COLOR, fg_color=PANE_BG_COLOR)
         self.schedule_hrs_frame = schedule_hrs_frame
 
+        # Create a canvas and inner frame
+        self.canvas = tk.Canvas(self, bg=PANE_BG_COLOR, width=200, height=400, highlightthickness=0)
+        self.inner_frame = tk.Frame(self.canvas, bg=PANE_BG_COLOR)
+
+        # Create a scrollbar and configure it
+        self.scrollbar = ctk.CTkScrollbar(self, orientation="vertical", command=self.canvas.yview,
+                                          fg_color=PANE_BG_COLOR, button_color=SCROLLBAR_FG_COLOR,
+                                          button_hover_color=SCROLLBAR_HOVER_COLOR)
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        # Pack the scrollbar and canvas
+        self.scrollbar.grid(row=1, column=1, sticky="ns")
+        self.canvas.grid(row=1, column=0, sticky="nsew")
+
+        # Create a window in the canvas for the inner frame
+        self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
+
         # Create header row
+        self.inner_frame.rowconfigure(0, weight=0)  # Don't allow the switch frame to expand
+        self.inner_frame.rowconfigure(1, weight=0)  # Don't allow the header row to expand
+        self.inner_frame.rowconfigure(2, weight=1)  # Allow the ranking rows to expand
+        self.inner_frame.columnconfigure(0, weight=1)  # Allow the header columns to expand horizontally
+        self.inner_frame.columnconfigure(1, weight=1)
+        self.inner_frame.columnconfigure(2, weight=1)
+
         self.rowconfigure(0, weight=0)  # Don't allow the switch frame to expand
         self.rowconfigure(1, weight=0)  # Don't allow the header row to expand
         self.rowconfigure(2, weight=1)  # Allow the ranking rows to expand
@@ -24,6 +50,7 @@ class RankingFrame(ctk.CTkFrame):
 
         # Create a frame to hold the switch and its label
         self.switch_frame = ctk.CTkFrame(self, fg_color=APP_BG_COLOR)
+        #self.switch_frame.pack(side="top", padx=5, pady=5, fill="x")
         self.switch_frame.grid(row=0, column=0, columnspan=3, padx=5, pady=5, sticky="ew")
 
         self.switch_label = ctk.CTkLabel(
@@ -46,10 +73,17 @@ class RankingFrame(ctk.CTkFrame):
 
         self.create_ranking_labels()
         self.sort_ranking_labels()
+        
+        for i in range(3):
+            self.inner_frame.columnconfigure(i, weight=1)
+            
+        self.update_idletasks()
+        self.update_scrollbar()
+        self.delayed_layout_update()
 
     def create_label_frame(self, parent, text, is_working_hours=False, is_name=False):
         frame = ctk.CTkFrame(
-            parent, width=40, height=20, 
+            parent, width=30, height=20, 
             bg_color=PANE_BG_COLOR, 
             fg_color=PANE_BG_COLOR
         )
@@ -67,7 +101,7 @@ class RankingFrame(ctk.CTkFrame):
             font=("Calibri", 12, "bold"), 
             text_color=label_color
         )
-        label.pack(expand=True, fill="both")
+        label.grid(sticky="nsew")
         return frame
     
     def calculate_total_working_hours(self, member_frame):
@@ -97,18 +131,20 @@ class RankingFrame(ctk.CTkFrame):
             name_frame = self.create_label_frame(
                 self, member_name, is_name=True
             )
-            name_frame.grid(row=i, column=0, padx=5, pady=5)
+            name_frame.grid(row=i, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
             tw_frame = self.create_label_frame(
                 self, total_working_hours, is_working_hours=True
             )
-            tw_frame.grid(row=i, column=1, padx=5, pady=5)
+            tw_frame.grid(row=i, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
             ta_frame = self.create_label_frame(
                 self, total_asking_hours, 
                 is_name=False, is_working_hours=False
             )
-            ta_frame.grid(row=i, column=2, padx=5, pady=5)
+            ta_frame.grid(row=i, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+            
+        self.update_scrollbar()
             
     def update_ranking(self, member_frame, modified_entry):
         # Check if the modified entry value is valid
@@ -125,17 +161,17 @@ class RankingFrame(ctk.CTkFrame):
         row_index = self.schedule_hrs_frame.frames.index(member_frame) + 1
 
         # Check if the name frame exists, create it if not
-        name_frame = self.grid_slaves(row=row_index, column=0)
+        name_frame = self.inner_frame.grid_slaves(row=row_index, column=0)
         if name_frame:
             name_frame[0].winfo_children()[0].configure(text=member_name)
         else:
             name_frame = self.create_label_frame(
                 self, member_name, is_name=True
             )
-            name_frame.grid(row=row_index, column=0, padx=5, pady=5)
+            name_frame.grid(row=row_index, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
         # Check if the tw frame exists, create it if not
-        tw_frame = self.grid_slaves(row=row_index, column=1)
+        tw_frame = self.inner_frame.grid_slaves(row=row_index, column=1)
         if tw_frame:
             tw_frame[0].winfo_children()[0].configure(
                 text=total_working_hours
@@ -145,10 +181,10 @@ class RankingFrame(ctk.CTkFrame):
                 self, total_working_hours, 
                 is_working_hours=True
             )
-            tw_frame.grid(row=row_index, column=1, padx=5, pady=5)
+            tw_frame.grid(row=row_index, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
         # Check if the ta frame exists, create it if not
-        ta_frame = self.grid_slaves(row=row_index, column=2)
+        ta_frame = self.inner_frame.grid_slaves(row=row_index, column=2)
         if ta_frame:
             ta_frame[0].winfo_children()[0].configure(text=total_asking_hours)
         else:
@@ -156,10 +192,24 @@ class RankingFrame(ctk.CTkFrame):
                 self, total_asking_hours, 
                 is_name=False, is_working_hours=False
             )
-            ta_frame.grid(row=row_index, column=2, padx=5, pady=5)
+            ta_frame.grid(row=row_index, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
         self.sort_ranking_labels()
-            
+        
+    def update_scrollbar(self):
+        self.canvas.update_idletasks()
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.inner_frame.update_idletasks()
+        canvas_width = self.canvas.winfo_width()
+        self.canvas.itemconfig(
+            self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw"),
+            width=canvas_width
+        )
+        self.inner_frame.config(width=canvas_width)
+        
+    def delayed_layout_update(self):
+        self.after(100, self.update_scrollbar)
+    
     def sort_switch_event(self):
         if self.sort_switch_var.get() == "asking":
             self.sort_ranking_labels(sort_key=self.sort_by_asking_hours_key)
@@ -202,7 +252,7 @@ class RankingFrame(ctk.CTkFrame):
         ranking_data.sort(key=sort_key, reverse=True)
 
         # Clear the existing ranking labels
-        for widget in self.grid_slaves():
+        for widget in self.inner_frame.grid_slaves():
             if int(widget.grid_info()["row"]) > 0:  # Skip the header row
                 widget.destroy()
 
@@ -211,22 +261,24 @@ class RankingFrame(ctk.CTkFrame):
             name_frame = self.create_label_frame(
                 self, member_name, is_name=True
             )
-            name_frame.grid(row=i, column=0, padx=5, pady=5)
+            name_frame.grid(row=i, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
             tw_frame = self.create_label_frame(
                 self, total_working_hours, is_working_hours=True
             )
-            tw_frame.grid(row=i, column=1, padx=5, pady=5)
+            tw_frame.grid(row=i, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
             ta_frame = self.create_label_frame(
                 self, total_asking_hours, 
                 is_name=False, is_working_hours=False
             )
-            ta_frame.grid(row=i, column=2, padx=5, pady=5)
+            ta_frame.grid(row=i, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+            
+        self.update_scrollbar()
             
     def rebuild_ranking_system(self):
         # Clear the existing ranking labels
-        for widget in self.grid_slaves():
+        for widget in self.inner_frame.grid_slaves():
             if int(widget.grid_info()["row"]) > 0:  # Skip the header row
                 widget.destroy()
 
