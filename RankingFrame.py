@@ -223,3 +223,18 @@ class RankingFrame(ctk.CTkFrame):
                 is_name=False, is_working_hours=False
             )
             ta_frame.grid(row=i, column=2, padx=5, pady=5)
+            
+    def rebuild_ranking_system(self):
+        # Clear the existing ranking labels
+        for widget in self.grid_slaves():
+            if int(widget.grid_info()["row"]) > 0:  # Skip the header row
+                widget.destroy()
+
+        # Create new ranking labels
+        self.create_ranking_labels()
+
+        # Toggle the sort switch to update the ranking
+        current_sort_state = self.sort_switch_var.get()
+        new_sort_state = "working" if current_sort_state == "asking" else "asking"
+        self.sort_switch_var.set(new_sort_state)
+        self.sort_switch_event()

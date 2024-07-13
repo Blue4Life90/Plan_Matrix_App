@@ -408,6 +408,10 @@ class ScheduleHrsFrame(tk.Frame):
         self.get_labels()
         self.adjust_canvas_size()
         
+        # Rebuild the ranking system after updating the frames
+        if self.ranking_frame:
+            self.ranking_frame.rebuild_ranking_system()
+        
         def check_frames_created():
             if self.schedule_type == "Overtime":
                 if len(self.frames) == self.crew_member_count:
