@@ -5,6 +5,8 @@ import sys
 import csv
 import time
 import logging
+import subprocess
+import webbrowser
 import threading
 import tkinter as tk
 from tkinter import ttk
@@ -706,6 +708,7 @@ class App(tk.Tk):
     Menu Bar Options
     
     """
+    
     def open_access_level_manager(self):
         """
         File menu option:
@@ -854,16 +857,27 @@ class App(tk.Tk):
         self.wait_window(self.schedule_hrs_frame.schedule_manager)
         self.hide_loading_overlay()
             
-    # TODO: Create the PDF
-    # TODO: Implement this function
     def show_about(self):
         """
         Help Menu Option: Display the about information.
 
-        This method is a placeholder for future implementation.
-        Opens the schedule overview from the menu.
+        This method opens the "Plan_Matrix_Doc.pdf" file when the user selects the "About" option from the Help menu.
+        It includes error handling for different scenarios.
         """
-        pass
+        pdf_path = "Plan_Matrix_Doc.pdf"
+        
+        if os.path.exists(pdf_path):
+            try:
+                if sys.platform == "win32":
+                    os.startfile(pdf_path)
+                else:
+                    subprocess.run(["open", pdf_path], check=True)
+            except Exception as e:
+                logging.error(f"Error occurred while opening the PDF file: {str(e)}")
+                messagebox.showerror("Error", "Failed to open the PDF file. Please check the application logs for more details.")
+        else:
+            logging.error(f"The 'Plan_Matrix_Doc.pdf' file was not found at path: {pdf_path}")
+            messagebox.showerror("File Not Found", "The 'Plan_Matrix_Doc.pdf' file was not found. Please ensure the file exists in the specified location.")
             
     # TODO: Test this function
     def contact_for_help(self):

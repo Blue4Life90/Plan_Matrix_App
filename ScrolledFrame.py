@@ -44,7 +44,7 @@ class ScrolledFrame(tk.Frame):
         screen_height = self.winfo_screenheight()
 
         canvas_width = int(screen_width * 0.77)
-        canvas_height = int(screen_height * 0.8)
+        canvas_height = int(screen_height * 0.85)
 
         self.canvas.configure(width=canvas_width, height=canvas_height)
 

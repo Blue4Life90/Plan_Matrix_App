@@ -1,0 +1,8 @@
+Alright, here's where we're at.
+
+RankingFrame - Loads too slow, there is a faster load time method in the chat history
+RankingFrame - Needs extensive testing once finalized and integrated with new changes
+RankingFrame - Center the buttons under build_work_schedule_frame method
+WorkScheduleMatrixFrame - We are Removing the Legend at the bottom of the page and replacing with Overtime Entries
+WorkScheduleMatrixFrame - Need to build in saves for this in json_functions.py
+WorkScheduleMatrixFrame - Overtime personnel must remain separate from ScheduleManager editing

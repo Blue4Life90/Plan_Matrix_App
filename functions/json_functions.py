@@ -8,6 +8,7 @@ import logging
 
 # Local Application/Library Specific Imports
 from constants import log_file
+from constants import LEGEND_CODES
 from PathConfig import get_shared_path
 from CrewMemberHours import CrewMemberHours
 
@@ -408,3 +409,7 @@ def move_person_data(user_selections, moved_personnel, schedule_type):
     # Save the updated JSON data back to the file
     with open(json_filepath, 'w') as file:
         json.dump(data, file, indent=4)
+        
+def save_legend_job_codes(job_codes):
+    with open(LEGEND_CODES, 'w') as file:
+        json.dump(job_codes, file, indent=4)

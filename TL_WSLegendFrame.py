@@ -1,5 +1,6 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
+import json
 
 # Third-Party Library Imports
 import customtkinter as ctk # type: ignore
@@ -7,6 +8,7 @@ import customtkinter as ctk # type: ignore
 # Local Application/Library Specific Imports
 from constants import APP_BG_COLOR, PANE_BG_COLOR, TEXT_COLOR
 from constants import COLOR_SPECS, ASSIGNMENT_CODES
+from constants import LEGEND_CODES
 from constants import BG_COLOR
 import functions.app_functions as app_functions
 
@@ -48,6 +50,13 @@ class WSLegendWindow(ctk.CTkToplevel):
         
         self.create_assignment_code_frame_widgets()
         
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.grab_set()  # This prevents interaction with the main window
+
+    def on_closing(self):
+        self.grab_release()
+        self.destroy()
+        
     def create_job_code_frame_widgets(self):
         # Header Label
         
@@ -60,17 +69,12 @@ class WSLegendWindow(ctk.CTkToplevel):
         )
         self.job_code_title_label.grid(row=0, column=0, columnspan=2, sticky="nsew", padx=10)
         
-        # Define a dictionary with label texts
-        job_codes = {
-            "FCC HO": "1",
-            "Alky HO": "2",
-            "FCC Console": "3",
-            "Alky Console": "4",
-            "Alky Operator": "5",
-            "67/40 Operator": "6",
-            "Cracker Operator": "7",
-            "Recovery Operator": "8"
-        }
+        # Load job codes from the JSON file
+        try:
+            with open(LEGEND_CODES, 'r') as file:
+                job_codes = json.load(file)
+        except FileNotFoundError:
+            job_codes = {}
         
         # Create labels dynamically using a loop
         for index, (title, code) in enumerate(job_codes.items(), start=1):
@@ -160,6 +164,7 @@ def center_window(window):
     height = window.winfo_height()
     x = (window.winfo_screenwidth() // 2) - (width // 2)
     y = (window.winfo_screenheight() // 2) - (height // 2)
+    window.lift()
 
 if __name__ == "__main__":
     app = TestLegendApp()

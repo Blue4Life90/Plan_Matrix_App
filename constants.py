@@ -49,6 +49,8 @@ log_file = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs
 TRACKING_LOGS_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "TrackingLogs"))
 USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
 USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
+USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry"))
+LEGEND_CODES = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "ws_legend_codes.json"))
 ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry", "access_levels.enc"))
 
 # Create the directory if it doesn't exist
