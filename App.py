@@ -934,11 +934,21 @@ class App(tk.Tk):
                 schedule_data.append((name, starting_working_hours, working_hours_data))
                 schedule_data.append(("", starting_asking_hours, asking_hours_data))
         elif schedule_type == "work_schedule":
+            # Personnel Schedule Data
             schedule_data = []
             for frame in self.schedule_hrs_frame.work_schedule_frames:
                 name = frame.labels[0].cget("text")
                 row_data = [str(entry.get()) for entry in frame.crew_member_role_entries]
                 schedule_data.append((name, row_data))
+            #TODO
+            # Overtime Personnel Data    
+            overtime_data = []
+            for label, entry_row in zip(self.schedule_hrs_frame.overtime_frame.labels, self.schedule_hrs_frame.overtime_frame.entries):
+                slot_name = label.cget("text")
+                slot_data = [entry.get() for entry in entry_row]
+                overtime_data.append((slot_name, slot_data))
+            
+            return schedule_data, overtime_data
         else:
             schedule_data = []
             
@@ -1121,7 +1131,8 @@ class App(tk.Tk):
                 span_commands = self.generate_overtime_span_commands(schedule_data)
             elif "WS" in filename:
                 header_text = self.generate_header_text("Work Schedule")
-                table_data, cell_styles = self.generate_work_schedule_table_data(schedule_data, HEADER_STYLE, DATA_STYLE)
+                regular_schedule, overtime_data = schedule_data
+                table_data, cell_styles = self.generate_work_schedule_table_data(regular_schedule, overtime_data, HEADER_STYLE, DATA_STYLE)
                 span_commands = []
             else:
                 logging.error("Invalid schedule type. Check filename in generate_schedule_pdf method")
@@ -1209,7 +1220,7 @@ class App(tk.Tk):
                 table_data.append(['', Paragraph(starting_hours, data_style)] + [Paragraph(data, data_style) for data in hours_data])
         return table_data
 
-    def generate_work_schedule_table_data(self, schedule_data, header_style, data_style):
+    def generate_work_schedule_table_data(self, schedule_data, overtime_data, header_style, data_style):
         """
         Generate the table data for the work schedule PDF.
 
@@ -1246,6 +1257,50 @@ class App(tk.Tk):
         for name, row_data in schedule_data:
             row = [Paragraph(name, data_style)]
             for data in row_data:
+                if data in constants.COLOR_SPECS:
+                    bg_color = constants.COLOR_SPECS[data]["label_bg"]
+                    text_color = constants.COLOR_SPECS[data]["label_text"]
+                    cell_style = ParagraphStyle(
+                        f'colored_cell_{data}',
+                        parent=data_style,
+                        textColor=colors.HexColor(text_color),
+                        backColor=colors.HexColor(bg_color)
+                    )
+                    row.append(Paragraph(data, cell_style))
+                    cell_styles.append(('BACKGROUND', (len(row)-1, len(table_data)), (len(row)-1, len(table_data)), colors.HexColor(bg_color)))
+                else:
+                    row.append(Paragraph(data, data_style))
+            table_data.append(row)
+            
+        # Add a separator row with "Overtime" title
+        separator_style = ParagraphStyle(
+            'separator',
+            parent=header_style,
+            fontSize=12,
+            textColor=colors.HexColor("#FFFFFF"),
+            backColor=colors.HexColor("#05016e"),
+            alignment=TA_CENTER
+        )
+        separator_row = [Paragraph("Overtime", separator_style)]
+        table_data.append(separator_row)
+
+        # Add style for the separator row
+        separator_row_index = len(table_data) - 1
+        cell_styles.append(('BACKGROUND', (0, separator_row_index), (-1, separator_row_index), colors.HexColor("#05016e")))
+        cell_styles.append(('SPAN', (0, separator_row_index), (-1, separator_row_index)))
+        cell_styles.append(('ALIGN', (0, separator_row_index), (-1, separator_row_index), 'CENTER'))
+        cell_styles.append(('VALIGN', (0, separator_row_index), (-1, separator_row_index), 'MIDDLE'))
+        
+        # Add style for the separator row
+        cell_styles.append(('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#05016e")))
+        cell_styles.append(('SPAN', (0, -1), (-1, -1)))
+        cell_styles.append(('ALIGN', (0, -1), (-1, -1), 'CENTER'))
+        cell_styles.append(('VALIGN', (0, -1), (-1, -1), 'MIDDLE'))
+
+        # Add overtime slots data
+        for slot_name, slot_data in overtime_data:
+            row = [Paragraph(slot_name, data_style)]
+            for data in slot_data:
                 if data in constants.COLOR_SPECS:
                     bg_color = constants.COLOR_SPECS[data]["label_bg"]
                     text_color = constants.COLOR_SPECS[data]["label_text"]
