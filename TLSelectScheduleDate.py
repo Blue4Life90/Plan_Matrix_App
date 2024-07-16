@@ -190,7 +190,7 @@ class TLSelectScheduleDate(tk.Toplevel):
     def update_schedule_type(self, *args):
         selected_type = self.schedule_type.get()
         if selected_type == "Overtime":
-            self.selected_schedule_type = "overtime"
+            self.selected_schedule_type = "Overtime"
         elif selected_type == "Work Schedule":
             self.selected_schedule_type = "work_schedule"
     
