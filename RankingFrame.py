@@ -118,6 +118,10 @@ class RankingFrame(ctk.CTkFrame):
         self.delayed_layout_update()
             
     def build_work_schedule_frame(self):
+        # Configure the main frame to expand the columns equally
+        self.main_frame.grid_columnconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(1, weight=1)
+        
         self.view_legend_button = ctk.CTkButton(
             self.main_frame,
             text="View Legend",
@@ -126,7 +130,7 @@ class RankingFrame(ctk.CTkFrame):
             hover_color=BUTTON_HOVER_BG_COLOR,
             text_color=TEXT_COLOR
         )
-        self.view_legend_button.grid(row=0, column=0, columnspan=2, padx=20, pady=(10, 5), sticky="ew")
+        self.view_legend_button.grid(row=0, column=0, columnspan=3, padx=20, pady=(10, 5), sticky="ew")
         
         self.define_job_codes_button = ctk.CTkButton(
             self.main_frame,
@@ -136,7 +140,7 @@ class RankingFrame(ctk.CTkFrame):
             hover_color=BUTTON_HOVER_BG_COLOR,
             text_color=TEXT_COLOR
         )
-        self.define_job_codes_button.grid(row=1, column=0, columnspan=2, padx=20, pady=(5, 10), sticky="ew")
+        self.define_job_codes_button.grid(row=1, column=0, columnspan=3, padx=20, pady=(5, 10), sticky="ew")
 
     def clear_content(self):
         for widget in self.winfo_children():
@@ -267,7 +271,7 @@ class RankingFrame(ctk.CTkFrame):
             )
             ta_frame.grid(row=row_index, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-        self.sort_ranking_labels()
+        self.sort_ranking_labels
         
     def update_scrollbar(self):
         if hasattr(self, 'canvas') and self.canvas:

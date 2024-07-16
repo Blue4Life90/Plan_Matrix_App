@@ -1,8 +1,6 @@
-Alright, here's where we're at.
-
-RankingFrame - Loads too slow, there is a faster load time method in the chat history
-RankingFrame - Needs extensive testing once finalized and integrated with new changes
-RankingFrame - Center the buttons under build_work_schedule_frame method
-WorkScheduleMatrixFrame - We are Removing the Legend at the bottom of the page and replacing with Overtime Entries
-WorkScheduleMatrixFrame - Need to build in saves for this in json_functions.py
-WorkScheduleMatrixFrame - Overtime personnel must remain separate from ScheduleManager editing
+Update: -WorkScheduleMatrixFrame 
+WorkScheduleMatrixFrame - Removed the Legend at the bottom of the page and replaced with Overtime Entries; Need to built in saves for this in json_functions.py; Overtime personnel remain separate from ScheduleManager editing;
+BugFix: -RankingFrame
+RankingFrame - Bug is Fixed. Updates properly after reorienting the FocusOut binding
+TODO:
+There is a bug in which the App is remaining withdrawn after making user_selections. Fix so it doesn't stay hidded. Open_input_window must be withdrawn or destroyed as well.

@@ -355,21 +355,33 @@ def save_hours_data_to_json(crew_member_hours, crew, year, schedule_type, month)
         json.dump(existing_data, file, indent=4)
 
 def update_subsequent_months(existing_data, crew, year, schedule_type, month):
+    """
+    Propagates the updated hours data from the current month to the subsequent months.
+    
+    Parameters:
+    - existing_data: The existing JSON data structure containing crew member hours.
+    - crew: The crew identifier.
+    - year: The year for which the data is being updated.
+    - schedule_type: The type of schedule (e.g., "Overtime").
+    - month: The current month number.
+    """
     if schedule_type == "Overtime":
         for subsequent_month in range(month + 1, 13):
             subsequent_month_str = str(subsequent_month)
+            previous_month_str = str(subsequent_month - 1)
             if subsequent_month_str in existing_data['month']:
                 for name, crew_member_data in existing_data['month'][subsequent_month_str].items():
-                    if name != "[placeholder]":
-                        previous_month_str = str(subsequent_month - 1)
+                    if name in existing_data['month'][previous_month_str]:
                         previous_month_data = existing_data['month'][previous_month_str][name]['monthly_hours']
                         crew_member_data['monthly_hours']['starting_asking_hours'] = previous_month_data['total_asking_hours']
                         crew_member_data['monthly_hours']['starting_working_hours'] = previous_month_data['total_working_hours']
                         crew_member_data['monthly_hours']['total_asking_hours'] = previous_month_data['total_asking_hours'] + sum(
                             int(hours) for hours in crew_member_data['monthly_hours']['asking_hours_data'] if hours.isdigit()
                         )
-                        crew_member_data['monthly_hours']['total_working_hours'] = previous_month_data['total_working_hours'] + sum(int(hours) for hours in crew_member_data['monthly_hours']['working_hours_data'] if hours.isdigit())
-      
+                        crew_member_data['monthly_hours']['total_working_hours'] = previous_month_data['total_working_hours'] + sum(
+                            int(hours) for hours in crew_member_data['monthly_hours']['working_hours_data'] if hours.isdigit()
+                        )
+
 def move_person_data(user_selections, moved_personnel, schedule_type):
     if schedule_type == "Overtime":
         schedule_prefix = "OT"

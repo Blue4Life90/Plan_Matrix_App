@@ -516,6 +516,8 @@ class App(tk.Tk):
 
         self.user_selections = user_selections
         self.set_title_frame(self.user_selections, selected_schedule_type)
+        print(selected_schedule_type)
+        print(user_selections)
         
         if not hasattr(self, 'loading_overlay') or not self.loading_overlay.winfo_exists():
             self.init_loading_overlay()

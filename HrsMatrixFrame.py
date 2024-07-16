@@ -158,7 +158,7 @@ class HrsMatrixFrame(tk.Frame):
             working_hours_entry.bind(
                 "<FocusOut>", 
                 lambda event, 
-                entry=working_hours_entry: [self.entry_modified(entry), self.update_column_sums(event)]
+                entry=working_hours_entry: [self.update_column_sums(event), self.entry_modified(entry)]
             )
             self.working_hours_entries.append(working_hours_entry)
 
@@ -174,7 +174,7 @@ class HrsMatrixFrame(tk.Frame):
             asking_hours_entry.bind(
                 "<FocusOut>", 
                 lambda event, 
-                entry=asking_hours_entry: [self.entry_modified(entry), self.update_column_sums(event)]
+                entry=asking_hours_entry: [self.update_column_sums(event), self.entry_modified(entry)]
             )
             self.asking_hours_entries.append(asking_hours_entry)
 

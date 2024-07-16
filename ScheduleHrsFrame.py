@@ -14,10 +14,10 @@ from functions.app_functions import apply_entry_color_specs
 from functions.app_functions import lock_and_color_entry_widgets
 from functions.json_functions import load_hours_data_from_json, save_hours_data_to_json
 from constants import log_file
-from constants import APP_BG_COLOR
+from constants import APP_BG_COLOR, TEXT_COLOR
 from constants import SCROLLBAR_FG_COLOR, SCROLLBAR_HOVER_COLOR
 from HdrDateGrid import HdrDateGrid
-from WSLegendFrame import WSLegendWindow
+from OvertimeSlots import OvertimeSlots
 from CrewMemberHours import CrewMemberHours
 from HrsMatrixFrame import HrsMatrixFrame
 from TLScheduleManager import TLScheduleManager
@@ -113,8 +113,6 @@ class ScheduleHrsFrame(tk.Frame):
 
         # Create a window in the canvas for the inner frame
         self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw")
-        
-        self.legend_frame = WSLegendWindow(self.inner_frame)
 
         self.create_frames()
         self.get_labels()
@@ -122,15 +120,15 @@ class ScheduleHrsFrame(tk.Frame):
         # Configure the canvas to expand and fill
         self.canvas.bind("<Configure>", self.on_canvas_configure)
     
-    def display_legend(self):        
-        if self.schedule_type == "work_schedule":
-            if not hasattr(self, 'legend_frame') or not self.legend_frame.winfo_exists():
-                self.legend_frame = WSLegendWindow(self.inner_frame)
-                self.legend_frame.pack_propagate(False)
-                
-            WorkScheduleMatrixFrame.update_idletasks(self)
-            self.legend_frame.pack(fill="x", expand=True, side=tk.BOTTOM)
-            self.adjust_canvas_size()
+    def create_overtime_section(self):
+        self.overtime_slot_title_frame = tk.Frame(self.inner_frame, bg=APP_BG_COLOR)
+        self.overtime_slot_title_frame.pack(fill="x", pady=(10, 0))
+        title_label = tk.Label(self.overtime_slot_title_frame, text="Scheduled Overtime", font=("Calibri", 14, "bold"), bg=APP_BG_COLOR, fg=TEXT_COLOR)
+        title_label.pack()
+
+        self.overtime_frame = OvertimeSlots(self.inner_frame, self.hdr_date_grid, self.user_selections)
+        self.overtime_frame.pack(fill="x", expand=True, pady=(5, 10))
+        self.overtime_frame.load_overtime_data()
     
     def load_workbook_data(self, json_filename, worksheet_name, schedule_type):
         """
@@ -236,7 +234,7 @@ class ScheduleHrsFrame(tk.Frame):
                         int(monthly_hours['starting_asking_hours'])
 )
                 save_hours_data_to_json(self.crew_member_hours, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, self.schedule_type, month_number)
-
+                
             elif self.schedule_type == "work_schedule":
                 for i, frame in enumerate(self.work_schedule_frames, start=2):
                     name = frame.labels[0].cget("text")
@@ -255,6 +253,7 @@ class ScheduleHrsFrame(tk.Frame):
                     member.monthly_hours[month_str]['entry_data'] = role_data
 
                 save_hours_data_to_json(self.crew_member_hours, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, self.schedule_type, month_number)
+                self.overtime_frame.save_overtime_data()
 
         except Exception as e:
             logging.error(f"An error occurred while saving data to JSON file: {str(e)}")
@@ -397,13 +396,12 @@ class ScheduleHrsFrame(tk.Frame):
                     apply_entry_color_specs(entry, role)
 
             self.work_schedule_frames = frames
+            self.create_overtime_section()
             
             if self.access_level == "read-only":
                 for frame in self.work_schedule_frames:
                     lock_and_color_entry_widgets(frame)                  
 
-
-        self.display_legend()
         self.update_scrollbar()
         self.get_labels()
         self.adjust_canvas_size()
@@ -437,7 +435,9 @@ class ScheduleHrsFrame(tk.Frame):
         if self.work_schedule_frames:
             for frame in self.work_schedule_frames:
                 frame.destroy()
-                self.legend_frame.destroy()
+                self.overtime_frame.destroy()
+                self.overtime_slot_title_frame.destroy()
+                
             self.work_schedule_frames.clear()
     
     def adjust_canvas_size(self):
@@ -455,8 +455,11 @@ class ScheduleHrsFrame(tk.Frame):
         If an exception occurs during the process, an error message is logged and displayed
         to the user.
         """
+
         self.selected_month = self.user_selections['selected_month'].month
         self.save_workbook_data(self.selected_month)
+        if self.schedule_type == "work_schedule":
+            self.overtime_frame.save_overtime_data()
         self.app.display_save_status()  # Ensure the save status is displayed
 
     def update_scrollbar(self):

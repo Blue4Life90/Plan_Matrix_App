@@ -98,7 +98,7 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.select_schedule_crew_label.grid(row=1, column=0, padx=10, pady=10, sticky="w")        
         
         self.select_schedule_crew = ctk.CTkComboBox(self.selection_frame, values=header_functions.crews_list())
-        #self.select_schedule_crew.set("A")
+        self.select_schedule_crew.set("")
         self.select_schedule_crew.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
 
         # Month Selection
@@ -110,7 +110,7 @@ class TLSelectScheduleDate(tk.Toplevel):
         self.select_schedule_month_label.grid(row=2, column=0, padx=10, pady=10, sticky="w")
         
         self.select_schedule_month = ctk.CTkComboBox(self.selection_frame, values=list(calendar.month_name)[1:])
-        #self.select_schedule_month.set(calendar.month_name[self.currentmonth])
+        self.select_schedule_month.set("")
         self.select_schedule_month.grid(row=2, column=1, padx=10, pady=10, sticky="ew")
         
         # Year Selection
@@ -185,7 +185,6 @@ class TLSelectScheduleDate(tk.Toplevel):
             variable=self.schedule_type 
         )
         schedule_type_combo.grid(row=4, column=1, padx=10, pady=10, sticky="ew")
-        schedule_type_combo.set("Overtime")  # Set the default value
         self.schedule_type.trace_add("write", self.update_schedule_type)
 
     def update_schedule_type(self, *args):
@@ -220,8 +219,16 @@ class TLSelectScheduleDate(tk.Toplevel):
     def selections_are_valid(self) -> bool:
         try:
             selected_year = int(self.select_schedule_year.get())
-            if selected_year > self.currentyear + 1 or str(self.select_schedule_crew.get()) == "":
-                messagebox.showerror("Invalid Selection", "Year > than current year was selected. Please select a valid year.")
+            selected_crew = self.select_schedule_crew.get()
+            selected_month = self.select_schedule_month.get()
+            selected_type = self.schedule_type.get()
+            
+            if not selected_crew or not selected_month or not selected_type:
+                messagebox.showerror("Invalid Selection", "Please select a crew, month, and schedule type.")
+                return False
+            
+            if selected_year > self.currentyear + 1:
+                messagebox.showerror("Invalid Selection", "Year greater than the current year + 1 was selected. Please select a valid year.")
                 logging.error("Invalid Selection", "User selection was >1 year past the current year")
                 return False
             return True
