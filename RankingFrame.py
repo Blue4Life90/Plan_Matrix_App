@@ -154,6 +154,8 @@ class RankingFrame(ctk.CTkFrame):
             text_color=TEXT_COLOR
         )
         self.edit_overtime_slots_button.grid(row=2, column=0, columnspan=3, padx=20, pady=(5, 10), sticky="ew")
+        
+        self.update_idletasks()
 
     def open_edit_overtime_slots_window(self):
         self.edit_overtime_slots_window = EditOvertimeSlotsWindow(self)
