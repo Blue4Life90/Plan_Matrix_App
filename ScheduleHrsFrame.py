@@ -18,6 +18,7 @@ from constants import APP_BG_COLOR, TEXT_COLOR
 from constants import SCROLLBAR_FG_COLOR, SCROLLBAR_HOVER_COLOR
 from HdrDateGrid import HdrDateGrid
 from OvertimeSlots import OvertimeSlots
+from OvertimeSlots import load_overtime_slots
 from CrewMemberHours import CrewMemberHours
 from HrsMatrixFrame import HrsMatrixFrame
 from TLScheduleManager import TLScheduleManager
@@ -126,9 +127,22 @@ class ScheduleHrsFrame(tk.Frame):
         title_label = tk.Label(self.overtime_slot_title_frame, text="Scheduled Overtime", font=("Calibri", 14, "bold"), bg=APP_BG_COLOR, fg=TEXT_COLOR)
         title_label.pack()
 
-        self.overtime_frame = OvertimeSlots(self.inner_frame, self.hdr_date_grid, self.user_selections)
-        self.overtime_frame.pack(fill="x", expand=True, pady=(5, 10))
+        overtime_data, num_slots = load_overtime_slots(
+            self.user_selections["selected_crew"], 
+            self.user_selections["selected_month"].month, 
+            self.user_selections["selected_year"].year
+        )
+        self.overtime_frame = OvertimeSlots(self.inner_frame, self.hdr_date_grid, self.user_selections, num_slots)
+        self.overtime_frame.pack(fill="x", expand="False", pady=(5, 10))
         self.overtime_frame.load_overtime_data()
+
+    def destroy_overtime_section(self):
+        if hasattr(self, 'overtime_slot_title_frame'):
+            self.overtime_slot_title_frame.destroy()
+            self.overtime_slot_title_frame = None
+        if hasattr(self, 'overtime_frame'):
+            self.overtime_frame.destroy()
+            self.overtime_frame = None
     
     def load_workbook_data(self, json_filename, worksheet_name, schedule_type):
         """
@@ -472,13 +486,14 @@ class ScheduleHrsFrame(tk.Frame):
         """
         self.canvas.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-        self.canvas.itemconfig(
-            self.canvas.create_window((0, 0), 
-                                      window=self.inner_frame, 
-                                      anchor="nw"
-            ),
-                            width=self.canvas.winfo_width() - self.scrollbar.winfo_width() - 5,
-                            height=self.inner_frame.winfo_reqheight())
+        if hasattr(self, 'inner_frame') and self.inner_frame:
+            self.inner_frame.update_idletasks()
+            canvas_width = self.canvas.winfo_width()
+            self.canvas.itemconfig(
+                self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw"),
+                width=canvas_width
+            )
+            self.inner_frame.config(width=canvas_width)
 
     def get_labels(self):
         """

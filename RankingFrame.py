@@ -2,6 +2,8 @@
 # Standard Library Imports
 import time
 import tkinter as tk
+from datetime import datetime
+from OvertimeSlots import OvertimeSlots
 
 # Third-Party Library Imports
 import customtkinter as ctk # type: ignore
@@ -118,7 +120,6 @@ class RankingFrame(ctk.CTkFrame):
         self.delayed_layout_update()
             
     def build_work_schedule_frame(self):
-        # Configure the main frame to expand the columns equally
         self.main_frame.grid_columnconfigure(0, weight=1)
         self.main_frame.grid_columnconfigure(1, weight=1)
         
@@ -140,8 +141,22 @@ class RankingFrame(ctk.CTkFrame):
             hover_color=BUTTON_HOVER_BG_COLOR,
             text_color=TEXT_COLOR
         )
-        self.define_job_codes_button.grid(row=1, column=0, columnspan=3, padx=20, pady=(5, 10), sticky="ew")
+        self.define_job_codes_button.grid(row=1, column=0, columnspan=3, padx=20, pady=(5, 5), sticky="ew")
 
+        self.edit_overtime_slots_button = ctk.CTkButton(
+            self.main_frame,
+            text="Edit Overtime Slots",
+            command=self.open_edit_overtime_slots_window,
+            fg_color=BUTTON_FG_COLOR,
+            hover_color=BUTTON_HOVER_BG_COLOR,
+            text_color=TEXT_COLOR
+        )
+        self.edit_overtime_slots_button.grid(row=2, column=0, columnspan=3, padx=20, pady=(5, 10), sticky="ew")
+
+    def open_edit_overtime_slots_window(self):
+        self.edit_overtime_slots_window = EditOvertimeSlotsWindow(self)
+        self.after(100, lambda: center_window(self.edit_overtime_slots_window))
+    
     def clear_content(self):
         for widget in self.winfo_children():
             widget.destroy()
@@ -420,6 +435,8 @@ class DefineJobCodesWindow(ctk.CTkToplevel):
         self.bind_shortcuts()
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.grab_set()  # This prevents interaction with the main window
+        
+        center_window(self)
 
     def on_closing(self):
         self.grab_release()
@@ -524,32 +541,96 @@ class DefineJobCodesWindow(ctk.CTkToplevel):
     
     def cancel(self):
         self.destroy()
-     
+
+class EditOvertimeSlotsWindow(ctk.CTkToplevel):
+    def __init__(self, parent):
+        super().__init__(parent, fg_color=APP_BG_COLOR)
+        self.parent = parent
+        self.title("Edit Overtime Slots")
+        self.geometry("300x200")
+        self.configure(bg=APP_BG_COLOR)
+
+        self.num_slots = tk.IntVar(value=4)
+
+        self.create_widgets()
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         
-# Mock ScheduleHrsFrame
-class MockScheduleHrsFrame:
-    def __init__(self):
-        #self.schedule_type = "work_schedule"
+        center_window(self)
+
+    def create_widgets(self):
+        label = ctk.CTkLabel(self, text="Number of Overtime Slots:", font=("Calibri", 14, "bold"), text_color=TEXT_COLOR)
+        label.pack(pady=(20, 5))
+
+        combobox_values = [str(i) for i in range(3, 11)]
+        self.combobox = ctk.CTkComboBox(self, values=combobox_values, variable=self.num_slots, font=("Calibri", 12), width=100)
+        self.combobox.pack(pady=(0, 10))
+
+        save_button = ctk.CTkButton(self, text="Save", command=self.save_changes, fg_color=BUTTON_FG_COLOR, hover_color=BUTTON_HOVER_BG_COLOR, text_color=TEXT_COLOR)
+        save_button.pack(pady=(5, 5))
+        
+        cancel_button = ctk.CTkButton(
+            self, text="Cancel", command=self.on_closing, 
+            fg_color=BUTTON_FG_COLOR, 
+            hover_color=BUTTON_HOVER_BG_COLOR, 
+            text_color=TEXT_COLOR
+        )
+        cancel_button.pack(pady=(5, 10))
+
+    def save_changes(self):
+        new_num_slots = int(self.combobox.get())
+        self.parent.schedule_hrs_frame.overtime_frame.update_overtime_slots(new_num_slots)
+        self.parent.schedule_hrs_frame.overtime_frame.save_overtime_data()
+        self.parent.schedule_hrs_frame.destroy_overtime_section()
+        self.parent.schedule_hrs_frame.create_overtime_section()
+        self.parent.schedule_hrs_frame.update_scrollbar()
+        self.parent.schedule_hrs_frame.adjust_canvas_size()
+        self.destroy()
+
+    def on_closing(self):
+        self.destroy()
+
+#TODO
+class MockScheduleHrsFrame(tk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
         self.schedule_type = "Overtime"
+        self.user_selections = {"selected_crew": "A", "selected_month": datetime(2024, 1, 1), "selected_year": datetime(2024, 1, 1)}
+        self.hdr_date_grid = DummyHdrDateGrid()
+        self.overtime_frame = OvertimeSlots(self, self.hdr_date_grid, self.user_selections)
+        self.overtime_frame.pack(expand=True, fill="both")
         self.frames = [MockMemberFrame() for _ in range(5)]  # Create 5 mock member frames
 
-class MockMemberFrame:
-    def __init__(self):
-        self.labels = [ctk.CTkLabel(None, text="Mock Member")]
+class MockMemberFrame(tk.Frame):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.labels = [tk.Label(self, text="Mock Member")]
         self.starting_working_hours = 40
-        self.working_hours_entries = [ctk.CTkEntry(None) for _ in range(7)]
-        self.asking_hours_tracking = [ctk.CTkLabel(None, text="50")]
+        self.working_hours_entries = [tk.Entry(self) for _ in range(7)]
+        self.asking_hours_tracking = [tk.Label(self, text="50")]
 
-# Main application
 class TestApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("RankingFrame Test")
-        self.geometry("300x500")
+        self.title("EditOvertimeSlotsWindow Test")
+        self.geometry("600x400")
 
-        self.schedule_hrs_frame = MockScheduleHrsFrame()
-        self.ranking_frame = RankingFrame(self, self.schedule_hrs_frame)
-        self.ranking_frame.pack(expand=True, fill="both", padx=10, pady=10)
+        self.schedule_hrs_frame = MockScheduleHrsFrame(self)
+        self.schedule_hrs_frame.pack(expand=True, fill="both", padx=10, pady=10)
+
+        self.edit_button = ctk.CTkButton(self, text="Edit Overtime Slots", command=self.open_edit_window)
+        self.edit_button.pack(pady=20)
+
+    def open_edit_window(self):
+        self.edit_window = EditOvertimeSlotsWindow(self)
+        self.edit_window.grab_set()
+
+    def rebuild_ranking_system(self):
+        # Placeholder for the method that rebuilds the ranking system
+        print("Rebuilding ranking system with new overtime slots...")
+
+class DummyHdrDateGrid:
+    def __init__(self):
+        self.dates = [datetime(2024, 1, day) for day in range(1, 32)]
 
 if __name__ == "__main__":
     app = TestApp()

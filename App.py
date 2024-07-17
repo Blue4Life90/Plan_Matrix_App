@@ -940,13 +940,14 @@ class App(tk.Tk):
                 name = frame.labels[0].cget("text")
                 row_data = [str(entry.get()) for entry in frame.crew_member_role_entries]
                 schedule_data.append((name, row_data))
-            #TODO
+
             # Overtime Personnel Data    
             overtime_data = []
             for label, entry_row in zip(self.schedule_hrs_frame.overtime_frame.labels, self.schedule_hrs_frame.overtime_frame.entries):
                 slot_name = label.cget("text")
                 slot_data = [entry.get() for entry in entry_row]
                 overtime_data.append((slot_name, slot_data))
+                print(overtime_data)
             
             return schedule_data, overtime_data
         else:
@@ -1290,31 +1291,17 @@ class App(tk.Tk):
         cell_styles.append(('SPAN', (0, separator_row_index), (-1, separator_row_index)))
         cell_styles.append(('ALIGN', (0, separator_row_index), (-1, separator_row_index), 'CENTER'))
         cell_styles.append(('VALIGN', (0, separator_row_index), (-1, separator_row_index), 'MIDDLE'))
-        
-        # Add style for the separator row
-        cell_styles.append(('BACKGROUND', (0, -1), (-1, -1), colors.HexColor("#05016e")))
-        cell_styles.append(('SPAN', (0, -1), (-1, -1)))
-        cell_styles.append(('ALIGN', (0, -1), (-1, -1), 'CENTER'))
-        cell_styles.append(('VALIGN', (0, -1), (-1, -1), 'MIDDLE'))
 
         # Add overtime slots data
         for slot_name, slot_data in overtime_data:
-            row = [Paragraph(slot_name, data_style)]
-            for data in slot_data:
+            row = [Paragraph(slot_name, data_style)] + [Paragraph(data, data_style) if data else '' for data in slot_data]
+            table_data.append(row)
+            for col, data in enumerate(slot_data):
                 if data in constants.COLOR_SPECS:
                     bg_color = constants.COLOR_SPECS[data]["label_bg"]
                     text_color = constants.COLOR_SPECS[data]["label_text"]
-                    cell_style = ParagraphStyle(
-                        f'colored_cell_{data}',
-                        parent=data_style,
-                        textColor=colors.HexColor(text_color),
-                        backColor=colors.HexColor(bg_color)
-                    )
-                    row.append(Paragraph(data, cell_style))
-                    cell_styles.append(('BACKGROUND', (len(row)-1, len(table_data)), (len(row)-1, len(table_data)), colors.HexColor(bg_color)))
-                else:
-                    row.append(Paragraph(data, data_style))
-            table_data.append(row)
+                    cell_styles.append(('BACKGROUND', (col+1, len(table_data)-1), (col+1, len(table_data)-1), colors.HexColor(bg_color)))
+                    cell_styles.append(('TEXTCOLOR', (col+1, len(table_data)-1), (col+1, len(table_data)-1), colors.HexColor(text_color)))
 
         return table_data, cell_styles
 

@@ -7,19 +7,16 @@ import os
 import json
 import logging
 import tkinter as tk
-from tkinter import messagebox
 
 # Third-Party Library Imports
-import customtkinter as ctk # type: ignore
 
 # Local Application/Library Specific Imports
 from PathConfig import get_shared_path
 from constants import APP_BG_COLOR, FG_COLOR
 from functions.header_functions import get_user_id
 from functions.app_functions import apply_entry_color_specs
-from functions.json_functions import create_hours_data_json
 
-def save_overtime_slots(data, crew, month, year):
+def save_overtime_slots(data, crew, month, year, num_slots):
     shared_path = get_shared_path() or os.getcwd()
     json_dir = os.path.normpath(os.path.join(shared_path, "SaveFiles", "OT_Slots"))
     os.makedirs(json_dir, exist_ok=True)  # Ensure the directory exists
@@ -35,6 +32,8 @@ def save_overtime_slots(data, crew, month, year):
     if str(month) not in existing_data['month']:
         existing_data['month'][str(month)] = {}
 
+    existing_data['month'][str(month)]['count'] = num_slots
+
     for slot, hours in data.items():
         existing_data['month'][str(month)][slot] = hours
 
@@ -48,19 +47,22 @@ def load_overtime_slots(crew, month, year):
     json_filepath = os.path.normpath(os.path.join(json_dir, f"OT_{crew}_{year}.json"))
 
     if not os.path.exists(json_filepath):
-        return {}  # Return an empty dictionary if the file does not exist
+        return {}, 3  # Return an empty dictionary and default to 3 slots if the file does not exist
 
     with open(json_filepath, 'r') as file:
         data = json.load(file)
 
-    return data['month'].get(str(month), {})
+    num_slots = data['month'].get(str(month), {}).get('count', 3)
+    return data['month'].get(str(month), {}), num_slots
+
 
 class OvertimeSlots(tk.Frame):
-    def __init__(self, parent, hdr_date_grid, user_selections, cols=31):
+    def __init__(self, parent, hdr_date_grid, user_selections, num_slots, cols=31):
         super().__init__(parent, bg=APP_BG_COLOR)
         self.hdr_date_grid = hdr_date_grid
         self.user_selections = user_selections
         self.cols = cols
+        self.num_slots = num_slots
 
         self.tracking_file = self.get_tracking_file_path()
         self.setup_logging()
@@ -68,6 +70,7 @@ class OvertimeSlots(tk.Frame):
         self.labels = []
         self.entries = []
 
+        self.load_overtime_data()
         self.create_overtime_entries()
 
     def get_tracking_file_path(self):
@@ -91,7 +94,16 @@ class OvertimeSlots(tk.Frame):
         self.error_logger.addHandler(handler)
 
     def create_overtime_entries(self):
-        overtime_names = ["Overtime 1", "Overtime 2", "Overtime 3", "Overtime 4"]
+        for label in self.labels:
+            label.destroy()
+        for entry_row in self.entries:
+            for entry in entry_row:
+                entry.destroy()
+
+        self.labels = []
+        self.entries = []
+
+        overtime_names = [f"Overtime {i+1}" for i in range(self.num_slots)]
 
         for i, overtime_name in enumerate(overtime_names):
             row = i
@@ -115,6 +127,7 @@ class OvertimeSlots(tk.Frame):
                 entry_row.append(overtime_entry)
 
             self.entries.append(entry_row)
+        print("skip")
 
     def entry_modified(self, modified_entry, event):
         entry_text = modified_entry.get()
@@ -137,62 +150,48 @@ class OvertimeSlots(tk.Frame):
         entry = event.widget
         entry.selection_range(0, tk.END)
 
-    def save_overtime_data(self):
-        overtime_data = {}
+    def update_overtime_slots(self, num_slots):
+        old_data = {}
         for label, entry_row in zip(self.labels, self.entries):
             slot_name = label.cget("text")
-            overtime_data[slot_name] = [entry.get() for entry in entry_row]
-        save_overtime_slots(overtime_data, self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year)
+            old_data[slot_name] = [entry.get() for entry in entry_row]
 
+        self.num_slots = max(3, num_slots)
+        self.labels.clear()
+        self.entries.clear()
+        self.create_overtime_entries()
+
+        for label, entry_row in zip(self.labels, self.entries):
+            slot_name = label.cget("text")
+            if slot_name in old_data:
+                for entry, value in zip(entry_row, old_data[slot_name]):
+                    entry.delete(0, tk.END)
+                    entry.insert(0, value)
+
+        self.save_overtime_data()
+    
     def load_overtime_data(self):
-        overtime_data = load_overtime_slots(self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year)
-        if overtime_data is None:
-            overtime_data = {}  # Ensure it's an empty dictionary if None
+        overtime_data, self.num_slots = load_overtime_slots(self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year)
         for label, entry_row in zip(self.labels, self.entries):
             slot_name = label.cget("text")
             if slot_name in overtime_data:
                 for entry, value in zip(entry_row, overtime_data[slot_name]):
                     entry.delete(0, tk.END)
                     entry.insert(0, value)
-                    
-class TestApp(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Overtime Slots Test")
+        print("skip")
 
-        user_selections = {
-            'selected_crew': 'A',
-            'selected_month': datetime(2023, 6, 1),  # Provide the month as a datetime object
-            'selected_year': datetime(2023, 1, 1)  # Provide the year as a datetime object
-        }
-
-        hdr_date_grid = self.create_dummy_hdr_date_grid()
+    def save_overtime_data(self):
+        overtime_data = {}
+        for label, entry_row in zip(self.labels, self.entries):
+            slot_name = label.cget("text")
+            overtime_data[slot_name] = [entry.get() for entry in entry_row]
         
-        # Create the title frame for the "Overtime" label
-        title_frame = tk.Frame(self, bg="lightgray")
-        title_frame.pack(fill="x", pady=(10, 5))
-        title_label = tk.Label(title_frame, text="Overtime", font=("Calibri", 14, "bold"), bg="lightgray", fg="black")
-        title_label.pack(pady=5)
-
-        # Create an instance of the OvertimeSlots
-        self.overtime_slots = OvertimeSlots(self, hdr_date_grid, user_selections)
-        self.overtime_slots.pack(fill="x", expand=True, pady=(5, 10))
-
-        # Create a save button to test saving the data
-        save_button = tk.Button(self, text="Save Overtime Data", command=self.overtime_slots.save_overtime_data)
-        save_button.pack(pady=10)
-
-        # Create a load button to test loading the data
-        load_button = tk.Button(self, text="Load Overtime Data", command=self.overtime_slots.load_overtime_data)
-        load_button.pack(pady=10)
-
-    def create_dummy_hdr_date_grid(self):
-        class DummyHdrDateGrid:
-            def __init__(self):
-                self.dates = [datetime(2023, 6, day) for day in range(1, 31)]
-
-        return DummyHdrDateGrid()
-
-if __name__ == "__main__":
-    app = TestApp()
-    app.mainloop()
+        # Remove old slots that are no longer needed
+        existing_data, _ = load_overtime_slots(self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year)
+        current_slots = [label.cget("text") for label in self.labels]
+        for slot in list(existing_data.keys()):
+            if slot.startswith("Overtime") and slot not in current_slots:
+                del existing_data[slot]
+        
+        save_overtime_slots(overtime_data, self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year, self.num_slots)
+        print("skip")
