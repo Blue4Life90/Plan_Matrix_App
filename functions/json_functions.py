@@ -400,8 +400,8 @@ def move_person_data(user_selections, moved_personnel, schedule_type):
         # Get the specific month data from the loaded JSON data
         month_data = data["month"][month]
 
-        # Create a list of crew member names and their data
-        crew_member_list = [(name, month_data[name]) for name in month_data]
+        # Create a list of crew member names and their data, excluding names containing "Overtime"
+        crew_member_list = [(name, month_data[name]) for name in month_data if "Overtime" not in name]
 
         # Adjust the order of personnel based on the moved personnel list
         for moved_name, new_position in moved_personnel:

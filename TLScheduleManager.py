@@ -616,12 +616,6 @@ class TLScheduleManager(tk.Toplevel):
             overtime_data = load_hours_data_from_json(self.user_selections['selected_crew'], self.user_selections['selected_month'].month, self.user_selections['selected_year'].year, "Overtime")
             work_schedule_data = load_hours_data_from_json(self.user_selections['selected_crew'], self.user_selections['selected_month'].month, self.user_selections['selected_year'].year, "work_schedule")
             
-            # Remove placeholder if it exists from the list is applicable
-            if "[placeholder]" in overtime_data:
-                del overtime_data["[placeholder]"]
-            if "[placeholder]" in work_schedule_data:
-                del work_schedule_data["[placeholder]"]
-            
             # Get the current crew member names from the Treeview
             current_crew_member_names = [self.tree.item(name)['values'][0] for name in self.tree.get_children()]
             

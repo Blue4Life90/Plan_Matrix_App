@@ -398,6 +398,7 @@ class ScheduleHrsFrame(tk.Frame):
                     entry.insert(0, role)
                     apply_entry_color_specs(entry, role)
 
+            self.destroy_overtime_section()
             self.create_overtime_section()
 
             if self.access_level == "read-only":
