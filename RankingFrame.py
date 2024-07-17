@@ -214,7 +214,7 @@ class RankingFrame(ctk.CTkFrame):
             return
         
         self.ranking_labels = []
-        for i, member_frame in enumerate(self.schedule_hrs_frame.frames, start=1):
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[2:], start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
@@ -244,42 +244,26 @@ class RankingFrame(ctk.CTkFrame):
         total_working_hours = self.calculate_total_working_hours(member_frame)
         total_asking_hours = self.calculate_total_asking_hours(member_frame)
 
-        row_index = self.schedule_hrs_frame.frames.index(member_frame) + 1
+        row_index = self.schedule_hrs_frame.frames.index(member_frame) - 2
 
-        # Check if the name frame exists, create it if not
-        name_frame = self.inner_frame.grid_slaves(row=row_index, column=0)
-        if name_frame:
-            name_frame[0].winfo_children()[0].configure(text=member_name)
+        if row_index < len(self.ranking_labels) and row_index >= 0:
+            name_frame, tw_frame, ta_frame = self.ranking_labels[row_index]
+            name_frame.winfo_children()[0].configure(text=member_name)
+            tw_frame.winfo_children()[0].configure(text=total_working_hours)
+            ta_frame.winfo_children()[0].configure(text=total_asking_hours)
         else:
-            name_frame = self.create_label_frame(
-                self, member_name, is_name=True
-            )
-            name_frame.grid(row=row_index, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+            if row_index >= 0:
+                name_frame = self.create_label_frame(self, member_name, is_name=True)
+                name_frame.grid(row=row_index+2, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-        # Check if the tw frame exists, create it if not
-        tw_frame = self.inner_frame.grid_slaves(row=row_index, column=1)
-        if tw_frame:
-            tw_frame[0].winfo_children()[0].configure(
-                text=total_working_hours
-            )
-        else:
-            tw_frame = self.create_label_frame(
-                self, total_working_hours, 
-                is_working_hours=True
-            )
-            tw_frame.grid(row=row_index, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+                tw_frame = self.create_label_frame(self, total_working_hours, is_working_hours=True)
+                tw_frame.grid(row=row_index+2, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-        # Check if the ta frame exists, create it if not
-        ta_frame = self.inner_frame.grid_slaves(row=row_index, column=2)
-        if ta_frame:
-            ta_frame[0].winfo_children()[0].configure(text=total_asking_hours)
-        else:
-            ta_frame = self.create_label_frame(
-                self, total_asking_hours, 
-                is_name=False, is_working_hours=False
-            )
-            ta_frame.grid(row=row_index, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+                ta_frame = self.create_label_frame(self, total_asking_hours, is_name=False, is_working_hours=False)
+                ta_frame.grid(row=row_index+2, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
+                self.ranking_labels.append((name_frame, tw_frame, ta_frame))
+            
         # Toggle the sort switch to update the ranking
         current_sort_state = self.sort_switch_var.get()
         if current_sort_state == "asking":
@@ -327,7 +311,7 @@ class RankingFrame(ctk.CTkFrame):
 
     def sort_ranking_labels(self, sort_key=None, reverse=True, update_lowest=True):
         ranking_data = []
-        for i, member_frame in enumerate(self.schedule_hrs_frame.frames, start=1):
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[2:], start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
@@ -365,9 +349,9 @@ class RankingFrame(ctk.CTkFrame):
         self.build_frame()
         # Clear the existing ranking labels
         if self.schedule_hrs_frame.schedule_type == "Overtime":
-        #for widget in self.inner_frame.grid_slaves():
-        #    if int(widget.grid_info()["row"]) > 0:  # Skip the header row
-        #        widget.destroy()
+            for widget in self.inner_frame.grid_slaves():
+                if int(widget.grid_info()["row"]) > 0:  # Skip the header row
+                    widget.destroy()
 
             # Create new ranking labels
             self.create_ranking_labels()
