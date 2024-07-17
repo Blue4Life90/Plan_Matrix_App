@@ -220,9 +220,6 @@ class ScheduleHrsFrame(tk.Frame):
                     monthly_hours['working_hours_data'] = working_hours_data
                     monthly_hours['asking_hours_data'] = asking_hours_data
 
-                    #TODO: Revise so that it adds the actual starting hours to the total
-                    #The value of 'member.monthly_hours' will always keep starting hours at 0 so
-                    #it can't work.
                     monthly_hours['total_working_hours'] = sum(
                         int(hours) for hours in working_hours_data if hours.isdigit()
                     ) + int(monthly_hours['starting_working_hours'])
@@ -504,6 +501,8 @@ class ScheduleHrsFrame(tk.Frame):
         """
         Open the schedule manager window.
         """
+        self.save_member_data()
+        
         self.schedule_manager = TLScheduleManager(self.parent, 
                                              self.initial_names, 
                                              self, 
@@ -559,84 +558,3 @@ class ScheduleHrsFrame(tk.Frame):
                             height=self.inner_frame.winfo_reqheight()
         )
         self.adjust_canvas_size() 
-
-
-
-
-# For testing...
-class TestApp(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Schedule Hours Frame Test")
-
-        # Create instances of the required objects (replace with your own instances)
-        ranking_frame = None
-        user_selections = {
-            'selected_crew': 'A',
-            'selected_month': datetime.datetime(2023, 6, 1),  # Provide the month as a datetime object
-            'selected_year': datetime.datetime(2023, 1, 1)  # Provide the year as a datetime object
-        }
-        self.schedule_type = "Overtime"  # Change to "work_schedule" if needed
-
-        # Create an instance of the HdrDateGrid
-        self.hdr_date_grid = HdrDateGrid(
-            self, user_selections
-        )
-        self.hdr_date_grid.pack(expand=True, fill="both")
-        
-        self.access_level = "admin"
-
-        # Create an instance of the ScheduleHrsFrame
-        self.schedule_hrs_frame = ScheduleHrsFrame(
-            self,
-            hdr_date_grid=self.hdr_date_grid,
-            ranking_frame=ranking_frame,
-            user_selections=user_selections,
-            schedule_type=self.schedule_type,
-            access_level=self.access_level
-        )
-        self.schedule_hrs_frame.pack(expand=True, fill="both")
-
-        # Adjust the canvas size after the app is displayed
-        self.after(0, self.adjust_canvas_size)
-
-        # Create a button to open the schedule manager window
-        open_window_button = tk.Button(
-            self,
-            text="Open Schedule Manager",
-            command=self.schedule_hrs_frame.open_window
-        )
-        open_window_button.pack()
-
-        # Create a button to save the member data
-        save_button = tk.Button(
-            self,
-            text="Save Member Data",
-            command=self.schedule_hrs_frame.save_member_data
-        )
-        save_button.pack()
-
-        # Test loading data
-        self.test_load_data()
-
-    def adjust_canvas_size(self):
-        self.update_idletasks()
-        required_width = self.schedule_hrs_frame.inner_frame.winfo_reqwidth() + 25
-        self.schedule_hrs_frame.canvas.configure(width=max(required_width, self.hdr_date_grid.winfo_reqwidth()))
-        self.schedule_hrs_frame.canvas.configure(height=min(self.schedule_hrs_frame.inner_frame.winfo_reqheight(), 650))
-
-    def test_load_data(self):
-        crew = self.schedule_hrs_frame.user_selections['selected_crew']
-        month = self.schedule_hrs_frame.user_selections['selected_month'].month
-        year = self.schedule_hrs_frame.user_selections['selected_year'].year
-        schedule_type = self.schedule_hrs_frame.schedule_type
-
-        data = load_hours_data_from_json(crew, month, year, schedule_type)
-
-        # Simulate passing this data to ScheduleHrsFrame
-        self.schedule_hrs_frame.data_loaded(data, None)
-
-
-if __name__ == "__main__":
-    app = TestApp()
-    app.mainloop()

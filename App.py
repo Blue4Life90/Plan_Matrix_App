@@ -6,7 +6,6 @@ import csv
 import time
 import logging
 import subprocess
-import webbrowser
 import threading
 import tkinter as tk
 from tkinter import ttk
@@ -257,11 +256,6 @@ class App(tk.Tk):
         self.file_menu.entryconfig("Auto Save", state="normal", variable=self.autosave_var, onvalue=True, offvalue=False)
         self.update_autosave_label()
         self.edit_menu.entryconfig("Open Schedule Manager", state="normal")
-        
-
-    #TODO: Show additional buttons for admin access level
-    def show_admin_buttons(self):
-        pass
 
     def toggle_nav_pane(self):
         if self.left_pane_frame.winfo_viewable():
@@ -345,14 +339,11 @@ class App(tk.Tk):
             selected_year = self.user_selections["selected_year"].strftime("%Y")
             selected_month = self.user_selections["selected_month"].strftime("%m")
             log_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
-            
-            print(f"Attempting to open log file: {log_file}")  # Debug print
 
             if os.path.exists(log_file):
                 if sys.platform == "win32":
                     os.system(f'start cmd /c "type {log_file} & pause"')
             else:
-                print(f"Log file does not exist: {log_file}")  # Debug print
                 messagebox.showinfo("Tracking Log", "No tracking log found for the selected schedule.")
         else:
             messagebox.showinfo("Tracking Log", "No schedule is currently loaded.")
@@ -551,20 +542,21 @@ class App(tk.Tk):
                     lock_widgets(self)
                     self.disable_menu_options()
                     
-                    # TODO: May need error handling here
-                    if selected_schedule_type == "Overtime":
-                        for frame in self.schedule_hrs_frame.frames:
-                            lock_widgets(frame)
-                            
-                    elif selected_schedule_type == "work_schedule":
-                        for frame in self.schedule_hrs_frame.work_schedule_frames:
-                            lock_widgets(frame)
+                    try:
+                        if selected_schedule_type == "Overtime":
+                            for frame in self.schedule_hrs_frame.frames:
+                                lock_widgets(frame)
+                                
+                        elif selected_schedule_type == "work_schedule":
+                            for frame in self.schedule_hrs_frame.work_schedule_frames:
+                                lock_widgets(frame)
+                    except Exception as e:
+                        logging.error(f"Error from widget lock: pass_values.update_ui(): {str(e)}")
                             
                 elif self.current_user.access_level == "privileged":
                     self.enable_menu_options()
                 elif self.current_user.access_level == "admin":
                     self.enable_menu_options()
-                    self.show_admin_buttons()
             else:
                 # Handle the case when self.current_user is None
                 # You can show an error message or take appropriate action
@@ -881,7 +873,6 @@ class App(tk.Tk):
             logging.error(f"The 'Plan_Matrix_Doc.pdf' file was not found at path: {pdf_path}")
             messagebox.showerror("File Not Found", "The 'Plan_Matrix_Doc.pdf' file was not found. Please ensure the file exists in the specified location.")
             
-    # TODO: Test this function
     def contact_for_help(self):
         """
         Help Menu Option: Open an email to contact for help.

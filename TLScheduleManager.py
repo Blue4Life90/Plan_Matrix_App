@@ -187,21 +187,22 @@ class TLScheduleManager(tk.Toplevel):
                     task()
                 except Exception as e:
                     print(f"Error in worker thread: {str(e)}")
+                    logging.error(f"Worker Thread - Error in worker thread: {str(e)}")
                 finally:
                     self.task_queue.task_done()
                     self.is_processing.clear()  # Clear the is_processing flag after processing the task
 
             except queue.Empty:
                 if not self.is_processing.is_set() and self.task_queue.empty():
-                    print("Task queue empty and processing not active. Exiting worker thread.")  # Print when exiting the worker thread
+                    print("Worker Thread - Task queue empty and processing not active. Exiting worker thread.")
                     break
                 else:
-                    print("Task queue empty. Waiting for more tasks.")  # Print when waiting for more tasks
+                    print("Worker Thread - Task queue empty. Waiting for more tasks.")
 
             except Exception as e:
-                print(f"Error in worker thread: {str(e)}")
+                print(f"Worker Thread - Error in Worker Thread: {str(e)}")
 
-        print("Worker thread finished.")  # Print when the worker thread finishes
+        logging.error("Worker Thread - Status: Finished")
         self.after(0, self.hide_progress_window)
     
     def on_closing(self):
@@ -229,7 +230,6 @@ class TLScheduleManager(tk.Toplevel):
         )
 
         # Crew Member Name Selected
-        #TODO: Name configures to selected tree item
         self.crew_member_name_label = ctk.CTkLabel(
             self.starting_hours_frame, text="", 
             font=("Calibri", 14, "bold"),
@@ -238,7 +238,6 @@ class TLScheduleManager(tk.Toplevel):
         self.crew_member_name_label.grid(row=0, column=0, padx=10, pady=10)
         
         # Starting Working Hours
-        #TODO: Hours configure to selected tree item
         self.crew_member_starting_working_hours_label = ctk.CTkLabel(
             self.starting_hours_frame, text="Starting Working Hours: ", 
             font=("Calibri", 14, "bold"),
@@ -257,7 +256,6 @@ class TLScheduleManager(tk.Toplevel):
         self.crew_member_starting_working_hours.grid(row=2, column=0, padx=10, pady=10)
 
         # Starting Asking Hours
-        #TODO: Hours configure to selected tree item
         self.crew_member_starting_asking_hours_label = ctk.CTkLabel(
             self.starting_hours_frame, text="Starting Asking Hours: ", 
             font=("Calibri", 14, "bold"),
@@ -284,12 +282,7 @@ class TLScheduleManager(tk.Toplevel):
         self.confirm_new_starting_hours_button.grid(row=5, column=0, sticky="ew", padx=10, pady=10)
 
         self.button_frame.grid_columnconfigure(0, weight=1)
-        
-        # Push the "Edit Selected Name" button to the bottom
-        #TODO: May not be needed...
-        #self.button_frame.grid_rowconfigure(5, weight=1)
 
-    #TODO: Test Once Ready
     def change_starting_hours(self):
         if self.schedule_type != "Overtime":
             messagebox.showinfo("Error", "Starting hours can only be changed in the Overtime Schedule.")
@@ -588,7 +581,6 @@ class TLScheduleManager(tk.Toplevel):
                 self.show_progress_window()
 
         try:
-            print("Putting task in queue: process_changes")  # Print when putting a task in the queue
             self.task_queue.put(self.process_changes, block=False)
         except queue.Full:
             messagebox.showwarning("Warning", "Cannot add more changes. Queue is full.")

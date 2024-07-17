@@ -23,10 +23,6 @@ class RankingFrame(ctk.CTkFrame):
         super().__init__(parent, bg_color=PANE_BG_COLOR, fg_color=PANE_BG_COLOR)
         self.schedule_hrs_frame = schedule_hrs_frame
         self.build_frame()
-        # Create a main frame to hold everything
-        #self.main_frame = ctk.CTkFrame(self, fg_color=APP_BG_COLOR)
-        #self.main_frame.grid(row=0, column=0, columnspan=3, sticky="nsew", padx=5, pady=5)
-        #self.main_frame.grid_propagate(False)
 
     def build_frame(self):
         self.clear_content()

@@ -203,7 +203,6 @@ class HrsMatrixFrame(tk.Frame):
         return label_values
 
     def update_rows(self, num_rows):
-        # Remove existing labels and entries from the grid
         for label in self.labels:
             label.grid_forget()
         for entry in self.working_hours_entries:
@@ -218,7 +217,7 @@ class HrsMatrixFrame(tk.Frame):
         # Create new labels and entries based on the updated number of rows
         for i in range(num_rows):
             label = tk.Label(self, text=f"Label {i+1}", width=20, height=1)
-            label.grid(row=i*2, column=0, padx=10, pady=(5, 0))  # Add vertical padding only at the top
+            label.grid(row=i*2, column=0, padx=10, pady=(5, 0))
             label.grid_propagate(False)
             self.labels.append(label)
             
@@ -228,7 +227,7 @@ class HrsMatrixFrame(tk.Frame):
                     font=('Calibri', 12), 
                     bg='lightgreen'
                 )
-                working_hours_entry.grid(row=i*2, column=j+1, padx=5, pady=0)  # Remove vertical padding
+                working_hours_entry.grid(row=i*2, column=j+1, padx=5, pady=0)
                 self.working_hours_entries.append(working_hours_entry)
                 
                 asking_hours_entry = tk.Entry(
@@ -236,7 +235,7 @@ class HrsMatrixFrame(tk.Frame):
                     font=('Calibri', 12), 
                     bg='lightpink'
                 )
-                asking_hours_entry.grid(row=i*2+1, column=j+1, padx=5, pady=0)  # Remove vertical padding
+                asking_hours_entry.grid(row=i*2+1, column=j+1, padx=5, pady=0)
                 self.asking_hours_entries.append(asking_hours_entry)
                 
     def update_column_sums(self, event):

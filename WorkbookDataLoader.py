@@ -19,9 +19,6 @@ class WorkbookDataLoader(threading.Thread):
             month = self.schedule_hrs_frame.user_selections['selected_month'].month
             year = self.schedule_hrs_frame.user_selections['selected_year'].year
             schedule_type = self.schedule_hrs_frame.schedule_type
-            
-            #TODO: Remove if not needed
-            #create_hours_data_json(crew, year, schedule_type)
 
             data = load_hours_data_from_json(crew, month, year, schedule_type)
 

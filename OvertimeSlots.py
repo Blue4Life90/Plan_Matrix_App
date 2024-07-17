@@ -1,8 +1,5 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
-#TODO - Remove when done
-from datetime import datetime
-
 import os
 import json
 import logging
@@ -127,7 +124,6 @@ class OvertimeSlots(tk.Frame):
                 entry_row.append(overtime_entry)
 
             self.entries.append(entry_row)
-        print("skip")
 
     def entry_modified(self, modified_entry, event):
         entry_text = modified_entry.get()
@@ -178,7 +174,6 @@ class OvertimeSlots(tk.Frame):
                 for entry, value in zip(entry_row, overtime_data[slot_name]):
                     entry.delete(0, tk.END)
                     entry.insert(0, value)
-        print("skip")
 
     def save_overtime_data(self):
         overtime_data = {}
@@ -186,7 +181,6 @@ class OvertimeSlots(tk.Frame):
             slot_name = label.cget("text")
             overtime_data[slot_name] = [entry.get() for entry in entry_row]
         
-        # Remove old slots that are no longer needed
         existing_data, _ = load_overtime_slots(self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year)
         current_slots = [label.cget("text") for label in self.labels]
         for slot in list(existing_data.keys()):
@@ -194,4 +188,3 @@ class OvertimeSlots(tk.Frame):
                 del existing_data[slot]
         
         save_overtime_slots(overtime_data, self.user_selections["selected_crew"], self.user_selections["selected_month"].month, self.user_selections["selected_year"].year, self.num_slots)
-        print("skip")

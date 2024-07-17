@@ -58,10 +58,8 @@ class LoginWindow(tk.Toplevel):
 
         if is_verified_user(get_user_id()):
             self.open_login_window()
-            #self.open_registration_window()
         else:
             self.open_registration_window()
-            #self.open_login_window()
 
         # Center the window on the parent application
         self.center_window()
