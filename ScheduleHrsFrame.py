@@ -120,21 +120,6 @@ class ScheduleHrsFrame(tk.Frame):
 
         # Configure the canvas to expand and fill
         self.canvas.bind("<Configure>", self.on_canvas_configure)
-    
-    def create_overtime_section(self):
-        self.overtime_slot_title_frame = tk.Frame(self.inner_frame, bg=APP_BG_COLOR)
-        self.overtime_slot_title_frame.pack(fill="x", pady=(10, 0))
-        title_label = tk.Label(self.overtime_slot_title_frame, text="Scheduled Overtime", font=("Calibri", 14, "bold"), bg=APP_BG_COLOR, fg=TEXT_COLOR)
-        title_label.pack()
-
-        overtime_data, num_slots = load_overtime_slots(
-            self.user_selections["selected_crew"], 
-            self.user_selections["selected_month"].month, 
-            self.user_selections["selected_year"].year
-        )
-        self.overtime_frame = OvertimeSlots(self.inner_frame, self.hdr_date_grid, self.user_selections, num_slots)
-        self.overtime_frame.pack(fill="x", expand="False", pady=(5, 10))
-        self.overtime_frame.load_overtime_data()
 
     def destroy_overtime_section(self):
         if hasattr(self, 'overtime_slot_title_frame'):
@@ -343,13 +328,22 @@ class ScheduleHrsFrame(tk.Frame):
             for frame in self.work_schedule_frames:
                 frame.update_tracking_file(user_selections)
     
-    def data_loaded(self, data, exception):
-        """
-        Callback function to handle the loaded data.
+    def create_overtime_section(self):
+        self.overtime_slot_title_frame = tk.Frame(self.inner_frame, bg=APP_BG_COLOR)
+        self.overtime_slot_title_frame.pack(fill="x", pady=(10, 0))
+        title_label = tk.Label(self.overtime_slot_title_frame, text="Scheduled Overtime", font=("Calibri", 14, "bold"), bg=APP_BG_COLOR, fg=TEXT_COLOR)
+        title_label.pack()
 
-        This method is called by the WorkbookDataLoader thread when the data is loaded.
-        It updates the existing frames with the loaded data or creates new frames if needed.
-        """
+        overtime_data, num_slots = load_overtime_slots(
+            self.user_selections["selected_crew"], 
+            self.user_selections["selected_month"].month, 
+            self.user_selections["selected_year"].year
+        )
+        self.overtime_frame = OvertimeSlots(self.inner_frame, self.hdr_date_grid, self.user_selections, num_slots)
+        self.overtime_frame.pack(fill="x", expand=False, pady=(5, 10))
+        self.overtime_frame.load_overtime_data()
+
+    def data_loaded(self, data, exception):
         if exception:
             messagebox.showerror("Error", "An error occurred while loading member data.")
             return
@@ -360,7 +354,7 @@ class ScheduleHrsFrame(tk.Frame):
         self.destroy_frames()
 
         if self.schedule_type == "Overtime":
-            frames = []
+            self.frames = []
             for name, item in data.items():
                 monthly_hours = item.monthly_hours
                 starting_asking_hours = monthly_hours.get('starting_asking_hours')
@@ -368,11 +362,9 @@ class ScheduleHrsFrame(tk.Frame):
                 working_hours_data = monthly_hours.get('working_hours_data', [])
                 asking_hours_data = monthly_hours.get('asking_hours_data', [])
 
-                frame = HrsMatrixFrame(self.inner_frame, name, self.hdr_date_grid,
-                                    self.ranking_frame, starting_asking_hours,
-                                    starting_working_hours, self.user_selections)
+                frame = HrsMatrixFrame(self.inner_frame, name, self.hdr_date_grid, self.ranking_frame, starting_asking_hours, starting_working_hours, self.user_selections)
                 frame.pack(pady=5, fill="x")
-                frames.append(frame)
+                self.frames.append(frame)
 
                 for j, working_hours in enumerate(working_hours_data):
                     working_hours_entry = frame.working_hours_entries[j]
@@ -387,21 +379,18 @@ class ScheduleHrsFrame(tk.Frame):
                 frame.update_column_sums(None)
                 frame.labels[0].config(text=name)
 
-            self.frames = frames
             if self.access_level == "read-only":
                 for frame in self.frames:
                     lock_widgets(frame)
-                    
         else:
-            frames = []
+            self.work_schedule_frames = []
             for name, item in data.items():
                 monthly_hours = item.monthly_hours
                 entry_data = monthly_hours.get('entry_data', [])
 
-                frame = WorkScheduleMatrixFrame(self.inner_frame, name, self.hdr_date_grid,
-                                    self.ranking_frame, self.user_selections)
+                frame = WorkScheduleMatrixFrame(self.inner_frame, name, self.hdr_date_grid, self.ranking_frame, self.user_selections)
                 frame.pack(pady=5, fill="x")
-                frames.append(frame)
+                self.work_schedule_frames.append(frame)
 
                 for j, role in enumerate(entry_data):
                     entry = frame.crew_member_role_entries[j]
@@ -409,21 +398,19 @@ class ScheduleHrsFrame(tk.Frame):
                     entry.insert(0, role)
                     apply_entry_color_specs(entry, role)
 
-            self.work_schedule_frames = frames
             self.create_overtime_section()
-            
+
             if self.access_level == "read-only":
                 for frame in self.work_schedule_frames:
-                    lock_and_color_entry_widgets(frame)                  
+                    lock_and_color_entry_widgets(frame)
 
         self.update_scrollbar()
         self.get_labels()
         self.adjust_canvas_size()
-        
-        # Rebuild the ranking system after updating the frames
+
         if self.ranking_frame:
             self.ranking_frame.rebuild_ranking_system()
-        
+
         def check_frames_created():
             if self.schedule_type == "Overtime":
                 if len(self.frames) == self.crew_member_count:

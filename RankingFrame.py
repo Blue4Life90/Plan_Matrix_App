@@ -123,6 +123,7 @@ class RankingFrame(ctk.CTkFrame):
     def build_work_schedule_frame(self):
         self.main_frame.grid_columnconfigure(0, weight=1)
         self.main_frame.grid_columnconfigure(1, weight=1)
+        self.main_frame.grid_columnconfigure(2, weight=1)
         
         self.view_legend_button = ctk.CTkButton(
             self.main_frame,
@@ -212,40 +213,34 @@ class RankingFrame(ctk.CTkFrame):
 
     def create_ranking_labels(self):
         if not self.schedule_hrs_frame.frames:
-            return  # Exit if frames attribute is empty or None
+            return
         
-        for i, member_frame in enumerate(
-            self.schedule_hrs_frame.frames, start=1
-        ):
+        self.ranking_labels = []
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames, start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
 
-            name_frame = self.create_label_frame(
-                self, member_name, is_name=True
-            )
+            name_frame = self.create_label_frame(self, member_name, is_name=True)
             name_frame.grid(row=i, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-            tw_frame = self.create_label_frame(
-                self, total_working_hours, is_working_hours=True
-            )
+            tw_frame = self.create_label_frame(self, total_working_hours, is_working_hours=True)
             tw_frame.grid(row=i, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-            ta_frame = self.create_label_frame(
-                self, total_asking_hours, 
-                is_name=False, is_working_hours=False
-            )
+            ta_frame = self.create_label_frame(self, total_asking_hours, is_name=False, is_working_hours=False)
             ta_frame.grid(row=i, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
-            
+
+            self.ranking_labels.append((name_frame, tw_frame, ta_frame))
+
         self.update_scrollbar()
             
     def update_ranking(self, member_frame, modified_entry):
         # Check if the modified entry value is valid
         entry_value = modified_entry.get()
         if not entry_value.isdigit() or len(entry_value) > 4:
-            # Skip the update if the entry value is invalid
-            return
-
+            if entry_value != '':
+                return
+        
         # Update the totals and labels
         member_name = member_frame.labels[0].cget("text")
         total_working_hours = self.calculate_total_working_hours(member_frame)
@@ -287,7 +282,12 @@ class RankingFrame(ctk.CTkFrame):
             )
             ta_frame.grid(row=row_index, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
-        self.sort_ranking_labels
+        # Toggle the sort switch to update the ranking
+        current_sort_state = self.sort_switch_var.get()
+        if current_sort_state == "asking":
+            self.sort_by_asking_hours() 
+        else:
+            self.sort_by_working_hours()        
         
     def update_scrollbar(self):
         if hasattr(self, 'canvas') and self.canvas:
@@ -327,18 +327,14 @@ class RankingFrame(ctk.CTkFrame):
             sort_key=self.sort_by_working_hours_key, reverse=True
         )
 
-    def sort_ranking_labels(self, sort_key=None, update_lowest=True):
-        # Get the current ranking data
+    def sort_ranking_labels(self, sort_key=None, reverse=True, update_lowest=True):
         ranking_data = []
-        for i, member_frame in enumerate(
-            self.schedule_hrs_frame.frames, start=1
-            ):
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames, start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
             ranking_data.append((member_name, total_working_hours, total_asking_hours))
 
-        # Sort the ranking data based on the switch state
         if self.sort_switch_var.get() == "asking":
             sort_key = self.sort_by_asking_hours_key
         else:
@@ -346,12 +342,10 @@ class RankingFrame(ctk.CTkFrame):
         
         ranking_data.sort(key=sort_key, reverse=True)
 
-        # Find the person with the lowest asking hours and lowest working hours
         if update_lowest and ranking_data:
             lowest_asking_person = min(ranking_data, key=lambda x: x[2])
             lowest_working_person = min(ranking_data, key=lambda x: x[1])
-
-            if self.schedule_hrs_frame.schedule_type == "Work Schedule":
+            if self.schedule_hrs_frame.schedule_type == "work_schedule":
                 self.lowest_asking_label.configure(text="")
             else:
                 if self.sort_switch_var.get() == "asking":
@@ -361,29 +355,12 @@ class RankingFrame(ctk.CTkFrame):
         else:
             self.lowest_asking_label.configure(text="")
 
-        # Clear the existing ranking labels
-        for widget in self.inner_frame.grid_slaves():
-            if int(widget.grid_info()["row"]) > 0:  # Skip the header row
-                widget.destroy()
-
-        # Create new ranking labels based on the sorted data
         for i, (member_name, total_working_hours, total_asking_hours) in enumerate(ranking_data, start=2):
-            name_frame = self.create_label_frame(
-                self, member_name, is_name=True
-            )
-            name_frame.grid(row=i, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+            name_frame, tw_frame, ta_frame = self.ranking_labels[i-2]
+            name_frame.winfo_children()[0].configure(text=member_name)
+            tw_frame.winfo_children()[0].configure(text=total_working_hours)
+            ta_frame.winfo_children()[0].configure(text=total_asking_hours)
 
-            tw_frame = self.create_label_frame(
-                self, total_working_hours, is_working_hours=True
-            )
-            tw_frame.grid(row=i, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
-
-            ta_frame = self.create_label_frame(
-                self, total_asking_hours, 
-                is_name=False, is_working_hours=False
-            )
-            ta_frame.grid(row=i, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
-            
         self.update_scrollbar()
             
     def rebuild_ranking_system(self):
