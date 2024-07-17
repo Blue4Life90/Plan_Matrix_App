@@ -359,9 +359,9 @@ class RankingFrame(ctk.CTkFrame):
                 self.lowest_asking_label.configure(text="")
             else:
                 if self.sort_switch_var.get() == "asking":
-                    self.lowest_asking_label.configure(text=f"Lowest Asking: {lowest_asking_person[0]}")
+                    self.lowest_asking_label.configure(text=f"Lowest Asking: {lowest_asking_person[0]}", text_color=ASKING_HRS_BG_COLOR)
                 else:
-                    self.lowest_asking_label.configure(text=f"Lowest Working: {lowest_working_person[0]}")
+                    self.lowest_asking_label.configure(text=f"Lowest Working: {lowest_working_person[0]}", text_color=WORKING_HRS_BG_COLOR)
         else:
             self.lowest_asking_label.configure(text="")
 
