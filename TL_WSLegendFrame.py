@@ -1,6 +1,7 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
 import json
+import tkinter as tk
 
 # Third-Party Library Imports
 import customtkinter as ctk # type: ignore
@@ -10,15 +11,21 @@ from constants import APP_BG_COLOR, PANE_BG_COLOR, TEXT_COLOR
 from constants import COLOR_SPECS, ASSIGNMENT_CODES
 from constants import LEGEND_CODES
 from constants import BG_COLOR
+from constants import load_icons
 import functions.app_functions as app_functions
 
-class WSLegendWindow(ctk.CTkToplevel):
+class WSLegendWindow(tk.Toplevel):
     def __init__(self, parent):
-        super().__init__(parent, fg_color=APP_BG_COLOR)
+        super().__init__(parent, bg=APP_BG_COLOR)
         self.parent = parent
+        
+        # Load icons after the root window is initialized
+        self.iconpath_0, self.iconpath_1, self.iconpath_2 = load_icons()
+        self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
+        
         self.legend_title_label = ctk.CTkLabel(
             self,
-            text="Legend", 
+            text="Work Schedule Code Legend", 
             font=("Calibri", 14, "bold"), 
             text_color=TEXT_COLOR, 
             fg_color=BG_COLOR

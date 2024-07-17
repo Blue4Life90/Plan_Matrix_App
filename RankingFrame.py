@@ -15,6 +15,7 @@ from constants import ASKING_HRS_FG_COLOR, ASKING_HRS_BG_COLOR
 from constants import WORKING_HRS_FG_COLOR, WORKING_HRS_BG_COLOR
 from constants import SCROLLBAR_FG_COLOR, SCROLLBAR_HOVER_COLOR
 from constants import BUTTON_FG_COLOR, BUTTON_HOVER_BG_COLOR
+from constants import load_icons
 from TL_WSLegendFrame import WSLegendWindow
 
 class RankingFrame(ctk.CTkFrame):
@@ -405,28 +406,35 @@ class RankingFrame(ctk.CTkFrame):
         
 
 def center_window(window):
-    window.update_idletasks()
-    width = window.winfo_width()
-    height = window.winfo_height()
-    x = (window.winfo_screenwidth() // 2) - (width // 2)
-    y = (window.winfo_screenheight() // 2) - (height // 2)
-    window.geometry(f'+{x}+{y}')
-    
-    # Make multiple attempts to lift the window
-    for _ in range(5):
-        window.lift()
-        window.attributes('-topmost', True)
-        window.update()
-        time.sleep(0.1)
-    window.attributes('-topmost', False)
-    window.focus_force()
+    try:
+        if window and window.winfo_exists():
+            window.update_idletasks()
+            width = window.winfo_width()
+            height = window.winfo_height()
+            x = (window.winfo_screenwidth() // 2) - (width // 2)
+            y = (window.winfo_screenheight() // 2) - (height // 2)
+            window.geometry(f'+{x}+{y}')
+            
+            # Make multiple attempts to lift the window
+            for _ in range(5):
+                window.lift()
+                window.attributes('-topmost', True)
+                window.update()
+                time.sleep(0.1)
+            window.attributes('-topmost', False)
+            window.focus_force()
+    except Exception as e:
+        pass
         
-class DefineJobCodesWindow(ctk.CTkToplevel):
+class DefineJobCodesWindow(tk.Toplevel):
     def __init__(self, parent):
-        super().__init__(parent, fg_color=APP_BG_COLOR)
+        super().__init__(parent, bg=APP_BG_COLOR)
         self.parent = parent
         self.title("Define Legend Job Codes")
-        self.configure(bg=APP_BG_COLOR)
+        
+        # Load icons after the root window is initialized
+        self.iconpath_0, self.iconpath_1, self.iconpath_2 = load_icons()
+        self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
         
         self.job_code_entries = []
         self.job_code_numbers = []
@@ -542,12 +550,17 @@ class DefineJobCodesWindow(ctk.CTkToplevel):
     def cancel(self):
         self.destroy()
 
-class EditOvertimeSlotsWindow(ctk.CTkToplevel):
+class EditOvertimeSlotsWindow(tk.Toplevel):
     def __init__(self, parent):
-        super().__init__(parent, fg_color=APP_BG_COLOR)
+        super().__init__(parent, bg=APP_BG_COLOR)
         self.parent = parent
         self.title("Edit Overtime Slots")
         self.geometry("300x200")
+        
+        # Load icons after the root window is initialized
+        self.iconpath_0, self.iconpath_1, self.iconpath_2 = load_icons()
+        self.iconphoto(False, self.iconpath_0)  # Set the icon for the main window
+        
         self.configure(bg=APP_BG_COLOR)
 
         self.num_slots = tk.IntVar(value=4)
@@ -588,50 +601,3 @@ class EditOvertimeSlotsWindow(ctk.CTkToplevel):
 
     def on_closing(self):
         self.destroy()
-
-#TODO
-class MockScheduleHrsFrame(tk.Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.schedule_type = "Overtime"
-        self.user_selections = {"selected_crew": "A", "selected_month": datetime(2024, 1, 1), "selected_year": datetime(2024, 1, 1)}
-        self.hdr_date_grid = DummyHdrDateGrid()
-        self.overtime_frame = OvertimeSlots(self, self.hdr_date_grid, self.user_selections)
-        self.overtime_frame.pack(expand=True, fill="both")
-        self.frames = [MockMemberFrame() for _ in range(5)]  # Create 5 mock member frames
-
-class MockMemberFrame(tk.Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.labels = [tk.Label(self, text="Mock Member")]
-        self.starting_working_hours = 40
-        self.working_hours_entries = [tk.Entry(self) for _ in range(7)]
-        self.asking_hours_tracking = [tk.Label(self, text="50")]
-
-class TestApp(ctk.CTk):
-    def __init__(self):
-        super().__init__()
-        self.title("EditOvertimeSlotsWindow Test")
-        self.geometry("600x400")
-
-        self.schedule_hrs_frame = MockScheduleHrsFrame(self)
-        self.schedule_hrs_frame.pack(expand=True, fill="both", padx=10, pady=10)
-
-        self.edit_button = ctk.CTkButton(self, text="Edit Overtime Slots", command=self.open_edit_window)
-        self.edit_button.pack(pady=20)
-
-    def open_edit_window(self):
-        self.edit_window = EditOvertimeSlotsWindow(self)
-        self.edit_window.grab_set()
-
-    def rebuild_ranking_system(self):
-        # Placeholder for the method that rebuilds the ranking system
-        print("Rebuilding ranking system with new overtime slots...")
-
-class DummyHdrDateGrid:
-    def __init__(self):
-        self.dates = [datetime(2024, 1, day) for day in range(1, 32)]
-
-if __name__ == "__main__":
-    app = TestApp()
-    app.mainloop()
