@@ -108,7 +108,7 @@ class RankingFrame(ctk.CTkFrame):
             self.exclusions_container, values=[str(i) for i in range(0, 6)], 
             variable=self.num_exclusions, 
             command=self.on_exclusion_change,
-            width=60)
+            width=60, height=20)
         self.exclusions_combobox.pack(side="left")
 
         # Create a bottom frame for the "Lowest Asking" label
