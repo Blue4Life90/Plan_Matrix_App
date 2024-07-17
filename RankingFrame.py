@@ -22,6 +22,7 @@ class RankingFrame(ctk.CTkFrame):
     def __init__(self, parent, schedule_hrs_frame):
         super().__init__(parent, bg_color=PANE_BG_COLOR, fg_color=PANE_BG_COLOR)
         self.schedule_hrs_frame = schedule_hrs_frame
+        self.num_exclusions = tk.IntVar(value=2)
         self.build_frame()
 
     def build_frame(self):
@@ -76,7 +77,7 @@ class RankingFrame(ctk.CTkFrame):
         self.switch_label = ctk.CTkLabel(
             self.top_frame, text="Sort by Asking/Working Hours", 
             bg_color=APP_BG_COLOR, text_color=TEXT_COLOR, 
-            font=("Calibri", 12)
+            font=("Calibri", 12, "bold")
         )
         self.switch_label.pack(side="left", padx=(0, 5))
 
@@ -90,6 +91,25 @@ class RankingFrame(ctk.CTkFrame):
             width=40, height=20
         )
         self.sort_switch.pack(side="left")
+        
+        # Create a top frame for the switch label and sort switch
+        self.middle_frame = ctk.CTkFrame(self.main_frame, fg_color=APP_BG_COLOR)
+        self.middle_frame.pack(fill="x", padx=5, pady=(10, 2))
+
+        # Create a new frame to hold the label and combobox
+        self.exclusions_container = ctk.CTkFrame(self.middle_frame, fg_color=APP_BG_COLOR)
+        self.exclusions_container.pack(expand=True)
+        
+        # Combobox to select the number of exclusions
+        self.exclusions_label = ctk.CTkLabel(self.exclusions_container, text="Rank Exclusions:", bg_color=APP_BG_COLOR, text_color=TEXT_COLOR, font=("Calibri", 12, "bold"))
+        self.exclusions_label.pack(side="left", padx=(0, 10))
+
+        self.exclusions_combobox = ctk.CTkComboBox(
+            self.exclusions_container, values=[str(i) for i in range(0, 6)], 
+            variable=self.num_exclusions, 
+            command=self.on_exclusion_change,
+            width=60)
+        self.exclusions_combobox.pack(side="left")
 
         # Create a bottom frame for the "Lowest Asking" label
         self.bottom_frame = ctk.CTkFrame(
@@ -101,7 +121,7 @@ class RankingFrame(ctk.CTkFrame):
         self.lowest_asking_label = ctk.CTkLabel(
             self.bottom_frame, text="Lowest Asking:",
             bg_color=APP_BG_COLOR, text_color=TEXT_COLOR,
-            font=("Calibri", 12, "bold"),
+            font=("Calibri", 14, "bold"),
             justify="center"
         )
         self.lowest_asking_label.pack(expand=True, fill="both", padx=10)
@@ -116,6 +136,9 @@ class RankingFrame(ctk.CTkFrame):
         self.update_scrollbar()
         self.delayed_layout_update()
             
+    def on_exclusion_change(self, _event=None):
+        self.rebuild_ranking_system()
+    
     def build_work_schedule_frame(self):
         self.main_frame.grid_columnconfigure(0, weight=1)
         self.main_frame.grid_columnconfigure(1, weight=1)
@@ -213,8 +236,10 @@ class RankingFrame(ctk.CTkFrame):
         if not self.schedule_hrs_frame.frames:
             return
         
+        num_exclusions = self.num_exclusions.get()
+        
         self.ranking_labels = []
-        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[2:], start=1):
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[num_exclusions:], start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
@@ -244,7 +269,8 @@ class RankingFrame(ctk.CTkFrame):
         total_working_hours = self.calculate_total_working_hours(member_frame)
         total_asking_hours = self.calculate_total_asking_hours(member_frame)
 
-        row_index = self.schedule_hrs_frame.frames.index(member_frame) - 2
+        num_exclusions = self.num_exclusions.get()
+        row_index = self.schedule_hrs_frame.frames.index(member_frame) - num_exclusions
 
         if row_index < len(self.ranking_labels) and row_index >= 0:
             name_frame, tw_frame, ta_frame = self.ranking_labels[row_index]
@@ -254,13 +280,13 @@ class RankingFrame(ctk.CTkFrame):
         else:
             if row_index >= 0:
                 name_frame = self.create_label_frame(self, member_name, is_name=True)
-                name_frame.grid(row=row_index+2, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+                name_frame.grid(row=row_index+num_exclusions, column=0, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
                 tw_frame = self.create_label_frame(self, total_working_hours, is_working_hours=True)
-                tw_frame.grid(row=row_index+2, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+                tw_frame.grid(row=row_index+num_exclusions, column=1, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
                 ta_frame = self.create_label_frame(self, total_asking_hours, is_name=False, is_working_hours=False)
-                ta_frame.grid(row=row_index+2, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
+                ta_frame.grid(row=row_index+num_exclusions, column=2, padx=2, pady=5, sticky="ew", in_=self.inner_frame)
 
                 self.ranking_labels.append((name_frame, tw_frame, ta_frame))
             
@@ -310,8 +336,10 @@ class RankingFrame(ctk.CTkFrame):
         )
 
     def sort_ranking_labels(self, sort_key=None, reverse=True, update_lowest=True):
+        num_exclusions = self.num_exclusions.get()
+        
         ranking_data = []
-        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[2:], start=1):
+        for i, member_frame in enumerate(self.schedule_hrs_frame.frames[num_exclusions:], start=1):
             member_name = member_frame.labels[0].cget("text")
             total_working_hours = self.calculate_total_working_hours(member_frame)
             total_asking_hours = self.calculate_total_asking_hours(member_frame)
@@ -467,10 +495,10 @@ class DefineJobCodesWindow(tk.Toplevel):
         cancel_button.grid(row=1, column=1, padx=(5, 0), pady=5, sticky="ew")
         
     def bind_shortcuts(self):
-        self.bind("<Tab>", lambda event: self.add_job_code_entry())
-        self.bind("<Control-z>", lambda event: self.remove_job_code_entry())
+        self.bind("<Tab>", self.add_job_code_entry)
+        self.bind("<Control-z>", self.remove_job_code_entry)
     
-    def add_job_code_entry(self):
+    def add_job_code_entry(self, event=None):
         index = len(self.job_code_entries) + 1
         
         number_label = ctk.CTkLabel(
@@ -487,12 +515,27 @@ class DefineJobCodesWindow(tk.Toplevel):
         entry.grid(row=index-1, column=1, padx=(0, 5), pady=5, sticky="ew")
         self.job_code_entries.append(entry)
         
-    def remove_job_code_entry(self):
+        # Set focus to the newly created entry
+        entry.focus_set()
+        
+        # If this method was called by the Tab key, prevent default behavior
+        if event:
+            return "break"
+        
+    def remove_job_code_entry(self, event=None):
         if len(self.job_code_entries) > 1:
             entry = self.job_code_entries.pop()
             number = self.job_code_numbers.pop()
             entry.destroy()
             number.destroy()
+            
+            # Set focus to the last remaining entry
+            if self.job_code_entries:
+                self.job_code_entries[-1].focus_set()
+        
+        # If this method was called by Ctrl+Z, prevent default behavior
+        if event:
+            return "break"
         
     def save_job_codes(self):
         job_codes = {}
