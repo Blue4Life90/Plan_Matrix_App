@@ -3,7 +3,7 @@ import logging
 from constants import TRACKING_LOGS_DIR
 
 def setup_logging(entry_log_file=None):
-    if not os.path.exists(TRACKING_LOGS_DIR):
+    if not os.path.exists(os.path.normpath(TRACKING_LOGS_DIR)):
         os.makedirs(TRACKING_LOGS_DIR)
 
     # Logger for entry modifications
@@ -29,7 +29,7 @@ def setup_logging(entry_log_file=None):
     
     error_logger.setLevel(logging.ERROR)
     error_logger.propagate = False  # Prevent log propagation
-    error_log_file = os.path.join(TRACKING_LOGS_DIR, 'app.log')
+    error_log_file = os.path.normpath(os.path.join(TRACKING_LOGS_DIR, 'app.log'))
     error_handler = logging.FileHandler(error_log_file)
     error_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
     error_logger.addHandler(error_handler)

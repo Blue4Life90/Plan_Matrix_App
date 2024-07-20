@@ -19,7 +19,7 @@ def save_overtime_slots(data, crew, month, year, num_slots):
     os.makedirs(json_dir, exist_ok=True)  # Ensure the directory exists
     json_filepath = os.path.normpath(os.path.join(json_dir, f"OT_{crew}_{year}.json"))
 
-    if not os.path.exists(json_filepath):
+    if not os.path.exists(os.path.normpath(json_filepath)):
         # If the file does not exist, create an initial structure
         existing_data = {'month': {}}
     else:
@@ -43,7 +43,7 @@ def load_overtime_slots(crew, month, year):
     os.makedirs(json_dir, exist_ok=True)  # Ensure the directory exists
     json_filepath = os.path.normpath(os.path.join(json_dir, f"OT_{crew}_{year}.json"))
 
-    if not os.path.exists(json_filepath):
+    if not os.path.exists(os.path.normpath(json_filepath)):
         return {}, 3  # Return an empty dictionary and default to 3 slots if the file does not exist
 
     with open(json_filepath, 'r') as file:
@@ -71,12 +71,12 @@ class OvertimeSlots(tk.Frame):
         self.create_overtime_entries()
 
     def get_tracking_file_path(self):
-        crew_folder = os.path.join("tracking_logs", self.user_selections["selected_crew"])
-        if not os.path.exists(crew_folder):
+        crew_folder = os.path.normpath(os.path.join("tracking_logs", self.user_selections["selected_crew"]))
+        if not os.path.exists(os.path.normpath(crew_folder)):
             os.makedirs(crew_folder)
         selected_year = self.user_selections["selected_year"].strftime("%Y")
         selected_month = self.user_selections["selected_month"].strftime("%m")
-        tracking_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
+        tracking_file = os.path.normpath(os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log'))
         return tracking_file
 
     def setup_logging(self):

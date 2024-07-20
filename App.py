@@ -59,11 +59,11 @@ try:
     os.makedirs(log_directory, exist_ok=True)
     os.makedirs(registry_directory, exist_ok=True)
     
-    if not os.path.exists(log_file):
+    if not os.path.exists(os.path.normpath(log_file)):
         open(log_file, 'w').close()
-    if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+    if not os.path.exists(os.path.normpath(ACCESS_LEVEL_ENCRYPTION)):
         open(ACCESS_LEVEL_ENCRYPTION, 'w').close()
-    if not os.path.exists(USER_ID_FILE):
+    if not os.path.exists(os.path.normpath(USER_ID_FILE)):
         with open(USER_ID_FILE, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['username', 'password_hash', 'remember_me'])  # Write header row
@@ -335,12 +335,12 @@ class App(tk.Tk):
     
     def view_tracking_log(self):
         if self.schedule_hrs_frame:
-            crew_folder = os.path.join(constants.TRACKING_LOGS_DIR, self.user_selections["selected_crew"])
+            crew_folder = os.path.normpath(os.path.join(constants.TRACKING_LOGS_DIR, self.user_selections["selected_crew"]))
             selected_year = self.user_selections["selected_year"].strftime("%Y")
             selected_month = self.user_selections["selected_month"].strftime("%m")
-            log_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
+            log_file = os.path.normpath(os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log'))
 
-            if os.path.exists(log_file):
+            if os.path.exists(os.path.normpath(log_file)):
                 if sys.platform == "win32":
                     os.system(f'start cmd /c "type {log_file} & pause"')
             else:
@@ -626,7 +626,7 @@ class App(tk.Tk):
         self.progress_bar = ttk.Progressbar(loading_frame, style="red.Horizontal.TProgressbar", length=200, mode='determinate')
         self.progress_bar.pack(pady=(0, 20))
 
-        image_path = os.path.join("images/background_images/", "Loading_Screen_image.png")
+        image_path = os.path.normpath(os.path.join("images/background_images/", "Loading_Screen_image.png"))
         image = Image.open(image_path)
         photo = ImageTk.PhotoImage(image)
 
@@ -858,7 +858,7 @@ class App(tk.Tk):
         """
         pdf_path = "Plan_Matrix_Doc.pdf"
         
-        if os.path.exists(pdf_path):
+        if os.path.exists(os.path.normpath(pdf_path)):
             try:
                 if sys.platform == "win32":
                     os.startfile(pdf_path)
@@ -1102,12 +1102,12 @@ class App(tk.Tk):
         )        
 
         # Define the file path for saving the PDF
-        DESKTOP_PATH = os.path.expanduser("~\\Desktop")
-        if not os.path.exists(DESKTOP_PATH):
+        DESKTOP_PATH = os.path.normpath(os.path.expanduser("~\\Desktop"))
+        if not os.path.exists(os.path.normpath(DESKTOP_PATH)):
             os.makedirs(DESKTOP_PATH)
 
-        file_path = os.path.join(DESKTOP_PATH, filename)
-        file_path = os.path.normpath(file_path)
+        file_path = os.path.normpath(os.path.join(DESKTOP_PATH, filename))
+        file_path = os.path.normpath(os.path.normpath(file_path))
 
         try:
             # Create a new PDF document

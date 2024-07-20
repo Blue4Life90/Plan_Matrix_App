@@ -48,7 +48,7 @@ class LeftPaneButtonFrame(ctk.CTkFrame):
         self.nav_pane_title_frame.pack(padx=10, pady=5, side="top", fill="x")  # Add fill="x" here
 
         # Title image
-        image_path = os.path.join("images/background_images/", "Plan_Matrix_title.png")
+        image_path = os.path.normpath(os.path.join("images/background_images/", "Plan_Matrix_title.png"))
         image = Image.open(image_path)  # Open the image file directly
         photo = ImageTk.PhotoImage(image)  # Convert to PhotoImage
 

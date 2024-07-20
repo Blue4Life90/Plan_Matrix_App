@@ -75,12 +75,12 @@ class HrsMatrixFrame(tk.Frame):
         self.create_labels_and_entries()  # Create the labels and entries    
 
     def get_tracking_file_path(self):
-        crew_folder = os.path.join(TRACKING_LOGS_DIR, self.user_selections["selected_crew"])
-        if not os.path.exists(crew_folder):
+        crew_folder =os.path.normpath(os.path.join(TRACKING_LOGS_DIR, self.user_selections["selected_crew"]))
+        if not os.path.exists(os.path.normpath(crew_folder)):
             os.makedirs(crew_folder)
         selected_year = self.user_selections["selected_year"].strftime("%Y")  # Extract year as string
         selected_month = self.user_selections["selected_month"].strftime("%m")  # Extract month as string
-        tracking_file = os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log')
+        tracking_file = os.path.normpath(os.path.join(crew_folder, f'{self.user_selections["selected_crew"]}_{selected_year}_{selected_month}.log'))
         return tracking_file
     
     def update_tracking_file(self, user_selections):

@@ -38,7 +38,7 @@ def save_user_access_levels():
 # Load user access levels from the access_levels.enc file
 def load_user_access_levels():
     try:
-        if os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+        if os.path.exists(os.path.normpath(ACCESS_LEVEL_ENCRYPTION)):
             with open(ACCESS_LEVEL_ENCRYPTION, "rb") as f:
                 user_access_levels = pickle.load(f)
         else:

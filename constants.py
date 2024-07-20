@@ -57,20 +57,20 @@ ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(shared_path, "SaveFiles"
 os.makedirs(TRACKING_LOGS_DIR, exist_ok=True)
 
 # Create the file if it doesn't exist
-if not os.path.exists(log_file):
+if not os.path.exists(os.path.normpath(log_file)):
     open(log_file, 'w').close()
 
 
 """images"""
-REGISTRATION_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Registration_Form_Banner.jpg")
-RESET_PASS_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Reset_Password_Banner.jpg")
-LOGIN_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Login_Form_Banner.jpg")
-SELECT_SCHEDULE_BANNER_IMAGE = os.path.join(os.getcwd(), "Images", "background_images", "Select_Schedule_Banner.jpg")
+REGISTRATION_BANNER_IMAGE = os.path.normpath(os.path.join(os.getcwd(), "Images", "background_images", "Registration_Form_Banner.jpg"))
+RESET_PASS_BANNER_IMAGE = os.path.normpath(os.path.join(os.getcwd(), "Images", "background_images", "Reset_Password_Banner.jpg"))
+LOGIN_BANNER_IMAGE = os.path.normpath(os.path.join(os.getcwd(), "Images", "background_images", "Login_Form_Banner.jpg"))
+SELECT_SCHEDULE_BANNER_IMAGE = os.path.normpath(os.path.join(os.getcwd(), "Images", "background_images", "Select_Schedule_Banner.jpg"))
 
 def load_icons():
-    ICON_PATH_0 = ImageTk.PhotoImage(file=os.path.join("images/background_images/svg/ICO/","16px.ico"))
-    ICON_PATH_1 = ImageTk.PhotoImage(file=os.path.join("images/background_images/svg/ICO/","32px.ico"))
-    ICON_PATH_2 = ImageTk.PhotoImage(file=os.path.join("images/background_images/svg/ICO/","48px.ico"))
+    ICON_PATH_0 = ImageTk.PhotoImage(file=os.path.normpath(os.path.join("images/background_images/svg/ICO/","16px.ico")))
+    ICON_PATH_1 = ImageTk.PhotoImage(file=os.path.normpath(os.path.join("images/background_images/svg/ICO/","32px.ico")))
+    ICON_PATH_2 = ImageTk.PhotoImage(file=os.path.normpath(os.path.join("images/background_images/svg/ICO/","48px.ico")))
     return ICON_PATH_0, ICON_PATH_1, ICON_PATH_2
 
 """login_functions.py"""
@@ -78,7 +78,7 @@ USER_REGISTRY_DIR = os.path.normpath(os.path.join(shared_path, "SaveFiles", "Use
 USER_ID_FILE = os.path.normpath(os.path.join(USER_REGISTRY_DIR, "user_id.csv"))
 os.makedirs(USER_REGISTRY_DIR, exist_ok=True)
 
-if os.path.exists(USER_ID_FILE):
+if os.path.exists(os.path.normpath(USER_ID_FILE)):
     with open(USER_ID_FILE, 'r', newline='') as file:
         reader = csv.reader(file)
         try:
@@ -102,11 +102,11 @@ else:
 ACCESS_LEVEL_ENCRYPTION = os.path.normpath(os.path.join(shared_path, "SaveFiles", "UserRegistry", "access_levels.enc"))
 
 # Create the file if it doesn't exist
-if not os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+if not os.path.exists(os.path.normpath(ACCESS_LEVEL_ENCRYPTION)):
     open(ACCESS_LEVEL_ENCRYPTION, 'w').close()
 
 """HrsMatrixFrame.py"""
-MEMBER_SAVE_DATA = os.path.join(os.getcwd(), "SaveFiles", "Crew_Member_Save_Data.csv")
+MEMBER_SAVE_DATA = os.path.normpath(os.path.join(os.getcwd(), "SaveFiles", "Crew_Member_Save_Data.csv"))
 
 """Work Schedule Formatting Presets"""
 ASSIGNMENT_CODES = {

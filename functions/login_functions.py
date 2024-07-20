@@ -134,7 +134,7 @@ def load_user_access_levels():
     """
     global user_access_levels
     try:
-        if os.path.exists(ACCESS_LEVEL_ENCRYPTION):
+        if os.path.exists(os.path.normpath(ACCESS_LEVEL_ENCRYPTION)):
             with open(ACCESS_LEVEL_ENCRYPTION, "rb") as f:
                 try:
                     user_access_levels = pickle.load(f)
@@ -238,7 +238,7 @@ def add_new_user(user_id, password):
     """
     hashed_password = password
     users_file_path = USER_ID_FILE
-    file_exists = os.path.isfile(users_file_path)
+    file_exists = os.path.normpath(os.path.isfile(users_file_path))
     with open(users_file_path, 'a', newline='') as file:
         fieldnames = ['username', 'password_hash', 'remember_me']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
