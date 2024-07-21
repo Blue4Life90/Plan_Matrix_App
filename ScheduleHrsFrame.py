@@ -411,11 +411,15 @@ class ScheduleHrsFrame(tk.Frame):
 
         def check_frames_created():
             if self.schedule_type == "Overtime":
+                print(f"Total frames: {len(self.frames)}")
+                print(f"Total crew members: {self.crew_member_count}")
                 if len(self.frames) == self.crew_member_count:
                     self.frames_created.set(True)
                 else:
                     self.after(100, check_frames_created)
             elif self.schedule_type == "work_schedule":
+                print(f"Total frames: {len(self.work_schedule_frames)}")
+                print(f"Total crew members: {self.crew_member_count}")
                 if len(self.work_schedule_frames) == self.crew_member_count:
                     self.frames_created.set(True)
                 else:

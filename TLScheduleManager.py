@@ -98,7 +98,7 @@ class TLScheduleManager(tk.Toplevel):
         apply_member_count_btn = ctk.CTkButton(
             self, text="Refresh", 
             fg_color="#047a1b", hover_color="#02a120", text_color="white", 
-            command=self.confirm_changes
+            command=self.refresh_schedule
         )
         apply_member_count_btn.grid(row=2, column=1, sticky="ew", padx=10, pady=10)
         
@@ -588,11 +588,17 @@ class TLScheduleManager(tk.Toplevel):
     def process_changes(self):
         try:
             self.apply_member_count()
-            self.app.create_frames()
-            self.app.update_scrollbar()
+
         except Exception as e:
             logging.error(f"Error applying changes.\nException: {str(e)}")
-            self.after(0, lambda: messagebox.showinfo("Error", "There was an error. Please view the log file."))
+            
+    def refresh_schedule(self):
+        try:
+            self.app.create_frames()
+            #self.app.update_scrollbar()
+            
+        except Exception as e:
+            logging.error(f"Error applying changes.\nException: {str(e)}")
     
     def apply_member_count(self):
         """
@@ -629,11 +635,19 @@ class TLScheduleManager(tk.Toplevel):
             
             # Remove the crew members from the JSON files if they were removed from the Treeview
             if self.removed_crew_members:
-                removed_crew_members_copy = self.removed_crew_members.copy()
-                for month in range(self.user_selections['selected_month'].month, 13):
-                    for name in removed_crew_members_copy:
-                        remove_crew_member(name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "Overtime")
-                        remove_crew_member(name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "work_schedule")
+                for name in self.removed_crew_members:
+                    print(f"Removing {name} from Overtime schedule")
+                    ot_consistent, ot_messages = remove_crew_member(name, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, "Overtime")
+                    print(f"Removing {name} from Work schedule")
+                    ws_consistent, ws_messages = remove_crew_member(name, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, "work_schedule")
+
+                    if not ot_consistent or not ws_consistent:
+                        print(f"Warning: Inconsistency detected after removing {name}")
+                        for message in ot_messages + ws_messages:
+                            print(message)
+                        logging.warning(f"Inconsistency detected after removing {name}")
+                        for message in ot_messages + ws_messages:
+                            logging.warning(message)
                 
             # Update the crew member names in the JSON files if they were edited
             if self.edited_crew_members:
@@ -641,6 +655,7 @@ class TLScheduleManager(tk.Toplevel):
                     for old_name, new_name in self.edited_crew_members.items():
                         change_crew_member_name(old_name, new_name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "Overtime")
                         change_crew_member_name(old_name, new_name, self.user_selections['selected_crew'], month, self.user_selections['selected_year'].year, "work_schedule")
+                        
             
             # Clear the edited and removed crew member lists
             self.edited_crew_members = {}
@@ -839,6 +854,7 @@ class TLScheduleManager(tk.Toplevel):
             crew_member_name = self.tree.item(item)['values'][0]
             self.removed_crew_members.append(crew_member_name)
             self.tree.delete(item)
+            print(f"Crew members to be removed: {self.removed_crew_members}")
             
         self.selected_num_rows_var.set(len(self.tree.get_children()))
         self.num_rows_label.configure(text=f"{self.selected_num_rows_var.get()} Crew Members")

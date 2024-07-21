@@ -196,7 +196,22 @@ def save_new_crew_member(crew_member_name, crew, month, year, schedule_type):
         
     load_hours_data_from_json(crew, month, year, schedule_type)
         
-def remove_crew_member(crew_member_name, crew, month, year, schedule_type):
+def verify_crew_consistency(data):
+    crew_members = set(data['month']['1'].keys())
+    inconsistencies = []
+    for month in range(2, 13):
+        month_crew = set(data['month'][str(month)].keys())
+        if month_crew != crew_members:
+            inconsistencies.append(f"Inconsistency found in month {month}")
+            inconsistencies.append(f"Month 1 crew: {crew_members}")
+            inconsistencies.append(f"Month {month} crew: {month_crew}")
+            inconsistencies.append(f"Difference: {crew_members.symmetric_difference(month_crew)}")
+    is_consistent = len(inconsistencies) == 0
+    return is_consistent, inconsistencies
+
+# In json_functions.py
+
+def remove_crew_member(crew_member_name, crew, year, schedule_type):
     if schedule_type == "Overtime":
         schedule_prefix = "OT"
     else:
@@ -204,24 +219,42 @@ def remove_crew_member(crew_member_name, crew, month, year, schedule_type):
 
     shared_path = get_shared_path() or os.getcwd()
     json_filepath = os.path.normpath(os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json"))
-   
-    # Load the entire JSON data from the file
+ 
     with open(json_filepath, 'r') as file:
         data = json.load(file)
+        
+    print("Initial crew consistency check:")
+    verify_crew_consistency(data)
 
-    # Get the specific month data from the loaded JSON data
-    month_data = data["month"].get(str(month), {})
+    # Get the full list of crew members from month 1
+    all_crew_members = set(data['month']['1'].keys())
+    print(all_crew_members)
 
-    # Remove the crew member from the month data
-    if crew_member_name in month_data:
-        del month_data[crew_member_name]
+    for month in range(1, 13):
+        month_str = str(month)
+        if month_str in data['month']:
+            if crew_member_name in data['month'][month_str]:
+                del data['month'][month_str][crew_member_name]
+                print(f"Removed {crew_member_name} from month {month}")
+            else:
+                print(f"{crew_member_name} not found in month {month}")
 
-    # Update the month data in the loaded JSON data
-    data["month"][str(month)] = month_data
-
-    # Save the updated JSON data back to the file
     with open(json_filepath, 'w') as file:
         json.dump(data, file, indent=4)
+
+    print("Final crew consistency check:")
+    is_consistent, inconsistency_messages = verify_crew_consistency(data)
+
+    print(f"Saved updated data for all months")
+    cache_key = f"{schedule_prefix}_{crew}_{year}"
+    data_cache.cache[cache_key] = data
+    data_cache.last_load_time[cache_key] = data_cache.get_file_modification_time(json_filepath)
+
+    if not is_consistent:
+        print(f"Warning: Crew data is inconsistent after removing {crew_member_name}")
+        for message in inconsistency_messages:
+            print(message)
+    return is_consistent, inconsistency_messages
 
 def adjust_crew_member_starting_hours(crew_member_name, crew, year, new_starting_working_hours, new_starting_asking_hours):
     schedule_prefix = "OT"
