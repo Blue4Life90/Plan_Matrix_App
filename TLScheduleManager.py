@@ -15,7 +15,7 @@ import customtkinter as ctk # type: ignore
 # Local Application/Library Specific Imports  
 from functions.json_functions import adjust_crew_member_starting_hours
 from functions.json_functions import load_hours_data_from_json, save_new_crew_member
-from functions.json_functions import remove_crew_member, change_crew_member_name, move_person_data
+from functions.json_functions import remove_crew_member, change_crew_member_name, move_person_data, remove_multiple_crew_members
 from functions.app_functions import center_toplevel_window
 from constants import log_file
 from constants import load_icons
@@ -202,7 +202,7 @@ class TLScheduleManager(tk.Toplevel):
             except Exception as e:
                 print(f"Worker Thread - Error in Worker Thread: {str(e)}")
 
-        logging.error("Worker Thread - Status: Finished")
+        print("Worker Thread - Status: Finished")
         self.after(0, self.hide_progress_window)
     
     def on_closing(self):
@@ -595,7 +595,6 @@ class TLScheduleManager(tk.Toplevel):
     def refresh_schedule(self):
         try:
             self.app.create_frames()
-            #self.app.update_scrollbar()
             
         except Exception as e:
             logging.error(f"Error applying changes.\nException: {str(e)}")
@@ -635,19 +634,18 @@ class TLScheduleManager(tk.Toplevel):
             
             # Remove the crew members from the JSON files if they were removed from the Treeview
             if self.removed_crew_members:
-                for name in self.removed_crew_members:
-                    print(f"Removing {name} from Overtime schedule")
-                    ot_consistent, ot_messages = remove_crew_member(name, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, "Overtime")
-                    print(f"Removing {name} from Work schedule")
-                    ws_consistent, ws_messages = remove_crew_member(name, self.user_selections['selected_crew'], self.user_selections['selected_year'].year, "work_schedule")
-
-                    if not ot_consistent or not ws_consistent:
-                        print(f"Warning: Inconsistency detected after removing {name}")
-                        for message in ot_messages + ws_messages:
-                            print(message)
-                        logging.warning(f"Inconsistency detected after removing {name}")
-                        for message in ot_messages + ws_messages:
-                            logging.warning(message)
+                remove_multiple_crew_members(
+                    self.removed_crew_members, 
+                    self.user_selections['selected_crew'],
+                    self.user_selections['selected_year'].year,
+                    "Overtime"
+                )
+                remove_multiple_crew_members(
+                    self.removed_crew_members, 
+                    self.user_selections['selected_crew'],
+                    self.user_selections['selected_year'].year,
+                    "work_schedule"
+                )
                 
             # Update the crew member names in the JSON files if they were edited
             if self.edited_crew_members:

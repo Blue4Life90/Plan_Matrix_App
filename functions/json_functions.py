@@ -211,6 +211,53 @@ def verify_crew_consistency(data):
 
 # In json_functions.py
 
+def remove_multiple_crew_members(crew_members, crew, year, schedule_type):
+    if schedule_type == "Overtime":
+        schedule_prefix = "OT"
+    else:
+        schedule_prefix = "WS"
+
+    shared_path = get_shared_path() or os.getcwd()
+    json_filepath = os.path.normpath(os.path.join(shared_path, "SaveFiles", f"{schedule_prefix}_{crew}_{year}.json"))
+   
+    with open(json_filepath, 'r') as file:
+        data = json.load(file)
+
+    for crew_member in crew_members:
+        for month in range(1, 13):
+            month_str = str(month)
+            if month_str in data['month'] and crew_member in data['month'][month_str]:
+                del data['month'][month_str][crew_member]
+
+    # Ensure all months have the same crew members
+    all_members = set()
+    for month_data in data['month'].values():
+        all_members.update(month_data.keys())
+
+    for month_str, month_data in data['month'].items():
+        for member in all_members:
+            if member not in month_data:
+                if schedule_type == "Overtime":
+                    month_data[member] = {
+                        "monthly_hours": {
+                            "starting_asking_hours": 0,
+                            "starting_working_hours": 0,
+                            "total_asking_hours": 0,
+                            "total_working_hours": 0,
+                            "asking_hours_data": [""] * 31,
+                            "working_hours_data": [""] * 31
+                        }
+                    }
+                else:  # Work Schedule
+                    month_data[member] = {
+                        "monthly_hours": {
+                            "entry_data": []
+                        }
+                    }
+
+    with open(json_filepath, 'w') as file:
+        json.dump(data, file, indent=4)
+
 def remove_crew_member(crew_member_name, crew, year, schedule_type):
     if schedule_type == "Overtime":
         schedule_prefix = "OT"
@@ -295,9 +342,10 @@ def adjust_crew_member_starting_hours(crew_member_name, crew, year, new_starting
         json.dump(data, file, indent=4)
 
 def load_hours_data_from_json(crew, month, year, schedule_type):
+    print(f"Entering load_hours_data_from_json: crew={crew}, month={month}, year={year}, schedule_type={schedule_type}")
     month_data = data_cache.get_data(crew, month, year, schedule_type)
     if not month_data:
-        logging.error(f"No data found for month {month}")
+        print(f"No data found for month {month}")
         return {}
 
     crew_member_hours = {}
@@ -305,6 +353,7 @@ def load_hours_data_from_json(crew, month, year, schedule_type):
         if name != "[placeholder]":
             crew_member_hours[name] = CrewMemberHours.from_dict({name: member_data})
 
+    print(f"Loaded data for {len(crew_member_hours)} crew members")
     return crew_member_hours
 
 def change_crew_member_name(old_name, new_name, crew, month, year, schedule_type):

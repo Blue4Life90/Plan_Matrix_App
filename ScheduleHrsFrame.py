@@ -1,7 +1,7 @@
 # PEP8 Compliant Guidance
 # Standard Library Imports
 import logging
-import datetime
+import time
 import tkinter as tk
 from tkinter import messagebox
 
@@ -16,7 +16,6 @@ from functions.json_functions import load_hours_data_from_json, save_hours_data_
 from constants import log_file
 from constants import APP_BG_COLOR, TEXT_COLOR
 from constants import SCROLLBAR_FG_COLOR, SCROLLBAR_HOVER_COLOR
-from HdrDateGrid import HdrDateGrid
 from OvertimeSlots import OvertimeSlots
 from OvertimeSlots import load_overtime_slots
 from CrewMemberHours import CrewMemberHours
@@ -29,6 +28,13 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s', 
                     filename=log_file, filemode='a'
 )
+
+# Add this after the basicConfig call
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
 
 class ScheduleHrsFrame(tk.Frame):
     """
@@ -120,6 +126,8 @@ class ScheduleHrsFrame(tk.Frame):
 
         # Configure the canvas to expand and fill
         self.canvas.bind("<Configure>", self.on_canvas_configure)
+        self.last_configure_time = 0
+        self.configure_delay = 200  # milliseconds
 
     def destroy_overtime_section(self):
         if hasattr(self, 'overtime_slot_title_frame'):
@@ -341,18 +349,24 @@ class ScheduleHrsFrame(tk.Frame):
         self.overtime_frame.load_overtime_data()
 
     def data_loaded(self, data, exception):
+        print("Entering data_loaded method")
         if exception:
+            print(f"Error loading data: {str(exception)}")
             messagebox.showerror("Error", "An error occurred while loading member data.")
             return
 
         if data is None or len(data) == 0:
+            print("No data loaded")
             messagebox.showinfo("No Data", "No crew data archived, please use Schedule Manager\nto begin adding data.")
 
+        print(f"Destroying existing frames")
         self.destroy_frames()
 
+        print(f"Creating new frames for {self.schedule_type} schedule")
         if self.schedule_type == "Overtime":
             self.frames = []
-            for name, item in data.items():
+            for i, (name, item) in enumerate(data.items()):
+                print(f"Creating frame for {name}")
                 monthly_hours = item.monthly_hours
                 starting_asking_hours = monthly_hours.get('starting_asking_hours')
                 starting_working_hours = monthly_hours.get('starting_working_hours')
@@ -360,7 +374,8 @@ class ScheduleHrsFrame(tk.Frame):
                 asking_hours_data = monthly_hours.get('asking_hours_data', [])
 
                 frame = HrsMatrixFrame(self.inner_frame, name, self.hdr_date_grid, self.ranking_frame, starting_asking_hours, starting_working_hours, self.user_selections)
-                frame.pack(pady=5, fill="x")
+                frame.grid(row=i, column=0, pady=5, sticky="ew")
+                print(f"Frame for {name} gridded")
                 self.frames.append(frame)
 
                 for j, working_hours in enumerate(working_hours_data):
@@ -375,18 +390,23 @@ class ScheduleHrsFrame(tk.Frame):
 
                 frame.update_column_sums(None)
                 frame.labels[0].config(text=name)
+            
+            print(f"All frames created and packed. Inner frame reqheight: {self.inner_frame.winfo_reqheight()}, height: {self.inner_frame.winfo_height()}")
 
             if self.access_level == "read-only":
                 for frame in self.frames:
                     lock_widgets(frame)
         else:
             self.work_schedule_frames = []
-            for name, item in data.items():
+            for i, (name, item) in enumerate(data.items()):
+                print(f"Creating work schedule frame for {name}")
+                logging.info(f"Creating work schedule frame for {name}")
                 monthly_hours = item.monthly_hours
                 entry_data = monthly_hours.get('entry_data', [])
 
                 frame = WorkScheduleMatrixFrame(self.inner_frame, name, self.hdr_date_grid, self.ranking_frame, self.user_selections)
-                frame.pack(pady=5, fill="x")
+                frame.grid(row=i, column=0, pady=5, sticky="ew")
+                logging.info(f"Work schedule frame for {name} gridded")
                 self.work_schedule_frames.append(frame)
 
                 for j, role in enumerate(entry_data):
@@ -394,6 +414,8 @@ class ScheduleHrsFrame(tk.Frame):
                     entry.delete(0, tk.END)
                     entry.insert(0, role)
                     apply_entry_color_specs(entry, role)
+                    
+            print(f"All frames created and packed. Inner frame reqheight: {self.inner_frame.winfo_reqheight()}, height: {self.inner_frame.winfo_height()}")
 
             self.destroy_overtime_section()
             self.create_overtime_section()
@@ -402,51 +424,90 @@ class ScheduleHrsFrame(tk.Frame):
                 for frame in self.work_schedule_frames:
                     lock_and_color_entry_widgets(frame)
 
+        print("Updating scrollbar")
         self.update_scrollbar()
+        print("Getting labels")
         self.get_labels()
+        print("Adjusting canvas size")
         self.adjust_canvas_size()
 
         if self.ranking_frame:
+            print("Rebuilding ranking system")
             self.ranking_frame.rebuild_ranking_system()
 
-        def check_frames_created():
-            if self.schedule_type == "Overtime":
-                print(f"Total frames: {len(self.frames)}")
-                print(f"Total crew members: {self.crew_member_count}")
-                if len(self.frames) == self.crew_member_count:
-                    self.frames_created.set(True)
-                else:
-                    self.after(100, check_frames_created)
-            elif self.schedule_type == "work_schedule":
-                print(f"Total frames: {len(self.work_schedule_frames)}")
-                print(f"Total crew members: {self.crew_member_count}")
-                if len(self.work_schedule_frames) == self.crew_member_count:
-                    self.frames_created.set(True)
-                else:
-                    self.after(100, check_frames_created)
+        print("Starting check_frames_created")
+        self.check_frames_created()
 
-        check_frames_created()
+        print("Adjusting canvas size after frame creation")
+        self.adjust_canvas_size()
+        print(f"Total frames created: {len(self.frames if self.schedule_type == 'Overtime' else self.work_schedule_frames)}")
+        print(f"Expected number of frames: {self.crew_member_count}")
+
+    def check_frames_created(self):
+        if self.schedule_type == "Overtime":
+            total_frames = len(self.frames)
+        elif self.schedule_type == "work_schedule":
+            total_frames = len(self.work_schedule_frames)
+        
+        print(f"check_frames_created: Total frames: {total_frames}")
+        print(f"check_frames_created: Total crew members: {self.crew_member_count}")
+        
+        if total_frames == self.crew_member_count:
+            print("All frames created successfully")
+            self.frames_created.set(True)
+        else:
+            print(f"Frames mismatch. Created: {total_frames}, Expected: {self.crew_member_count}")
+            self.after(100, self.check_frames_created)
 
     def destroy_frames(self):
-        # Destroy existing HrsMatrixFrame instances
+        print("Entering destroy_frames method")
         if self.frames:
+            print(f"Destroying {len(self.frames)} Overtime frames")
             for frame in self.frames:
                 frame.destroy()
             self.frames.clear()
 
-        # Destroy existing WorkScheduleMatrixFrame instances
         if self.work_schedule_frames:
+            print(f"Destroying {len(self.work_schedule_frames)} Work Schedule frames")
             for frame in self.work_schedule_frames:
                 frame.destroy()
+            if hasattr(self, 'overtime_frame'):
                 self.overtime_frame.destroy()
+            if hasattr(self, 'overtime_slot_title_frame'):
                 self.overtime_slot_title_frame.destroy()
-                
             self.work_schedule_frames.clear()
-    
+        print("Exiting destroy_frames method")
+
     def adjust_canvas_size(self):
+        print("Entering adjust_canvas_size method")
         self.update_idletasks()
-        self.canvas.configure(width=self.inner_frame.winfo_reqwidth() + 25)
-        self.canvas.configure(height=min(self.inner_frame.winfo_reqheight(), 650))
+        inner_frame_width = self.inner_frame.winfo_reqwidth()
+        inner_frame_height = self.inner_frame.winfo_reqheight()
+        print(f"Inner frame dimensions: {inner_frame_width}x{inner_frame_height}")
+        print(f"Number of child widgets: {len(self.inner_frame.winfo_children())}")
+        print("Child widgets:")
+        for child in self.inner_frame.winfo_children():
+            print(f"  {child} - {child.winfo_class()}")
+
+        # Set a maximum width for the canvas
+        max_width = 1500 
+        buffer_width = 30  # Add a buffer to ensure all content is visible
+        canvas_width = min(inner_frame_width + buffer_width, max_width)
+        canvas_height = min(inner_frame_height, 650)
+
+        # Only adjust the canvas size if it's different from the current size
+        current_width = self.canvas.winfo_width()
+        current_height = self.canvas.winfo_height()
+        if canvas_width != current_width or canvas_height != current_height:
+            self.canvas.configure(width=canvas_width, height=canvas_height)
+            print(f"Canvas size adjusted to: {canvas_width}x{canvas_height}")
+        else:
+            print("Canvas size unchanged")
+
+        # Update the scroll region
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+        print("Exiting adjust_canvas_size method")
     
     def save_member_data(self):
         """
@@ -473,16 +534,24 @@ class ScheduleHrsFrame(tk.Frame):
         size of the inner frame. It adjusts the scroll region and the size of the canvas
         window to accommodate the content of the inner frame.
         """
+        print("Entering update_scrollbar method")
         self.canvas.update_idletasks()
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        print(f"Canvas scroll region before update: {self.canvas.cget('scrollregion')}")
+        bbox = self.canvas.bbox("all")
+        print(f"Canvas bbox: {bbox}")
+        self.canvas.configure(scrollregion=bbox)
+        print(f"Canvas scroll region after update: {self.canvas.cget('scrollregion')}")
         if hasattr(self, 'inner_frame') and self.inner_frame:
             self.inner_frame.update_idletasks()
             canvas_width = self.canvas.winfo_width()
+            inner_frame_height = max(self.inner_frame.winfo_reqheight(), sum(f.winfo_reqheight() for f in self.frames))
             self.canvas.itemconfig(
                 self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw"),
-                width=canvas_width
+                width=canvas_width,
+                height=inner_frame_height
             )
-            self.inner_frame.config(width=canvas_width)
+            self.inner_frame.config(width=canvas_width, height=inner_frame_height)
+        print("Exiting update_scrollbar method")
 
     def get_labels(self):
         """
@@ -543,22 +612,16 @@ class ScheduleHrsFrame(tk.Frame):
             pass
     
     def on_canvas_configure(self, event):
-        """
-        Update the canvas configuration when the window is resized.
-
-        This method is triggered when the canvas is resized due to window resizing.
-        It adjusts the scroll region and the size of the inner frame to match the new canvas size.
-
-        Args:
-            event (tk.Event): The canvas configure event object.
-        """
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-        self.canvas.itemconfig(
-            self.canvas.create_window((0, 0), 
-                                      window=self.inner_frame, 
-                                      anchor="nw"
-                                      ),
-                            width=self.canvas.winfo_width() - self.scrollbar.winfo_width() - 5,
-                            height=self.inner_frame.winfo_reqheight()
-        )
-        self.adjust_canvas_size() 
+        current_time = time.time() * 1000  # Convert to milliseconds
+        if current_time - self.last_configure_time > self.configure_delay:
+            self.last_configure_time = current_time
+            self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+            self.canvas.itemconfig(
+                self.canvas.create_window((0, 0), window=self.inner_frame, anchor="nw"),
+                width=self.canvas.winfo_width() - self.scrollbar.winfo_width() - 5,
+                height=self.inner_frame.winfo_reqheight()
+            )
+            self.after(self.configure_delay, self.delayed_adjust_canvas_size)
+            
+    def delayed_adjust_canvas_size(self):
+        self.adjust_canvas_size()

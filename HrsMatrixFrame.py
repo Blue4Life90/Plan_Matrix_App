@@ -46,6 +46,8 @@ class HrsMatrixFrame(tk.Frame):
         
         self.cols = cols
         
+        self.configure(width=200, height=50)  # Adjust values as needed
+        
         # Create a frame for the total working hours label
         self.total_working_hours_frame = tk.Frame(self, bg=APP_BG_COLOR)
         self.total_working_hours_frame.grid(row=3, column=self.cols + 1, sticky="nsew")
@@ -72,7 +74,8 @@ class HrsMatrixFrame(tk.Frame):
 
         self.total_asking_hours_label.pack(fill="both", expand=True)
         
-        self.create_labels_and_entries()  # Create the labels and entries    
+        self.create_labels_and_entries()  # Create the labels and entries
+        print(f"HrsMatrixFrame created for {name} - Size: {self.winfo_reqwidth()}x{self.winfo_reqheight()}")    
 
     def get_tracking_file_path(self):
         crew_folder =os.path.normpath(os.path.join(TRACKING_LOGS_DIR, self.user_selections["selected_crew"]))

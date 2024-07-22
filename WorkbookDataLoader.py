@@ -20,10 +20,11 @@ class WorkbookDataLoader(threading.Thread):
             year = self.schedule_hrs_frame.user_selections['selected_year'].year
             schedule_type = self.schedule_hrs_frame.schedule_type
 
+            print(f"Loading data for crew: {crew}, month: {month}, year: {year}, schedule_type: {schedule_type}")
             data = load_hours_data_from_json(crew, month, year, schedule_type)
+            print(f"Data loaded. Number of crew members: {len(data)}")
 
             self.schedule_hrs_frame.after(0, self.schedule_hrs_frame.data_loaded, data, None)
         except Exception as e:
-            logging.error("An error occurred while loading JSON data.")
-            logging.exception(f"WorkbookDataLoader.run: Exception:{str(e)}")
+            print(f"An error occurred while loading JSON data: {str(e)}")
             self.schedule_hrs_frame.after(0, self.schedule_hrs_frame.data_loaded, None, e)
